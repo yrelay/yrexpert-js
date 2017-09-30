@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -84,12 +84,12 @@ var BuildDetails = React.createClass({
               <td>{this.xpressBuild}</td>
             </tr>
             <tr>
-              <td>Yexpert-M</td>
-              <td>{this.yexpertmVersion}</td>
+              <td>yrexpert-m</td>
+              <td>{this.yrexpertmVersion}</td>
             </tr>
             <tr>
-              <td>Yexpert-JS</td>
-              <td>{this.yexpertjsBuild}</td>
+              <td>yexpert-js</td>
+              <td>{this.yrexpertjsBuild}</td>
             </tr>
           </tbody>
         </Table>

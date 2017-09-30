@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -25,8 +25,8 @@ module.exports = function (controller, component) {
     component.docStoreBuild = data.docStoreBuild.no;
     component.qxBuild = data.qxBuild;
     component.xpressBuild = data.xpressBuild.no;
-    component.yexpertmVersion = data.yexpertmVersion;
-    component.yexpertjsBuild = data.yexpertjsBuild.no;
+    component.yrexpertmVersion = data.yrexpertmVersion;
+    component.yrexpertjsBuild = data.yrexpertjsBuild.no;
     component.setState({
       status: 'dataAvailable'
     });

@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -63,7 +63,7 @@ var AproposPanel = React.createClass({
           <img width={1800} height={640} alt="900x500" src="./images/carousel.jpg"/>
           <Carousel.Caption>
             <h3>Votre Système Expert libre</h3>
-            <p>Comme tous les systèmes experts Yexpert se présente comme une coquille vide qu’il va falloir compléter.</p>
+            <p>Comme tous les systèmes experts YRexpert se présente comme une coquille vide qu’il va falloir compléter.</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -85,12 +85,12 @@ var AproposPanel = React.createClass({
 
     <Media>
      <Media.Left>
-        <img width={64} height={64} src="./images/yexpert_logo.png" alt="Image"/>
+        <img width={64} height={64} src="./images/yrexpert_logo.png" alt="Image"/>
       </Media.Left>
       <Media.Body>
-        <Media.Heading>Yexpert</Media.Heading>
+        <Media.Heading>YRexpert</Media.Heading>
 
-          <p>Yexpert est un Syst&egrave;me Expert libre fonctionnant sous Mumps <a href="http://www.fisglobal.com/products-technologyplatforms-gtm" target="_blank">GT.M</a> et GNU/Linux. <a href="https://www.yrelay.fr/" target="_blank">Yrelay</a> utilise de nombreuses contributions communautaires libres&nbsp;notamment l'application <a href="http://www.mgateway.com/" target="_blank">EWD 3</a>.</p>
+          <p>YRexpert est un Syst&egrave;me Expert libre fonctionnant sous Mumps <a href="http://www.fisglobal.com/products-technologyplatforms-gtm" target="_blank">GT.M</a> et GNU/Linux. <a href="https://www.yrelay.fr/" target="_blank">Yrelay</a> utilise de nombreuses contributions communautaires libres&nbsp;notamment l'application <a href="http://www.mgateway.com/" target="_blank">EWD 3</a>.</p>
 
       </Media.Body>
     </Media>

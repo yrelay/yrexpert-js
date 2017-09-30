@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -58,7 +58,7 @@ var AproposPanel = React.createClass({
 
       <div style={{width: 'auto', height: 'auto'}}>
         <ResponsiveEmbed a16by9>
-          <embed type="text/html" src="http://localhost:8081/yexpert-term/index.html" />
+          <embed type="text/html" src="http://localhost:8081/yrexpert-term/index.html" />
         </ResponsiveEmbed>
       </div>
 
@@ -74,7 +74,7 @@ module.exports = AproposPanel;
         <Grid>
           <Row>
             <Col md={12}>
-              <iframe height="430px" width="710px" src="http://localhost:8081/yexpert-term/index.html" frameborder="0" allowfullscreen></iframe>
+              <iframe height="430px" width="710px" src="http://localhost:8081/yrexpert-term/index.html" frameborder="0" allowfullscreen></iframe>
             </Col>
           </Row>
         </Grid>

@@ -12,7 +12,7 @@
 var reactLoader = require('ewd-xpress-react').loader;
 
 var params = {
-  applicationName: 'yexpert-js',
+  applicationName: 'yrexpert-js',
   MainPage: require('./MainPage')
 };
 
