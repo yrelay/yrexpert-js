@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/js/RobotAndyPanel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/js/RobotAndyPanel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+
+!----------------------------------------------------------------------------!
+!                                                                            !
+! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
+!                                                                            !
+!----------------------------------------------------------------------------!
+
+*/
+
+"use strict"
+
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+var Inspector = require('react-json-inspector');
+var fs = require('fs');
+var os = require('os');
+
+var {
+  Button,
+  Glyphicon,
+  OverlayTrigger,
+  Panel,
+  Tooltip,
+  form,
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  HelpBlock
+} = ReactBootstrap;
+
+var RobotAndyPanel = React.createClass({
+
+  componentWillMount: function() {
+
+    this.controller = require('./controller-RobotAndyPanel')(this.props.controller, this);
+
+    this.title = (
+      &lt;h1>Robot Andy&lt;/h1>
+    );
+  },
+
+// *******
+
+  getInitialState() {
+    return {
+      valueNomPartition: '',
+      isLoading: false,
+      status: 'initial'
+    };
+  },
+
+
+// ******2
+
+  handleClick() {
+    this.setState({isLoading: true});
+    this.refresh();
+
+    // This probably where you would have an `ajax` call
+    setTimeout(() => {
+      // Completed of async action, set loading state back
+      this.setState({isLoading: false});
+    }, 2000);
+    },
+
+  componentDidUpdate: function() {
+
+    //console.log('status: ' + this.state.status);
+    var that = this;
+
+    setTimeout(function() {
+      $('.json-inspector__leaf').each(function(ix, item) {
+        var id = $(item).attr('id');
+        var name = id.split('root.')[1];
+        if (!name) {
+          $(item).find('span.json-inspector__key').first().hide();
+          $(item).find('span.json-inspector__value').first().hide();
+        }
+        else if (name.indexOf('.') === -1 &amp;&amp; that.data[name]) {
+          $(item).find('span.json-inspector__key').first().addClass('json-inspector__docName');
+        }
+      });
+    }, 100);
+  },
+  
+// ******
+
+  componentWillReceiveProps: function(newProps) {
+    this.onNewProps(newProps);
+  },
+
+  render: function() {
+
+    //var componentPath = this.controller.updateComponentPath(this);
+
+    /**
+     * @todo Améliorer le test sur laille de la partition
+     * @todo La taille ne doit pas excéder 50% de la taille disponible en local
+    */
+
+    let isLoading = this.state.isLoading;
+
+    // Créer un clone de données pour assurer un nouveau rendu
+    if (this.data) {
+      var newData = {};
+      Object.assign(newData, this.data);
+    }
+
+    return (
+      &lt;Panel 
+        collapsible 
+        expanded={this.expanded} 
+        header={this.title}
+        bsStyle="primary"
+      >
+
+      &lt;form>
+        &lt;FormGroup
+          controlId="formBasicText"
+        >
+          &lt;ControlLabel>Dialoguer avec Andy.&lt;/ControlLabel>
+          &lt;FormControl
+            type="text"
+            value={this.state.value}
+            placeholder="Saisir votre question"
+          />
+          &lt;FormControl.Feedback />
+          &lt;HelpBlock>Demandez à Andy toutes les questions et il fera de son mieux pour aider à les résoudre. Vous devez autoriser cette application à "Exécuter" lorsque vous y êtes invité. Si vous ne pouvez pas taper, cliquez sur l'écran de jeu pour concentrer la fenêtre. Tapez "help" (sans guillemets) pour afficher une liste de commandes.&lt;/HelpBlock>
+        &lt;/FormGroup>
+
+      &lt;/form>
+
+      &lt;Button
+        bsStyle="primary"
+        disabled={isLoading}
+        onClick={!isLoading ? this.handleClick : null}>
+        {isLoading ? 'En traitement...' : 'Soumettre'}
+      &lt;/Button>
+
+      &lt;Inspector 
+        data={newData}
+        isExpanded = {this.isExpanded}
+        onClick={this.nodeClicked}
+        search={false}
+      />
+
+      &lt;/Panel>
+    );
+  }
+});
+
+module.exports = RobotAndyPanel;
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yexper-js.html">lib/yexper-js</a></li></ul><h3>Classes</h3><ul><li><a href="EventPropagators.html">EventPropagators</a></li><li><a href="ForEachBookKeeping.html">ForEachBookKeeping</a></li><li><a href="MapBookKeeping.html">MapBookKeeping</a></li><li><a href="module-lib_yexper-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yexper-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="ReactClass.html">ReactClass</a></li><li><a href="ReactDOMComponent.html">ReactDOMComponent</a></li><li><a href="ReactDOMTextComponent.html">ReactDOMTextComponent</a></li><li><a href="ReactMountReady.html">ReactMountReady</a></li><li><a href="ReactMultiChild.html">ReactMultiChild</a></li><li><a href="ReactOwner.html">ReactOwner</a></li><li><a href="ReactReconcileTransaction.html">ReactReconcileTransaction</a></li><li><a href="ReactServerRenderingTransaction.html">ReactServerRenderingTransaction</a></li><li><a href="ReactServerUpdateQueue.html">ReactServerUpdateQueue</a></li><li><a href="Transaction.html">Transaction</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="ReactClassInterface.html">ReactClassInterface</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="UIEvent.html">UIEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#animation">animation</a></li><li><a href="global.html#autoFocus">autoFocus</a></li><li><a href="global.html#backdrop">backdrop</a></li><li><a href="global.html#backdropClassName">backdropClassName</a></li><li><a href="global.html#backdropStyle">backdropStyle</a></li><li><a href="global.html#backdropTransitionTimeout">backdropTransitionTimeout</a></li><li><a href="global.html#componentWillReceiveProps">componentWillReceiveProps</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#containerClassName">containerClassName</a></li><li><a href="global.html#defaultOverlayShown">defaultOverlayShown</a></li><li><a href="global.html#delay">delay</a></li><li><a href="global.html#delayHide">delayHide</a></li><li><a href="global.html#delayShow">delayShow</a></li><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#dialogComponentClass">dialogComponentClass</a></li><li><a href="global.html#dialogTransitionTimeout">dialogTransitionTimeout</a></li><li><a href="global.html#enforceFocus">enforceFocus</a></li><li><a href="global.html#ensureScrollValueMonitoring">ensureScrollValueMonitoring</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getText">getText</a></li><li><a href="global.html#isEnabled">isEnabled</a></li><li><a href="global.html#isExpanded">isExpanded</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#keyboard">keyboard</a></li><li><a href="global.html#listenTo">listenTo</a></li><li><a href="global.html#manager">manager</a></li><li><a href="global.html#mountComponent">mountComponent</a></li><li><a href="global.html#onBackdropClick">onBackdropClick</a></li><li><a href="global.html#onEnter">onEnter</a></li><li><a href="global.html#onEntered">onEntered</a></li><li><a href="global.html#onEntering">onEntering</a></li><li><a href="global.html#onEscapeKeyUp">onEscapeKeyUp</a></li><li><a href="global.html#onExit">onExit</a></li><li><a href="global.html#onExited">onExited</a></li><li><a href="global.html#onExiting">onExiting</a></li><li><a href="global.html#onHide">onHide</a></li><li><a href="global.html#onShow">onShow</a></li><li><a href="global.html#overlay">overlay</a></li><li><a href="global.html#persist">persist</a></li><li><a href="global.html#placement">placement</a></li><li><a href="global.html#ReactEventListener">ReactEventListener</a></li><li><a href="global.html#receiveComponent">receiveComponent</a></li><li><a href="global.html#renderBackdrop">renderBackdrop</a></li><li><a href="global.html#rootClose">rootClose</a></li><li><a href="global.html#setEnabled">setEnabled</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#supportsEventPageXY">supportsEventPageXY</a></li><li><a href="global.html#tabClassName">tabClassName</a></li><li><a href="global.html#title">title</a></li><li><a href="global.html#toggleLabel">toggleLabel</a></li><li><a href="global.html#transition">transition</a></li><li><a href="global.html#trigger">trigger</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Feb 11 2017 17:06:15 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lib/yexpert-js.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lib/yexpert-js.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+
+!----------------------------------------------------------------------------!
+!                                                                            !
+! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
+!                                                                            !
+!----------------------------------------------------------------------------!
+
+*/
+
+var build = require('./build');
+var sessions = require('ewd-session');
+var runRPC = require('yexpert-rpc/lib/proto/runRPC');
+var fs = require('fs');
+var os = require('os');
+
+/**
+ * Module yexpert-js.
+ * @module lib/yexper-js
+ */
+
+/** Fonction yexpert-js. */
+module.exports = {
+
+  /** Initialisation. */
+  init: function() {
+    var types = [
+      'qoper8-stats',
+      'qoper8-getStats',
+      'getMasterProcessDetails',
+      'getWorkerDetails',
+      'getPoolSize'
+    ];
+    if (this.dontLog) this.dontLog(types);
+  },
+
+  /** Services autorisés. */
+  servicesAllowed: {
+    'ewd-react-tools': true
+  },
+
+  /** Gestionnaire d'évènemments. */
+  handlers: {
+
+    loginRpc: function(messageObj, session, send, finished) {
+
+      if (session.authenticated) {
+        finished({error: 'Vous êtes déjà connectés à Yexpert-JS'});
+        return;
+      }
+
+      var accessCode = messageObj.params.ac;
+      var verifyCode = messageObj.params.vc;
+      //console.log("-----messageObj.params.ac: " + JSON.stringify(messageObj.params.ac));
+      //console.log("-----messageObj.params.vc: " + JSON.stringify(messageObj.params.vc));
+
+      if (accessCode === '') {
+        finished({error: "Vous devez entrer un code d'accès"});
+        return;
+      }
+      if (verifyCode === '') {
+        finished({error: 'Vous devez saisir un code de validation'});
+        return;
+      }
+
+      if (!this.db.symbolTable) this.db.symbolTable = sessions.symbolTable(this.db);
+
+      var params = {
+        rpcName: 'RPCUSR ETABLIR CONNEXION'
+      };
+
+      // N'enregistrez pas encore la table des symboles!
+      var response = runRPC.call(this, params, session, false);
+      //console.log("-----response: " + JSON.stringify(response));
+  
+      params = {
+        rpcName: 'RPCUSR VERIFIER CODE',
+        rpcArgs: [{
+          type: 'LITERAL',
+          value: accessCode + ';' + verifyCode
+        }],
+      };
+
+      var response = runRPC.call(this, params, session, false);
+      console.log('login response: ' + JSON.stringify(response));
+      var values = response.value;
+      var duz = values[0];
+      var err = values[3]
+      //console.log("-----err: " + JSON.stringify(err));
+      if (duz.toString() === '0' &amp;&amp; err !== '') {
+        finished({error: err});
+      }
+      else {
+        // Connecté avec succès
+        // Enregistrer la table des symboles à la session ...
+        ok = this.db.symbolTable.save(session);
+
+        // Nettoyer le processus de back-end Cache / GT.M:
+        ok = this.db.symbolTable.clear();
+
+        // ** important ! Signaler l'utilisateur comme authentifié pour empêcher l'accès non autorisé aux RPC par un utilisateur avant de se connecter
+        session.authenticated = true;
+
+        // Réponse de retour
+        var greeting = values[7];
+        var pieces = greeting.split(' ');
+        pieces = pieces.splice(2, pieces.length);
+        var displayName = pieces.join(' ');
+
+        var results = {
+          displayName: displayName,
+          greeting: greeting,
+          lastSignon: values[8],
+          messages: values.splice(8, values.length)
+        };
+        // Notez que nous ne renvoyons pas le DUZ!
+        //finished(results);
+        session.timeout = 20 * 60;
+        session.authenticated = true;
+        finished({ok: true});    
+      }
+    },
+
+    rpc: function(messageObj, session, send, finished) {
+
+      if (!this.db.symbolTable) this.db.symbolTable = sessions.symbolTable(this.db);
+
+      var rpcName = messageObj.params.rpcName;
+      if (rpcName === 'RPCUSR ETABLIR CONNEXION' || rpcName === 'RPCUSR VERIFIER CODE') {
+        // Vous devez utiliser le gestionnaire de connexion pour ces RPC
+        finished({error: rpcName + ' RPC ne peut pas être invoqué directement'});
+        return;
+      }
+      var manageSymbolTable = false;      
+      if (rpcName !== 'RPCUSR MESSAGE INTRO') {
+        if (!session.authenticated) {
+          finished({error: "Vous n'avez pas été authentifié sur Yexpert-JS"});
+          return;
+        }
+        manageSymbolTable = true;
+      }
+
+      var results = runRPC.call(this, messageObj.params, session, manageSymbolTable);
+
+      if (manageSymbolTable) {
+         // Nettoyer le processus de back-end Cache / GT.M :
+         this.db.symbolTable.clearclear();
+      }
+      finished(results);
+    },
+
+    exemple: function(messageObj, session, send, finished) {
+
+      var node = {
+        global: 'irelay',
+        subscripts: ['a'],
+        data: 'hello world'
+      };
+      this.db.set(node);
+
+      var func2 = this.db.function({function: 'ZGBLDIR^%GTM', arguments: ['DMO']});
+
+      var dir = this.db.global_directory();
+      finished(dir);
+      //finished({ok: 'example executed!'});
+    },
+
+    /**
+     * Se déplacer sur une partition.
+     * @constructor
+     * @param {object} messageObj - Message.
+     * @param {number} session - Session.
+     * @param {string} send - Send.
+     * @param {object} finished - Message de retour de la fonction.
+     */
+    cdNameSpace: function(messageObj, session, send, finished) {
+      var fn = {};
+      var path = '/home/' + process.env['instance'] + '/partitions/' + messageObj.params.namespace.toLowerCase() + '/globals/';
+      if (messageObj.params.namespace != '') {
+        if (fs.existsSync(path + messageObj.params.namespace.toUpperCase() + '.gld')) {
+          var fn = this.db.function({function: 'ZGBLDIR^%GTM', arguments: [messageObj.params.namespace.toUpperCase()]});
+        }
+      }
+      finished(fn);    
+    },
+
+    /**
+     * Obtenir la liste des noms des partitions installées.
+     * @constructor
+     * @param {object} messageObj - Message.
+     * @param {number} session - Session.
+     * @param {string} send - Send.
+     * @param {object} finished - Liste des noms des partitions installées sous la forme ["DMO", "YXP"].
+     */
+    getNameSpace: function(messageObj, session, send, finished) {
+      var path = '/home/' + process.env['instance'] + '/partitions/';
+      fs.readdir(path, function(err, items) {
+        if (err) {
+          finished(err);
+        }
+        finished(items);
+      });
+    },
+
+    getQui: function(messageObj, session, send, finished) {
+      var node = {
+        global: 'QUI',
+        subscripts: []
+      };
+      var result = this.db.get(node);
+      //console.log("-----getQui: " + JSON.stringify(result.data));
+      finished({qui: result.data});
+    },
+
+    setQui: function(messageObj, session, send, finished) {
+      if (messageObj.params.partition &amp;&amp; messageObj.params.partition !== '') {
+        var node = {
+          global: 'QUI',
+          subscripts: [],
+          data: messageObj.params.partition
+        };
+        var result = this.db.set(node);
+        //console.log("-----setQui: " + JSON.stringify(result.data));
+        finished({ok: true});    
+      }
+      else {
+        finished({error: 'Invalid partition'});
+      }
+    },
+    /* A supprimer */
+    login: function(messageObj, session, send, finished) {
+
+      if (messageObj.params.password === this.userDefined.config.managementPassword) {
+        session.timeout = 20 * 60;
+        session.authenticated = true;
+        finished({ok: true});    
+      }
+      else {
+        finished({error: 'Invalid login attempt'});
+      }
+      return;
+    },
+
+    getServerName: function(messageObj, session, send, finished) {
+      var serverName = '';
+      if (this.userDefined.config &amp;&amp; this.userDefined.config.serverName) serverName = this.userDefined.config.serverName;
+      finished({serverName: serverName});
+    },
+
+    getBuildDetails: function(messageObj, session, send, finished) {
+      var node = {
+        global: 'INCONNE',
+        subscripts: ['VERSION']
+      };
+      var rep = this.db.get(node);
+      if (session.authenticated) {
+        var buildDetails = {
+          nodejsBuild: process.version,
+          dbInterface: this.db.version(),
+          qoper8Build: this.build,
+          docStoreBuild: this.documentStore.build,
+          xpressBuild: this.xpress.build,
+          yexpertmVersion: rep.data,
+          yexpertjsBuild: build
+        };
+        //console.log("-----buildDetails: " + JSON.stringify(buildDetails));
+        if (this.userDefined.config &amp;&amp; this.userDefined.config.qxBuild) buildDetails.qxBuild = this.userDefined.config.qxBuild;
+        finished(buildDetails);
+      }
+      else {
+        finished({error: 'Unauthenticated'});
+      }
+    },
+
+    getMasterProcessDetails: function(messageObj, session, send, finished) {
+      if (session.authenticated) {
+        //var details = {};
+        //if (this.userDefined.config &amp;&amp; this.userDefined.config.masterProcessPid) details.pid = this.userDefined.config.masterProcessPid;
+        //finished(details);
+        finished({ok: true});
+      }
+      else {
+        finished({error: 'Unauthenticated'});
+      }
+    },
+
+    stopMasterProcess: function(messageObj, session, send, finished) {
+      if (session.authenticated) {
+        send({displayButton: true});
+        finished({closeSocket: true});
+      }
+      else {
+        finished({error: 'Unauthenticated'});
+      }
+    },
+
+    getWorkerDetails: function(messageObj, session, send, finished) {
+      if (session.authenticated) {
+        finished({ok: true});
+      }
+      else {
+        finished({error: 'Unauthenticated'});
+      }
+    },
+
+    stopWorkerProcess: function(messageObj, session, send, finished) {
+      finished({pid: messageObj.params.pid});
+    },
+
+    setPoolSize: function(messageObj, session, send, finished) {
+      finished({poolSize: messageObj.params.poolSize});
+    },
+
+    getPoolSize: function(messageObj, session, send, finished) {
+      finished({ok: true});
+    },
+
+    getGlobalDirectory: function(messageObj, session, send, finished) {
+      var dir = this.db.global_directory();
+      finished(dir);
+    },
+
+    getNextSubscripts: function(messageObj, session, send, finished) {
+      var subscripts = messageObj.params.path.split('.');
+      var global = subscripts.shift();
+      var glo = new this.documentStore.DocumentNode(global, subscripts);
+      var data = {};
+      glo.forEachChild(function(name, node) {
+        if (node.hasChildren) {
+          data[name] = messageObj.params.expandText
+	 }
+	 else data[name] = node.value;
+      });
+      finished(data);
+    },
+
+    getSessions: function(messageObj, session, send, finished) {
+      var activeSessions = this.sessions.active();
+      var sessions = [];
+      var disabled;
+      activeSessions.forEach(function(ewdSession) {
+        disabled = false;
+        if (ewdSession.id.toString() === session.id.toString()) disabled = true;
+        sessions.push({
+          id: ewdSession.id,
+          token: ewdSession.token,
+          application: ewdSession.application,
+          expiry: ewdSession.expiryTime,
+          disabled: disabled
+        });
+      });
+      finished(sessions);
+    },
+
+    stopSession: function(messageObj, session, send, finished) {
+      var ewdSession = this.sessions.byToken(messageObj.params.token);
+      if (ewdSession) ewdSession.delete();
+      finished({ok: true});
+    },
+
+    showSession: function(messageObj, session, send, finished) {
+      var token = messageObj.params.token;
+      var ewdSession = this.sessions.byToken(token);
+      if (ewdSession) {
+        var data = {};
+        var expandText = ' -->';
+        ewdSession.data.forEachChild(function(name, childNode) {
+          data[name] = expandText;
+          if (childNode.hasValue) data[name] = childNode.value;
+          if (name === 'ewd_symbolTable') data[name] = 'Mumps Symbol Table Data';
+        });
+        finished({
+          token: token,
+          id: ewdSession.id,
+          data: data
+        });
+      }
+      else {
+        finished({
+          token: token,
+          error: 'Session no longer exists'
+        });
+      }
+    },
+
+    getSessionSubscripts: function(messageObj, session, send, finished) {
+      var subs = messageObj.params.path.split('.');
+      var token = messageObj.params.token;
+      var ewdSession = this.sessions.byToken(token);
+      if (ewdSession) {
+        var documentName = ewdSession.documentName;
+        var subscripts = ewdSession.data._node.subscripts.concat(subs);
+        var doc = new this.documentStore.DocumentNode(documentName, subscripts);
+        var data = {};
+        doc.forEachChild(function(name, childNode) {
+          data[name] = messageObj.params.expandText;
+          if (childNode.hasValue) data[name] = childNode.value;
+        });
+        finished({
+          data: data
+        });
+      }
+      else {
+        finished({error: 'Session no longer exists'});
+      }
+    }
+  },
+
+
+
+  workerResponseHandlers: {
+    // Permettre l'interception par le processus maître d'augmenter/traiter la demande après l'authentification dans le worker
+    getMasterProcessDetails: function(message) {
+      var stats = this.getStats();
+      return {
+        pid: process.pid,
+        startTime: new Date(this.startTime).toLocaleString(),
+        upTime: stats.uptime,
+        memory: stats.memory
+      }
+    },
+
+    getWorkerDetails: function(message, send) {
+      // use special handler function for getting stats for master and workers
+      var that = this;
+      this.handleStats(function(messageObj) {
+        var resultObj = {
+          type: 'getWorkerDetails',
+          results: messageObj.worker
+        };
+        send(resultObj);
+      });
+      return;
+    },
+
+    stopMasterProcess: function(message) {
+
+      if (message.displayButton) return message ;
+
+      // delay slightly to allow response to be sent to browser
+      var that = this;
+      setTimeout(function() {
+        that.stop();
+      }, 2000);
+      //return {disconnect: true, error: 'EWD AppRunner has been shut down'};
+      return {ok: true};
+    },
+
+    stopWorkerProcess: function(message) {
+      this.stopWorker(message.pid);
+      return {pid: message.pid};
+    },
+
+    getPoolSize: function(message) {
+      return {poolSize: this.worker.poolSize};
+    },
+
+    setPoolSize: function(message) {
+      this.setWorkerPoolSize(message.poolSize);
+      return {ok: true};
+    }
+
+  }
+
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yexper-js.html">lib/yexper-js</a></li></ul><h3>Classes</h3><ul><li><a href="EventPropagators.html">EventPropagators</a></li><li><a href="ForEachBookKeeping.html">ForEachBookKeeping</a></li><li><a href="MapBookKeeping.html">MapBookKeeping</a></li><li><a href="module-lib_yexper-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yexper-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="ReactClass.html">ReactClass</a></li><li><a href="ReactDOMComponent.html">ReactDOMComponent</a></li><li><a href="ReactDOMTextComponent.html">ReactDOMTextComponent</a></li><li><a href="ReactMountReady.html">ReactMountReady</a></li><li><a href="ReactMultiChild.html">ReactMultiChild</a></li><li><a href="ReactOwner.html">ReactOwner</a></li><li><a href="ReactReconcileTransaction.html">ReactReconcileTransaction</a></li><li><a href="ReactServerRenderingTransaction.html">ReactServerRenderingTransaction</a></li><li><a href="ReactServerUpdateQueue.html">ReactServerUpdateQueue</a></li><li><a href="Transaction.html">Transaction</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="ReactClassInterface.html">ReactClassInterface</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="UIEvent.html">UIEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#animation">animation</a></li><li><a href="global.html#autoFocus">autoFocus</a></li><li><a href="global.html#backdrop">backdrop</a></li><li><a href="global.html#backdropClassName">backdropClassName</a></li><li><a href="global.html#backdropStyle">backdropStyle</a></li><li><a href="global.html#backdropTransitionTimeout">backdropTransitionTimeout</a></li><li><a href="global.html#componentWillReceiveProps">componentWillReceiveProps</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#containerClassName">containerClassName</a></li><li><a href="global.html#defaultOverlayShown">defaultOverlayShown</a></li><li><a href="global.html#delay">delay</a></li><li><a href="global.html#delayHide">delayHide</a></li><li><a href="global.html#delayShow">delayShow</a></li><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#dialogComponentClass">dialogComponentClass</a></li><li><a href="global.html#dialogTransitionTimeout">dialogTransitionTimeout</a></li><li><a href="global.html#enforceFocus">enforceFocus</a></li><li><a href="global.html#ensureScrollValueMonitoring">ensureScrollValueMonitoring</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getText">getText</a></li><li><a href="global.html#isEnabled">isEnabled</a></li><li><a href="global.html#isExpanded">isExpanded</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#keyboard">keyboard</a></li><li><a href="global.html#listenTo">listenTo</a></li><li><a href="global.html#manager">manager</a></li><li><a href="global.html#mountComponent">mountComponent</a></li><li><a href="global.html#onBackdropClick">onBackdropClick</a></li><li><a href="global.html#onEnter">onEnter</a></li><li><a href="global.html#onEntered">onEntered</a></li><li><a href="global.html#onEntering">onEntering</a></li><li><a href="global.html#onEscapeKeyUp">onEscapeKeyUp</a></li><li><a href="global.html#onExit">onExit</a></li><li><a href="global.html#onExited">onExited</a></li><li><a href="global.html#onExiting">onExiting</a></li><li><a href="global.html#onHide">onHide</a></li><li><a href="global.html#onShow">onShow</a></li><li><a href="global.html#overlay">overlay</a></li><li><a href="global.html#persist">persist</a></li><li><a href="global.html#placement">placement</a></li><li><a href="global.html#ReactEventListener">ReactEventListener</a></li><li><a href="global.html#receiveComponent">receiveComponent</a></li><li><a href="global.html#renderBackdrop">renderBackdrop</a></li><li><a href="global.html#rootClose">rootClose</a></li><li><a href="global.html#setEnabled">setEnabled</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#supportsEventPageXY">supportsEventPageXY</a></li><li><a href="global.html#tabClassName">tabClassName</a></li><li><a href="global.html#title">title</a></li><li><a href="global.html#toggleLabel">toggleLabel</a></li><li><a href="global.html#transition">transition</a></li><li><a href="global.html#trigger">trigger</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Feb 19 2017 19:14:27 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
