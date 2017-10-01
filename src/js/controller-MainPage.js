@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -53,7 +53,7 @@ module.exports = function (controller, component) {
   };
 
   controller.on('socketDisconnected', function() {
-    controller.toastr('warning', 'Back-end Yexpert-JS a été arrêté');
+    controller.toastr('warning', 'Back-end yrexpert-js a été arrêté');
     controller.emit('logout');
     controller.stopTimers();
   });
@@ -114,7 +114,7 @@ module.exports = function (controller, component) {
     // Back-end est de retour - redémarrez tout
     controller.timers = {};
     controller.emit('startTimers');
-    controller.toastr('warning', 'Le back-end Yexpert-JS a été redémarré');
+    controller.toastr('warning', 'Le back-end yrexpert-js a été redémarré');
   });
 
   controller.navOptionSelected = function(eventKey) {

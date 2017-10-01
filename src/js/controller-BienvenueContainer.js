@@ -16,7 +16,6 @@ module.exports = function (controller, component) {
   };
 
   // Afficher le panneau de bienvenue lors du premier rendu après la connexion
-
   component.hideContainer = false;
 
   return controller;

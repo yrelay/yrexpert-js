@@ -56,7 +56,13 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "babelify": "^7.3.0",
-    "react-select": "^1.0.0-rc.10"
+    "react-select": "^1.0.0-rc.10",
+    "webpack": "",
+    "webpack-dev-server": "",
+    "babel-core": "",
+    "babel-loader": "",
+    "babel-preset-react-hmre": "",
+    "react-router": ""
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -72,7 +78,7 @@
   },
   "babel": {
     "presets": [
-      "es2015",
+      "env",
       "react",
       "stage-3"
     ],
@@ -84,7 +90,8 @@
     "GPL-3.0"
   ],
   "scripts": {
-    "postinstall": "node postinstall/install"
+    "postinstall": "node postinstall/install",
+    "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot"
   },
   "bugs": {
     "url": "https://github.com/yrelay/yrexpert-js/issues"
