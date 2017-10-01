@@ -1,7 +1,7 @@
 {
   "name": "yrexpert-js",
   "description": "Votre sytème expert en mode Web...",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "name": "Yrelay",
     "email": "info@yrelay.fr"
@@ -64,8 +64,7 @@
     "babel-preset-react-hmre": "",
     "react-router": ""
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "babel": {
     "presets": [
       "env",
