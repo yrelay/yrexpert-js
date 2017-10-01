@@ -88,7 +88,7 @@ var BuildDetails = React.createClass({
               <td>{this.yrexpertmVersion}</td>
             </tr>
             <tr>
-              <td>yexpert-js</td>
+              <td>yrexpert-js</td>
               <td>{this.yrexpertjsBuild}</td>
             </tr>
           </tbody>

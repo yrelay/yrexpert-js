@@ -68,7 +68,7 @@ var BienvenuePanel = React.createClass({
             <img width={64} height={64} src="./images/yrexpert_logo.png" alt="Image"/>
           </Media.Left>
           <Media.Body>
-            <Media.Heading>yexpert-js</Media.Heading>
+            <Media.Heading>yrexpert-js</Media.Heading>
 
               <p>Le Syst&egrave;me Expert YRexpert est libre et fonctionne sous Mumps <a href="http://www.fisglobal.com/products-technologyplatforms-gtm" target="_blank">GT.M</a> et GNU/Linux. <a href="https://www.yrelay.fr/" target="_blank">Yrelay</a> utilise de nombreuses contributions communautaires libres&nbsp;notamment l'application <a href="http://www.mgateway.com/" target="_blank">EWD 3</a>.</p>
               <p>Comme tous les syst&egrave;mes experts, YRexpert se pr&eacute;sente comme une coquille vide qu&rsquo;il va falloir compl&eacute;ter.</p>
