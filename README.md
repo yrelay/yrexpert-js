@@ -1,12 +1,13 @@
-[![NPM](https://img.shields.io/npm/v/yrexpert-js.svg)](https://www.npmjs.com/package/yrexpert-js)
-[![Build Status](https://travis-ci.org/JedWatson/yrexpert-js.svg?branch=master)](https://travis-ci.org/JedWatson/yrexpert-js)
-[![Coverage Status](https://coveralls.io/repos/JedWatson/yrexpert-js/badge.svg?branch=master&service=github)](https://coveralls.io/github/JedWatson/yrexpert-js?branch=master)
-[![Supported by Thinkmill](https://thinkmill.github.io/badge/heart.svg)](http://thinkmill.com.au/?utm_source=github&utm_medium=badge&utm_campaign=yrexpert-js)
-[![CDNJS](https://img.shields.io/cdnjs/v/yrexpert-js.svg)](https://cdnjs.com/libraries/yrexpert-js)
-
 ![yrexpert_logo.png](./images/yrexpert_logo.png)
 
-# Interface Web pour votre système expert... 
+# Interface Web pour votre système expert...
+
+[![npm version][npm-image]][npm-url]
+[![npm downloads][downloads-image]][downloads-url]
+[![Build Status][travis-image]][travis-url]
+[![Dependencies Status][dependencies-image]][dependencies-url]
+[![DevDependencies Status][dev-dependencies-image]][dev-dependencies-url]
+[![Known Vulnerabilities][vulnerabilities-image]][vulnerabilities-url]
 
 Cette arborescence fournit une interface Web et les outils que vous aurez besoin pour votre système expert. Elle est maintenue par yrelay/ et diffusée sous licence libre. Cette version comprend des contributions communautaires libres acceptées par yrelay/.
 
