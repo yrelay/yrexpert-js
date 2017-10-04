@@ -62,3 +62,21 @@ Pour remonter un bug : [https://github.com/yrelay//yrexpert-term/issues](https:/
 * yrelay/ Github : [https://github.com/yrelay//](https://github.com/yrelay//)
 
 
+
+[npm-image]: https://img.shields.io/npm/v/yrexpert-js.svg
+[npm-url]: https://npmjs.org/package/yrexpert-js
+[downloads-image]: https://img.shields.io/npm/dm/yrexpert-js.svg
+[downloads-url]: https://npmjs.org/package/yrexpert-js
+[travis-image]: https://travis-ci.org/kimxogus/yrexpert-js.svg?branch=develop
+[travis-url]: https://travis-ci.org/kimxogus/yrexpert-js
+[dependencies-image]: https://david-dm.org/kimxogus/yrexpert-js.svg
+[dependencies-url]: https://david-dm.org/kimxogus/yrexpert-js
+[dependencies-image]: https://david-dm.org/kimxogus/yrexpert-js/status.svg
+[dependencies-url]: https://david-dm.org/kimxogus/yrexpert-js
+[dev-dependencies-image]: https://david-dm.org/kimxogus/yrexpert-js/dev-status.svg
+[dev-dependencies-url]: https://david-dm.org/kimxogus/yrexpert-js?type=dev
+[vulnerabilities-image]: https://snyk.io/test/github/kimxogus/yrexpert-js/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/kimxogus/yrexpert-js
+
+
+
