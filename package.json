@@ -18,7 +18,7 @@
   },
   "main": "./lib/yrexpert-js.js",
   "engines": {
-    "node": ">=0.2.2"
+    "node": ">=6.0.0"
   },
   "dependencies": {
     "body-parser": "",
@@ -36,9 +36,9 @@
     "jsdoc": "",
     "moment": "",
     "nodem": "",
-    "react": "^0.14.5",
+    "react": "^0.14.8",
     "react-bootstrap": "",
-    "react-dom": "^0.14.5",
+    "react-dom": "^0.14.8",
     "react-json-inspector": "",
     "react-toastr": "",
     "reactify": "",
@@ -56,7 +56,7 @@
     "babel-preset-stage-2": "",
     "babel-preset-stage-3": "",
     "babelify": "",
-    "react-select": "^1.0.0-rc.5",
+    "react-select": "^1.0.0-rc.3",
     "webpack": "",
     "webpack-dev-server": "",
     "babel-core": "",
