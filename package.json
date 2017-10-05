@@ -56,7 +56,6 @@
     "babel-preset-stage-2": "",
     "babel-preset-stage-3": "",
     "babelify": "",
-    "react-select": "^1.0.0-rc.3",
     "webpack": "",
     "webpack-dev-server": "",
     "babel-core": "",
