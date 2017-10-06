@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -139,19 +139,22 @@ var RobotAndyPanel = React.createClass({
         {isLoading ? 'En traitement...' : 'Soumettre'}
       </Button>
 
-      <Inspector 
-        data={newData}
-        isExpanded = {this.isExpanded}
-        onClick={this.nodeClicked}
-        search={false}
-      />
-
       </Panel>
     );
   }
 });
 
 module.exports = RobotAndyPanel;
+
+/*
+      <Inspector 
+        data={newData}
+        isExpanded = {this.isExpanded}
+        onClick={this.nodeClicked}
+        search={false}
+      />
+*/
+
 
 
 

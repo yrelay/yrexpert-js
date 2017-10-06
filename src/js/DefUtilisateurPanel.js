@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -185,13 +185,6 @@ var DefUtilisateurPanel = React.createClass({
         {isLoading ? 'En traitement...' : 'Soumettre'}
       </Button>
 
-      <Inspector 
-        data={newData}
-        isExpanded = {this.isExpanded}
-        onClick={this.nodeClicked}
-        search={false}
-      />
-
       </Panel>
     );
   }
@@ -199,6 +192,14 @@ var DefUtilisateurPanel = React.createClass({
 
 module.exports = DefUtilisateurPanel;
 
+/*
+      <Inspector 
+        data={newData}
+        isExpanded = {this.isExpanded}
+        onClick={this.nodeClicked}
+        search={false}
+      />
+*/
 
 /*
         <FormGroup
