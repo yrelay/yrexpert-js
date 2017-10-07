@@ -4,14 +4,10 @@
 
 [![npm version][npm-image]][npm-url]
 [![npm downloads][downloads-image]][downloads-url]
-[![Build Status][travis-image]][travis-url]
-[![Dependencies Status][dependencies-image]][dependencies-url]
-[![DevDependencies Status][dev-dependencies-image]][dev-dependencies-url]
-[![Known Vulnerabilities][vulnerabilities-image]][vulnerabilities-url]
 
-Cette arborescence fournit une interface Web et les outils que vous aurez besoin pour votre système expert. Elle est maintenue par yrelay/ et diffusée sous licence libre. Cette version comprend des contributions communautaires libres acceptées par yrelay/.
+Cette arborescence fournit une interface Web et les outils que vous aurez besoin pour votre système expert. Elle est maintenue par [https://www.yrelay.fr/](https://www.yrelay.fr/) et diffusée sous licence libre. Cette version comprend des contributions communautaires libres acceptées par [https://www.yrelay.fr/](https://www.yrelay.fr/).
 
-Disclaimer : yrexpert est encore en développement et son interface peut changer dans les futures versions. Utilisez cette production à vos propres risques.
+Disclaimer : YRexpert est encore en développement et son interface peut changer dans les futures versions. Utilisez cette production à vos propres risques.
 
 Ce dépot est fortement inspiré de l'application [EWD.js](http://www.mgateway.com/) de Rob Tweed (Merci).
 
@@ -43,7 +39,7 @@ Ce dépot est fortement inspiré de l'application [EWD.js](http://www.mgateway.c
 
 ## 2. Comment tester yrexpert-js ?
 
-Pour tester yrexpert-js, vous pouvez installer [yrexpert-box](https://github.com/yrelay//yrexpert-box).
+Pour tester yrexpert-js, vous pouvez installer [yrexpert-box](https://github.com/yrelay/yrexpert-box).
 
 ## 3. Comment contribuer ?
 
@@ -53,13 +49,13 @@ Pour tester yrexpert-js, vous pouvez installer [yrexpert-box](https://github.com
 * Push(er) la branche (git push origin ma-branche)
 * Créer une demande d'évolution (utiliser Pull Requests)
 
-Pour remonter un bug : [https://github.com/yrelay//yrexpert-term/issues](https://github.com/yrelay//yrexpert-term/issues)
+Pour remonter un bug : [https://github.com/yrelay/yrexpert-term/issues](https://github.com/yrelay/yrexpert-term/issues)
 
 ## 4. Liens
 
-* yrelay/ Page d'accueil : [https://www.yrelay/.fr/](https://www.yrelay/.fr/)
-* yrelay/ Référentiels : [https://code.yrelay/.fr/](https://code.yrelay/.fr/)
-* yrelay/ Github : [https://github.com/yrelay//](https://github.com/yrelay//)
+* yrelay Page d'accueil : [https://www.yrelay.fr/](https://www.yrelay.fr/)
+* yrelay Référentiels : [https://code.yrelay.fr/](https://code.yrelay.fr/)
+* yrelay Github : [https://github.com/yrelay/](https://github.com/yrelay/)
 
 
 
@@ -67,16 +63,6 @@ Pour remonter un bug : [https://github.com/yrelay//yrexpert-term/issues](https:/
 [npm-url]: https://npmjs.org/package/yrexpert-js
 [downloads-image]: https://img.shields.io/npm/dm/yrexpert-js.svg
 [downloads-url]: https://npmjs.org/package/yrexpert-js
-[travis-image]: https://travis-ci.org/kimxogus/yrexpert-js.svg?branch=develop
-[travis-url]: https://travis-ci.org/kimxogus/yrexpert-js
-[dependencies-image]: https://david-dm.org/kimxogus/yrexpert-js.svg
-[dependencies-url]: https://david-dm.org/kimxogus/yrexpert-js
-[dependencies-image]: https://david-dm.org/kimxogus/yrexpert-js/status.svg
-[dependencies-url]: https://david-dm.org/kimxogus/yrexpert-js
-[dev-dependencies-image]: https://david-dm.org/kimxogus/yrexpert-js/dev-status.svg
-[dev-dependencies-url]: https://david-dm.org/kimxogus/yrexpert-js?type=dev
-[vulnerabilities-image]: https://snyk.io/test/github/kimxogus/yrexpert-js/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/kimxogus/yrexpert-js
 
 
 
