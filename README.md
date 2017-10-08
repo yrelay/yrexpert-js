@@ -49,7 +49,7 @@ Pour tester yrexpert-js, vous pouvez installer [yrexpert-box](https://github.com
 * Push(er) la branche (git push origin ma-branche)
 * Créer une demande d'évolution (utiliser Pull Requests)
 
-Pour remonter un bug : [https://github.com/yrelay/yrexpert-term/issues](https://github.com/yrelay/yrexpert-term/issues)
+Pour remonter un bug : [https://github.com/yrelay/yrexpert-term/issues](https://github.com/yrelay/yrexpert-js/issues)
 
 ## 4. Liens
 
