@@ -39,7 +39,6 @@
     "react": "^0.14.8",
     "react-bootstrap": "",
     "react-dom": "^0.14.8",
-    "react-json-inspector": "",
     "react-toastr": "",
     "reactify": "",
     "socket.io-client": "",
