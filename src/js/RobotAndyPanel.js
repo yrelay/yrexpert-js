@@ -64,7 +64,7 @@ var RobotAndyPanel = React.createClass({
       this.setState({isLoading: false});
     }, 2000);
     },
-
+/*
   componentDidUpdate: function() {
 
     //console.log('status: ' + this.state.status);
@@ -84,7 +84,7 @@ var RobotAndyPanel = React.createClass({
       });
     }, 100);
   },
-  
+*/  
 // ******
 
   componentWillReceiveProps: function(newProps) {
@@ -146,14 +146,6 @@ var RobotAndyPanel = React.createClass({
 
 module.exports = RobotAndyPanel;
 
-/*
-      <Inspector 
-        data={newData}
-        isExpanded = {this.isExpanded}
-        onClick={this.nodeClicked}
-        search={false}
-      />
-*/
 
 
 

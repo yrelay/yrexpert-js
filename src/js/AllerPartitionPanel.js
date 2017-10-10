@@ -13,21 +13,15 @@
 
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
-var Inspector = require('react-json-inspector');
-//var Select = require('react-select');
+//var Inspector = require('react-json-inspector');
 
 var {
-  Button,
-  Glyphicon,
-  OverlayTrigger,
   Panel,
-  Tooltip,
-  form,
+  ButtonToolbar,
+  Button,
   FormGroup,
   ControlLabel,
-  FormControl,
-  HelpBlock,
-  select
+  FormControl
 } = ReactBootstrap;
 
 var AllerPartitionPanel = React.createClass({
@@ -47,15 +41,14 @@ var AllerPartitionPanel = React.createClass({
   getInitialState: function() {
     return {
       status: 'initial',
+      value: 'YXP'
     }
   },
 
-  updateValue (newValue) {
-    //console.log('State changed to ' + newValue);
-    this.setState({
-      selectValue: newValue
-    });
-  if (newValue != '') this.choix(newValue);
+  onPickPartition(e){
+    //console.log('----- onPickPartition : ', this.inputEl.value);
+    this.setState({ partition: this.inputEl.value });
+    if (this.inputEl.value != '') this.choix(this.inputEl.value);
   },
 
   render: function() {
@@ -82,15 +75,22 @@ var AllerPartitionPanel = React.createClass({
 
       <form>
 
-        <select class="custom-select">
-          <option selected>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      
+      <div>
+        <FormGroup controlId="formControlsSelect">
+          <ControlLabel>Selection</ControlLabel>
+          <FormControl 
+              onChange={this.onPickPartition.bind(null, this)}
+              inputRef={ el => this.inputEl=el }
+              componentClass="select" placeholder="Partition">
+            <option value="">Votre partition</option>
+            <option value="YXP">YXP</option>
+            <option value="DMO">DMO</option>
+          </FormControl>
+        </FormGroup>
+      </div>
+
       <p></p>
-      {this.custom-select && <p>La partition active est {this.custom-select}</p>}
+      {this.state.partition && <p>La partition active est {this.state.partition}</p>}
 
       </form>
       </Panel>
@@ -101,21 +101,6 @@ var AllerPartitionPanel = React.createClass({
 
 module.exports = AllerPartitionPanel;
 
-/*
-       <Select
-            ref="stateSelect"
-            autofocus
-            options={options}
-            simpleValue
-            clearable={this.state.clearable}
-            name="selected-state"
-            disabled={this.state.disabled}
-            value={this.state.selectValue}
-            onChange={this.updateValue}
-            searchable={this.state.searchable}
-        />
-      
-      <p></p>
-      {this.state.selectValue && <p>La partition active est {this.state.selectValue}</p>}
-*/
+
+
 

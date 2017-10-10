@@ -55,7 +55,6 @@ var RobotAndyContainer = React.createClass({
         </Row>
       </Grid>
     );
-
   }
 });
 

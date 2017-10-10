@@ -98,7 +98,7 @@ var DefUtilisateurPanel = React.createClass({
       this.setState({isLoading: false});
     }, 2000);
     },
-
+/*
   componentDidUpdate: function() {
 
     //console.log('status: ' + this.state.status);
@@ -118,7 +118,7 @@ var DefUtilisateurPanel = React.createClass({
       });
     }, 100);
   },
-  
+*/  
 // ******
 
   componentWillReceiveProps: function(newProps) {

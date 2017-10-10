@@ -14,9 +14,14 @@ module.exports = function (controller, component) {
   component.refresh = function() {
 
     var message = {
-      type: 'getNameSpace',
+      type: 'setRPCBDDC',
       params: {
-        namespace: 'DMO'
+        qui: 'DMO',
+        rep: 'BAC.A.SABLE',
+        ind: 'DEFAUT',
+        att: 'DESCRIPTION',
+        val: 'Coucou 171010',
+        ice: '1'
       }
     };
     controller.send(message, function(responseObj) {

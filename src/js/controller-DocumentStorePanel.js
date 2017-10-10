@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -16,6 +16,7 @@ module.exports = function (controller, component) {
       type: 'getGlobalDirectory'
     };
     controller.send(message, function(responseObj) {
+      //console.log('----- responseObj : ', responseObj);
       component.data = {};
       responseObj.message.forEach(function(name) {
         component.data[name] = expandText;
@@ -37,7 +38,10 @@ module.exports = function (controller, component) {
 
   component.refresh();
 
-  function index(obj,is, value) {
+  function index(obj, is, value) {
+    //console.log('----- obj : ', obj);
+    //console.log('----- is : ', is);
+    //console.log('----- value : ', value);
     if (typeof is == 'string') {
       return index(obj,is.split('.'), value);
     }
