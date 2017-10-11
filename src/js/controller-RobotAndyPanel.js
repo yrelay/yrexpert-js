@@ -11,8 +11,7 @@
 
 module.exports = function (controller, component) {
 
-  component.refresh = function() {
-
+  component.refresh = function(question) {
     var message = {
       type: 'setRPCBDDC',
       params: {
@@ -20,8 +19,8 @@ module.exports = function (controller, component) {
         rep: 'BAC.A.SABLE',
         ind: 'DEFAUT',
         att: 'DESCRIPTION',
-        val: 'Coucou 171010',
-        ice: '1'
+        val: question,
+        ice: (new Date()).getTime()
       }
     };
     controller.send(message, function(responseObj) {

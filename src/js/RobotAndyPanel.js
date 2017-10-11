@@ -41,22 +41,23 @@ var RobotAndyPanel = React.createClass({
     );
   },
 
-// *******
-
   getInitialState() {
     return {
-      valueNomPartition: '',
-      isLoading: false,
-      status: 'initial'
+      status: 'initial',
+      value: '',
+      isLoading: false
     };
   },
 
-
-// ******2
+  handleChange (event) {
+    this.setState({ value: event.target.value });
+  },
 
   handleClick() {
+    var question = this.state.value;
+    //alert("-----this.value: " + JSON.stringify(question));
     this.setState({isLoading: true});
-    this.refresh();
+    this.refresh(question);
 
     // This probably where you would have an `ajax` call
     setTimeout(() => {
@@ -64,28 +65,6 @@ var RobotAndyPanel = React.createClass({
       this.setState({isLoading: false});
     }, 2000);
     },
-/*
-  componentDidUpdate: function() {
-
-    //console.log('status: ' + this.state.status);
-    var that = this;
-
-    setTimeout(function() {
-      $('.json-inspector__leaf').each(function(ix, item) {
-        var id = $(item).attr('id');
-        var name = id.split('root.')[1];
-        if (!name) {
-          $(item).find('span.json-inspector__key').first().hide();
-          $(item).find('span.json-inspector__value').first().hide();
-        }
-        else if (name.indexOf('.') === -1 && that.data[name]) {
-          $(item).find('span.json-inspector__key').first().addClass('json-inspector__docName');
-        }
-      });
-    }, 100);
-  },
-*/  
-// ******
 
   componentWillReceiveProps: function(newProps) {
     this.onNewProps(newProps);
@@ -125,9 +104,10 @@ var RobotAndyPanel = React.createClass({
             type="text"
             value={this.state.value}
             placeholder="Saisir votre question"
+            onChange={this.handleChange}
           />
           <FormControl.Feedback />
-          <HelpBlock>Demandez à Andy toutes les questions et il fera de son mieux pour aider à les résoudre. Vous devez autoriser cette application à "Exécuter" lorsque vous y êtes invité. Si vous ne pouvez pas taper, cliquez sur l'écran de jeu pour concentrer la fenêtre. Tapez "help" (sans guillemets) pour afficher une liste de commandes.</HelpBlock>
+          <HelpBlock>Posez à Andy votre question et il fera de son mieux pour vous aider.</HelpBlock>
         </FormGroup>
 
       </form>

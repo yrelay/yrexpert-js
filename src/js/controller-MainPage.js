@@ -23,7 +23,7 @@ module.exports = function (controller, component) {
     controller.toastr('error', error);
   };
 
-  // Afficher les erreurs génériques Yexpert-JS en utilisant toastr :
+  // Afficher les erreurs génériques yrexpert-js en utilisant toastr :
   controller.on('error', function(messageObj) {
     var error = messageObj.message.error || messageObj.message;
     controller.displayError(error);
