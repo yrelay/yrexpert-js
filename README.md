@@ -57,8 +57,6 @@ Pour remonter un bug : [https://github.com/yrelay/yrexpert-term/issues](https://
 * yrelay Référentiels : [https://code.yrelay.fr/](https://code.yrelay.fr/)
 * yrelay Github : [https://github.com/yrelay/](https://github.com/yrelay/)
 
-
-
 [npm-image]: https://img.shields.io/npm/v/yrexpert-js.svg
 [npm-url]: https://npmjs.org/package/yrexpert-js
 [downloads-image]: https://img.shields.io/npm/dm/yrexpert-js.svg
