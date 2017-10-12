@@ -27,7 +27,8 @@ var {
   FormGroup,
   ControlLabel,
   FormControl,
-  HelpBlock
+  HelpBlock,
+  Well
 } = ReactBootstrap;
 
 var RobotAndyPanel = React.createClass({
@@ -54,10 +55,10 @@ var RobotAndyPanel = React.createClass({
   },
 
   handleClick() {
-    var question = this.state.value;
-    //alert("-----this.value: " + JSON.stringify(question));
+    //alert("-----this.value: " + JSON.stringify(this.state.value));
     this.setState({isLoading: true});
-    this.refresh(question);
+    this.init('DMO');
+    this.question(this.state.value);
 
     // This probably where you would have an `ajax` call
     setTimeout(() => {
@@ -118,6 +119,9 @@ var RobotAndyPanel = React.createClass({
         onClick={!isLoading ? this.handleClick : null}>
         {isLoading ? 'En traitement...' : 'Soumettre'}
       </Button>
+
+      <p></p>
+      <Well>{this.token}</Well>
 
       </Panel>
     );

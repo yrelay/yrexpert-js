@@ -11,92 +11,64 @@
 
 module.exports = function (controller, component) {
 
-  component.refresh = function(question) {
+  component.onNewProps = function(newProps) {
+    //console.log('----- newProps: ' + JSON.stringify(newProps));
+  };
+
+  component.expanded = true;
+  component.token = [ '' ];
+
+  controller.on('getToken', function(responseObj) {
+    if (responseObj.message && responseObj.message !== '') {
+      component.token = responseObj.message.token;
+      component.setState({
+        status: 'updated'
+      });
+    }
+    //alert("-----token: " + JSON.stringify(component.token));
+  });
+  controller.send({
+    type: 'getToken'
+  });
+
+
+  component.init = function(qui) {
+    var message = {
+      type: 'setRPCBDDC',
+      params: {
+        qui: qui,
+        rep: '%',
+        ind: component.token,
+        att: 'NOM',
+        val: component.token,
+        ice: 1
+      }
+    };
+    controller.send(message, function(responseObj) {
+      //alert("message: " + JSON.stringify(message));
+      //alert("responseObj: " + JSON.stringify(responseObj));
+      type: 'setRPCBDDC'
+    });
+  };
+
+  component.question = function(question) {
     var message = {
       type: 'setRPCBDDC',
       params: {
         qui: 'DMO',
-        rep: 'BAC.A.SABLE',
-        ind: 'DEFAUT',
-        att: 'DESCRIPTION',
+        rep: '%',
+        ind: component.token,
+        att: 'QUESTION',
         val: question,
         ice: (new Date()).getTime()
       }
     };
     controller.send(message, function(responseObj) {
-      alert("message: " + JSON.stringify(message));
-      alert("responseObj: " + JSON.stringify(responseObj));
-    });
-
-  };
-
-
-// **************************************************
-/*
-      namespace: '/home/yrelay/partitions/dmo/globals/DMO.gld'
-*/
-// **************************************************
-
-  component.refresh2 = function() {
-    var message = {
-      type: 'getGlobalDirectory'
-    };
-    controller.send(message, function(responseObj) {
-      component.data = {};
-      component.data["MODEPAS"] = expandText;
-      component.setState({status: 'globalDirectory'});
-
       //alert("message: " + JSON.stringify(message));
       //alert("responseObj: " + JSON.stringify(responseObj));
-
+      type: 'setRPCBDDC'
     });
-  };
 
-  component.onNewProps = function(newProps) {
-  };
-
-  component.expanded = true;
-
-  var expandText = ' -->';
-  component.expand = false;
-  component.isExpanded = function(keypath, value) {
-    return component.expand;
-  };
-
-  //component.refresh();
-
-  function index(obj,is, value) {
-    //alert("value: " + JSON.stringify(value));
-    if (typeof is == 'string') {
-      return index(obj,is.split('.'), value);
-    }
-    else if (is.length==1 && value!==undefined) {
-      return obj[is[0]] = value;
-    }
-    else if (is.length==0) {
-      return obj;
-    }
-    else {
-      return index(obj[is[0]],is.slice(1), value);
-    }
-  }
-
-  component.nodeClicked = function(obj) {
-    if (obj.value === expandText) {
-      var message = {
-        type: 'getNextSubscripts',
-        params: {
-          path: obj.path,
-          expandText: expandText
-        }
-      };
-      controller.send(message, function(responseObj) {
-        //alert("obj.path: " + JSON.stringify(obj.path));
-        index(component.data, obj.path, responseObj.message);
-        component.expand = true;
-        component.setState({status: 'nextSubscripts'});
-      });
-    }
   };
 
   return controller;

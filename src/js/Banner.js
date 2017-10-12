@@ -97,7 +97,7 @@ var Banner = React.createClass({
           <MenuItem divider />
           <MenuItem eventKey="tabledesmatieresdelaide" href="help/index.html" target="_blank">Table des matières de l'aide</MenuItem>
           <MenuItem divider />
-          <MenuItem eventKey="apropos">A propos d'Yexpert</MenuItem>
+          <MenuItem eventKey="apropos">A propos d'YRexpert</MenuItem>
         </NavDropdown>
       </Nav>
 
