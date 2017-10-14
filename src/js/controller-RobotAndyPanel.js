@@ -16,7 +16,23 @@ module.exports = function (controller, component) {
   };
 
   component.expanded = true;
-  component.token = [ '' ];
+  component.token = '';
+  component.indice = (new Date()).getTime();
+  component.nameSpace = [];
+  //alert("-----component.indice: " + JSON.stringify(component.indice));
+
+  controller.on('getNameSpace', function(responseObj) {
+    if (responseObj.message && responseObj.message !== '') {
+      component.nameSpace = responseObj.message;
+      component.setState({
+        status: 'updated'
+      });
+    }
+    //alert("partition: " + JSON.stringify(component.nameSpace));
+  });
+  controller.send({
+    type: 'getNameSpace'
+  });
 
   controller.on('getToken', function(responseObj) {
     if (responseObj.message && responseObj.message !== '') {
@@ -31,12 +47,11 @@ module.exports = function (controller, component) {
     type: 'getToken'
   });
 
-
-  component.init = function(qui) {
+  component.init = function(partition) {
     var message = {
       type: 'setRPCBDDC',
       params: {
-        qui: qui,
+        qui: partition,
         rep: '%',
         ind: component.token,
         att: 'NOM',
@@ -51,21 +66,66 @@ module.exports = function (controller, component) {
     });
   };
 
-  component.question = function(question) {
+  component.question = function(partition, question) {
     var message = {
       type: 'setRPCBDDC',
       params: {
-        qui: 'DMO',
+        qui: partition,
         rep: '%',
         ind: component.token,
         att: 'QUESTION',
-        val: question,
-        ice: (new Date()).getTime()
+        val: 'question',
+        ice: component.indice
       }
     };
     controller.send(message, function(responseObj) {
       //alert("message: " + JSON.stringify(message));
       //alert("responseObj: " + JSON.stringify(responseObj));
+      type: 'setRPCBDDC'
+    });
+
+  };
+
+  component.reponse0 = function(partition, reponse) {
+    var message = {
+      type: 'setRPCBDDC',
+      params: {
+        qui: partition,
+        rep: '%',
+        ind: component.token,
+        att: 'REPONSE',
+        val: reponse,
+        ice: component.indice
+      }
+    };
+    controller.send(message, function(responseObj) {
+      //alert("message: " + JSON.stringify(message));
+      //alert("responseObj: " + JSON.stringify(responseObj));
+      type: 'setRPCBDDC'
+    });
+
+  };
+
+  component.reponse = function(partition) {
+    var message = {
+      type: 'readRPCBDDC',
+      params: {
+        qui: partition,
+        rep: '%',
+        ind: component.token,
+        att: 'REPONSE',
+        ice: component.indice
+      }
+    };
+    controller.send(message, function(responseObj) {
+      //alert("message: " + JSON.stringify(message));
+      //alert("responseObj: " + JSON.stringify(responseObj));
+      if (responseObj.message && responseObj.message !== '') {
+        component.reponse = responseObj.message.value;
+        component.setState({
+          status: 'updated'
+        });
+      }
       type: 'setRPCBDDC'
     });
 

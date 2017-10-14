@@ -46,8 +46,16 @@ var RobotAndyPanel = React.createClass({
     return {
       status: 'initial',
       value: '',
-      isLoading: false
+      partition: '',
+      isLoading: false,
+      nameSpace: []
     };
+  },
+
+  onPickPartition(e){
+    //console.log('----- onPickPartition : ', this.inputEl.value);
+    this.setState({ partition: this.inputEl.value });
+    //if (this.inputEl.value != '') this.choix(this.inputEl.value);
   },
 
   handleChange (event) {
@@ -55,10 +63,12 @@ var RobotAndyPanel = React.createClass({
   },
 
   handleClick() {
-    //alert("-----this.value: " + JSON.stringify(this.state.value));
+    //alert("-----partition: " + JSON.stringify(this.state.partition));
     this.setState({isLoading: true});
-    this.init('DMO');
-    this.question(this.state.value);
+    this.init(this.state.partition);
+    this.question(this.state.partition, this.state.value);
+    this.reponse0(this.state.partition, 'Réponse de Andy');
+    this.reponse(this.state.partition);
 
     // This probably where you would have an `ajax` call
     setTimeout(() => {
@@ -80,6 +90,19 @@ var RobotAndyPanel = React.createClass({
      * @todo La taille ne doit pas excéder 50% de la taille disponible en local
     */
 
+    //var options = [
+    //    { value: 'DMO', label: 'DMO' },
+    //    { value: 'YXP', label: 'YXP' }
+    //];
+    var options = [];
+    //var nameSpace = [ 'DMO', 'YXP' ];
+    var nameSpace = this.nameSpace;
+    for (var i = 0; i < nameSpace.length; i++) {
+        var items = { 'value': nameSpace[i].toUpperCase(), 'label': nameSpace[i].toUpperCase() };
+        options.push(items);
+    }
+    //alert("-----options: " + JSON.stringify(options));
+
     let isLoading = this.state.isLoading;
 
     // Créer un clone de données pour assurer un nouveau rendu
@@ -97,6 +120,26 @@ var RobotAndyPanel = React.createClass({
       >
 
       <form>
+
+      <div>
+        <FormGroup controlId="formControlsSelect">
+          <ControlLabel>Choisir votre partition</ControlLabel>
+          <FormControl 
+              onChange={this.onPickPartition.bind(null, this)}
+              inputRef={ el => this.inputEl=el }
+              componentClass="select" placeholder="Partition">
+            <option value="">Votre partition</option>
+            <option value="YXP">YXP</option>
+            <option value="DMO">DMO</option>
+          </FormControl>
+        </FormGroup>
+
+      <p></p>
+      {this.state.partition && <p>La partition active est {this.state.partition}</p>}
+
+      </div>
+
+      <div>
         <FormGroup
           controlId="formBasicText"
         >
@@ -111,8 +154,6 @@ var RobotAndyPanel = React.createClass({
           <HelpBlock>Posez à Andy votre question et il fera de son mieux pour vous aider.</HelpBlock>
         </FormGroup>
 
-      </form>
-
       <Button
         bsStyle="primary"
         disabled={isLoading}
@@ -121,8 +162,10 @@ var RobotAndyPanel = React.createClass({
       </Button>
 
       <p></p>
-      <Well>{this.token}</Well>
+      <Well>{this.reponse}</Well>
 
+      </div>
+      </form>
       </Panel>
     );
   }
@@ -131,6 +174,24 @@ var RobotAndyPanel = React.createClass({
 module.exports = RobotAndyPanel;
 
 
+/*
+      <div>
+        <FormGroup controlId="formControlsSelect">
+          <ControlLabel>Choisir votre partition</ControlLabel>
+          <FormControl 
+              onChange={this.onPickPartition.bind(null, this)}
+              inputRef={ el => this.inputEl=el }
+              componentClass="select" placeholder="Partition">
+            <option value="">Votre partition</option>
+            <option value="YXP">YXP</option>
+            <option value="DMO">DMO</option>
+          </FormControl>
+        </FormGroup>
 
+      <p></p>
+      {this.state.partition && <p>La partition active est {this.state.partition}</p>}
+
+      </div>
+*/
 
 
