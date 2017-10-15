@@ -67,7 +67,7 @@ var RobotAndyPanel = React.createClass({
     this.setState({isLoading: true});
     this.init(this.state.partition);
     this.question(this.state.partition, this.state.value);
-    this.reponse0(this.state.partition, 'Réponse de Andy');
+    this.reponse0(this.state.partition, 'Reponse de Andy');
     this.reponse(this.state.partition);
 
     // This probably where you would have an `ajax` call
