@@ -66,6 +66,7 @@ var RobotAndyPanel = React.createClass({
     //alert("-----partition: " + JSON.stringify(this.state.partition));
     this.setState({isLoading: true});
     this.ajouter_nom(this.state.partition);
+    this.ajouter_date_creation(this.state.partition);
     this.ajouter_cree_par(this.state.partition);
     this.question(this.state.partition, this.state.value);
     this.reponse(this.state.partition);

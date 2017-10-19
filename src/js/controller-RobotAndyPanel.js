@@ -15,6 +15,23 @@ module.exports = function (controller, component) {
     //console.log('----- newProps: ' + JSON.stringify(newProps));
   };
 
+  function getDateTime() {
+    var date = new Date();
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+    //return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+    return day + "/" + month + "/" + year + " " + hour + ":" + min + ":" + sec;
+  }
+
   component.expanded = true;
   component.token = '';
   component.indice = (new Date()).getTime();
@@ -74,7 +91,26 @@ module.exports = function (controller, component) {
         rep: 'INTERFACE',
         ind: component.token,
         att: 'CREE.PAR',
-        val: 'Andy',
+        val: 'ANDY',
+        ice: 1
+      }
+    };
+    controller.send(message, function(responseObj) {
+      //alert("message: " + JSON.stringify(message));
+      //alert("responseObj: " + JSON.stringify(responseObj));
+      type: 'setRPCBDDC'
+    });
+  };
+
+  component.ajouter_date_creation = function(partition) {
+    var message = {
+      type: 'setRPCBDDC',
+      params: {
+        qui: partition,
+        rep: 'INTERFACE',
+        ind: component.token,
+        att: 'DATE.CREATION',
+        val: getDateTime(),
         ice: 1
       }
     };
@@ -93,7 +129,7 @@ module.exports = function (controller, component) {
         rep: 'INTERFACE',
         ind: component.token,
         att: 'QUESTION',
-        val: 'question',
+        val: question,
         ice: component.indice
       }
     };
