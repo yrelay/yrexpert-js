@@ -128,8 +128,9 @@ var RobotAndyPanel = React.createClass({
               onChange={this.onPickPartition.bind(null, this)}
               inputRef={ el => this.inputEl=el }
               componentClass="select" placeholder="Partition">
-            <option value="DMO">DMO</option>
+            <option value="">Votre partition</option>
             <option value="YXP">YXP</option>
+            <option value="DMO">DMO</option>
           </FormControl>
         </FormGroup>
 
