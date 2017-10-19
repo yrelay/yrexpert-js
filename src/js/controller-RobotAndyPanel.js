@@ -117,8 +117,8 @@ module.exports = function (controller, component) {
       }
     };
     controller.send(message, function(responseObj) {
-      alert("message: " + JSON.stringify(message));
-      alert("responseObj: " + JSON.stringify(responseObj));
+      //alert("message: " + JSON.stringify(message));
+      //alert("responseObj: " + JSON.stringify(responseObj));
       if (responseObj.message && responseObj.message !== '') {
         component.reponse = responseObj.message.value;
         component.setState({
