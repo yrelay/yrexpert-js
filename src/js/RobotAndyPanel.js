@@ -65,9 +65,9 @@ var RobotAndyPanel = React.createClass({
   handleClick() {
     //alert("-----partition: " + JSON.stringify(this.state.partition));
     this.setState({isLoading: true});
-    this.init(this.state.partition);
+    this.ajouter_nom(this.state.partition);
+    this.ajouter_cree_par(this.state.partition);
     this.question(this.state.partition, this.state.value);
-    this.reponse0(this.state.partition, 'Reponse de Andy');
     this.reponse(this.state.partition);
 
     // This probably where you would have an `ajax` call

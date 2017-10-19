@@ -47,15 +47,34 @@ module.exports = function (controller, component) {
     type: 'getToken'
   });
 
-  component.init = function(partition) {
+  component.ajouter_nom = function(partition) {
     var message = {
       type: 'setRPCBDDC',
       params: {
         qui: partition,
-        rep: '%',
+        rep: 'INTERFACE',
         ind: component.token,
         att: 'NOM',
         val: component.token,
+        ice: 1
+      }
+    };
+    controller.send(message, function(responseObj) {
+      //alert("message: " + JSON.stringify(message));
+      //alert("responseObj: " + JSON.stringify(responseObj));
+      type: 'setRPCBDDC'
+    });
+  };
+
+  component.ajouter_cree_par = function(partition) {
+    var message = {
+      type: 'setRPCBDDC',
+      params: {
+        qui: partition,
+        rep: 'INTERFACE',
+        ind: component.token,
+        att: 'CREE.PAR',
+        val: 'Andy',
         ice: 1
       }
     };
@@ -71,30 +90,10 @@ module.exports = function (controller, component) {
       type: 'setRPCBDDC',
       params: {
         qui: partition,
-        rep: '%',
+        rep: 'INTERFACE',
         ind: component.token,
         att: 'QUESTION',
         val: 'question',
-        ice: component.indice
-      }
-    };
-    controller.send(message, function(responseObj) {
-      //alert("message: " + JSON.stringify(message));
-      //alert("responseObj: " + JSON.stringify(responseObj));
-      type: 'setRPCBDDC'
-    });
-
-  };
-
-  component.reponse0 = function(partition, reponse) {
-    var message = {
-      type: 'setRPCBDDC',
-      params: {
-        qui: partition,
-        rep: '%',
-        ind: component.token,
-        att: 'REPONSE',
-        val: reponse,
         ice: component.indice
       }
     };
@@ -111,7 +110,7 @@ module.exports = function (controller, component) {
       type: 'readRPCBDDC',
       params: {
         qui: partition,
-        rep: '%',
+        rep: 'INTERFACE',
         ind: component.token,
         att: 'REPONSE',
         ice: component.indice
