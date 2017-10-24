@@ -15,6 +15,12 @@ module.exports = function (controller, component) {
     //console.log('----- newProps: ' + JSON.stringify(newProps));
   };
 
+  component.expanded = true;
+  component.token = '';
+  //component.indice = (new Date()).getTime();
+  component.nameSpace = [];
+  //alert("-----component.indice: " + JSON.stringify(component.indice));
+
   function getDateTime() {
     var date = new Date();
     var hour = date.getHours();
@@ -32,11 +38,19 @@ module.exports = function (controller, component) {
     return day + "/" + month + "/" + year + " " + hour + ":" + min + ":" + sec;
   }
 
-  component.expanded = true;
-  component.token = '';
-  component.indice = (new Date()).getTime();
-  component.nameSpace = [];
-  //alert("-----component.indice: " + JSON.stringify(component.indice));
+  component.refresh = function() {
+    var message = {
+      type: 'getGlobalDirectory'
+    };
+    controller.send(message, function(responseObj) {
+      //console.log('----- responseObj : ', responseObj);
+      component.data = {};
+      responseObj.message.forEach(function(name) {
+        component.data[name] = expandText;
+      });
+      component.setState({status: 'globalDirectory'});
+    });
+  };
 
   controller.on('getNameSpace', function(responseObj) {
     if (responseObj.message && responseObj.message !== '') {
@@ -121,7 +135,7 @@ module.exports = function (controller, component) {
     });
   };
 
-  component.question = function(partition, question) {
+  component.question = function(partition, question, indice) {
     var message = {
       type: 'setRPCBDDC',
       params: {
@@ -130,7 +144,7 @@ module.exports = function (controller, component) {
         ind: component.token,
         att: 'QUESTION',
         val: question,
-        ice: component.indice
+        ice: indice
       }
     };
     controller.send(message, function(responseObj) {
@@ -141,7 +155,7 @@ module.exports = function (controller, component) {
 
   };
 
-  component.reponse = function(partition) {
+  component.reponse = function(partition, indice) {
     var message = {
       type: 'readRPCBDDC',
       params: {
@@ -149,12 +163,12 @@ module.exports = function (controller, component) {
         rep: 'INTERFACE',
         ind: component.token,
         att: 'REPONSE',
-        ice: component.indice
+        ice: indice
       }
     };
     controller.send(message, function(responseObj) {
       //alert("message: " + JSON.stringify(message));
-      //alert("responseObj: " + JSON.stringify(responseObj));
+      alert("responseObj: " + JSON.stringify(responseObj));
       if (responseObj.message && responseObj.message !== '') {
         component.reponse = responseObj.message.value;
         component.setState({

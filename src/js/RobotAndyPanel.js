@@ -47,8 +47,8 @@ var RobotAndyPanel = React.createClass({
       status: 'initial',
       value: '',
       partition: '',
-      isLoading: false,
-      nameSpace: []
+      nameSpace: [],
+      isLoading: false
     };
   },
 
@@ -65,15 +65,16 @@ var RobotAndyPanel = React.createClass({
   handleClick() {
     //alert("-----partition: " + JSON.stringify(this.state.partition));
     this.setState({isLoading: true});
+    var indice = (new Date()).getTime();
     this.ajouter_nom(this.state.partition);
     this.ajouter_date_creation(this.state.partition);
     this.ajouter_cree_par(this.state.partition);
-    this.question(this.state.partition, this.state.value);
-    this.reponse(this.state.partition);
+    this.question(this.state.partition, this.state.value, indice);
+    this.reponse(this.state.partition, indice);
 
-    // This probably where you would have an `ajax` call
+    // C'est probablement là où vous auriez un appel `ajax`
     setTimeout(() => {
-      // Completed of async action, set loading state back
+      // Achevée d'une action asynchrone, rétablit l'état de chargement
       this.setState({isLoading: false});
     }, 2000);
     },
