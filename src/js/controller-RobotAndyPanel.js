@@ -135,7 +135,7 @@ module.exports = function (controller, component) {
     });
   };
 
-  component.question = function(partition, question, indice) {
+  component.set_question = function(partition, question, indice) {
     var message = {
       type: 'setRPCBDDC',
       params: {
@@ -155,7 +155,7 @@ module.exports = function (controller, component) {
 
   };
 
-  component.reponse = function(partition, indice) {
+  component.get_reponse = function(partition, indice) {
     var message = {
       type: 'readRPCBDDC',
       params: {
@@ -168,7 +168,7 @@ module.exports = function (controller, component) {
     };
     controller.send(message, function(responseObj) {
       //alert("message: " + JSON.stringify(message));
-      alert("responseObj: " + JSON.stringify(responseObj));
+      //alert("responseObj: " + JSON.stringify(responseObj));
       if (responseObj.message && responseObj.message !== '') {
         component.reponse = responseObj.message.value;
         component.setState({
