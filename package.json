@@ -61,7 +61,8 @@
     "babel-core": "",
     "babel-loader": "",
     "babel-preset-react-hmre": "",
-    "react-router": ""
+    "react-router": "",
+    "snyk": "^1.46.0"
   },
   "devDependencies": {},
   "babel": {
@@ -79,9 +80,12 @@
   ],
   "scripts": {
     "postinstall": "node postinstall/install",
-    "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot"
+    "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "bugs": {
     "url": "https://github.com/yrelay/yrexpert-js/issues"
-  }
+  },
+  "snyk": true
 }
