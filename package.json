@@ -1,6 +1,6 @@
 {
   "name": "yrexpert-js",
-  "description": "Votre sytème expert en mode Web...",
+  "description": "L'interface Web pour votre système expert...",
   "version": "0.0.37",
   "author": {
     "name": "Yrelay",
@@ -36,9 +36,9 @@
     "jsdoc": "",
     "moment": "",
     "nodem": "",
-    "react": "^0.14.8",
+    "react": "",
     "react-bootstrap": "",
-    "react-dom": "^0.14.8",
+    "react-dom": "",
     "react-toastr": "",
     "reactify": "",
     "socket.io-client": "",
