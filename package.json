@@ -1,7 +1,7 @@
 {
   "name": "yrexpert-js",
   "description": "L'interface Web pour votre système expert...",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "author": {
     "name": "Yrelay",
     "email": "info@yrelay.fr"
@@ -39,12 +39,11 @@
     "react": "^0.14.8",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^0.14.8",
-    "react-json-inspector": "^7.1.0",
+    "react-json-inspector": "",
     "react-toastr": "^2.9.3",
     "reactify": "^1.1.1",
     "socket.io-client": "^2.0.3",
     "toastr": "^2.1.2",
-    "react-json-inspector": "",
     "yrexpert-gtm": ">=0.0.0",
     "yrexpert-rpc": ">=0.0.0",
     "yrexpert-term": ">=0.0.0",
