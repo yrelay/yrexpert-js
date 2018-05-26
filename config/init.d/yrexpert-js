@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#!----------------------------------------------------------------------------!
+#!                                                                            !
+#! yrexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux         !
+#! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
+#!                                                                            !
+#!----------------------------------------------------------------------------!
+
+# script init pour yrexpert-JS
+
+# Debian
+### BEGIN INIT INFO
+# Provides:          y-instanceyrexpert-js
+# Required-Start:    $remote_fs $syslog $y-instanceyrexpert
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Lancer yrexpert-JS pour yrexpert au moment du démarrage
+# Description:       Services Starts/Stops yrexpert-JS pour yrexpert.
+### END INIT INFO
+
+# Assurez-vous que nous sommes en root
+if [[ $EUID -ne 0 ]]; then
+    echo "Ce script doit être exécuté en tant que root" 1>&2
+    exit 1
+fi
+
+# Variables d'environnement
+# Ce chemin sera remplacé par le $basedir correspondant à l'instance yrexpert
+# qui sera créée. Ce script devra avoir codé "en dur"
+source /home/y-instance/config/env
+export PATH=$PATH:/usr/local/bin
+
+# Démarrer les services yrexpert-...-srv
+start() {
+    echo "Lancer le serveur yrexpert-js-srv"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && daemon --name yrexpert-js-srv -O $basedir/log/yrexpert-js-srvOut.log -E $basedir/log/yrexpert-js-srvErr.log --chdir $basedir/nodejs node $basedir/nodejs/yrexpert-js-srv.js yrelay-config"
+
+    echo "Lancer le serveur yrexpert-term-srv"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && cd $basedir/nodejs && daemon --name yrexpert-term-srv -O $basedir/log/yrexpert-term-srvOut.log -E $basedir/log/yrexpert-term-srvErr.log --chdir $basedir/nodejs node $basedir/nodejs/yrexpert-term-srv.js"
+
+    echo "Lancer le serveur yrexpert-rpc-srv"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && daemon --name yrexpert-rpc-srv -O $basedir/log/yrexpert-rpc-srvOut.log -E $basedir/log/yrexpert-rpc-srvErr.log --chdir $basedir/nodejs node $basedir/nodejs/node_modules/yrexpert-rpc/example/yrexpert-rpc-srv.js"
+
+}
+
+# Stopper les services yrexpert-...-srv
+stop() {
+    echo "Arrêter le serveur yrexpert-js-srv"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && daemon --name yrexpert-js-srv --stop"
+
+    echo "Arrêter le serveur yrexpert-term-srv"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && daemon --name yrexpert-term-srv --stop"
+
+    echo "Arrêter le serveur yrexpert-rpc-srv"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/config/env && nvm use $nodever && daemon --name yrexpert-rpc-srv --stop"
+
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        sleep 5
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        ;;
+esac
