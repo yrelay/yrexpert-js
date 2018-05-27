@@ -1,4 +1,0 @@
-{
-    "silent": true,
-    "extras": false
-}
