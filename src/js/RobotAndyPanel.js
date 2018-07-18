@@ -46,7 +46,7 @@ var RobotAndyPanel = React.createClass({
     return {
       status: 'initial',
       value: '',
-      partition: '',
+      partition: 'DMO',
       nameSpace: [],
       isLoading: false
     };
@@ -60,6 +60,10 @@ var RobotAndyPanel = React.createClass({
 
   handleChange (event) {
     this.setState({ value: event.target.value });
+  },
+
+  handleSubmit(event) {
+    event.preventDefault();
   },
 
   handleClick() {
@@ -76,7 +80,8 @@ var RobotAndyPanel = React.createClass({
     setTimeout(() => {
       // Achevée d'une action asynchrone, rétablit l'état de chargement
       this.setState({isLoading: false});
-    }, 2000);
+      this.setState({ value: '' });
+    }, 1000);
     },
 
   componentWillReceiveProps: function(newProps) {
@@ -121,7 +126,7 @@ var RobotAndyPanel = React.createClass({
         bsStyle="primary"
       >
 
-      <form>
+      <form onSubmit={this.handleSubmit}>
 
       <div>
         <FormGroup controlId="formControlsSelect">
@@ -129,6 +134,7 @@ var RobotAndyPanel = React.createClass({
           <FormControl 
               onChange={this.onPickPartition.bind(null, this)}
               inputRef={ el => this.inputEl=el }
+              defaultValue={this.props.partition}
               componentClass="select" placeholder="Partition">
             <option value="">Votre partition</option>
             <option value="YXP">YXP</option>
@@ -156,19 +162,19 @@ var RobotAndyPanel = React.createClass({
           <HelpBlock>Posez à Andy votre question et il fera de son mieux pour vous aider.</HelpBlock>
         </FormGroup>
 
-      <Button
-        bsStyle="primary"
-        disabled={isLoading}
-        onClick={!isLoading ? this.handleClick : null}>
-        {isLoading ? 'En traitement...' : 'Soumettre'}
-      </Button>
+        <Button
+          bsStyle="primary"
+          disabled={isLoading}
+          onClick={!isLoading ? this.handleClick : null}>
+          {isLoading ? 'En traitement...' : 'Soumettre'}
+        </Button>
 
-      <p></p>
-      <Well>{this.reponse && <p>{this.reponse}</p>}</Well>
-      
-
+        <p></p>
+        <Well>{this.reponse && <p>{this.reponse}</p>}</Well>
       </div>
+
       </form>
+
       </Panel>
     );
   }
@@ -176,25 +182,5 @@ var RobotAndyPanel = React.createClass({
 
 module.exports = RobotAndyPanel;
 
-
-/*
-      <div>
-        <FormGroup controlId="formControlsSelect">
-          <ControlLabel>Choisir votre partition</ControlLabel>
-          <FormControl 
-              onChange={this.onPickPartition.bind(null, this)}
-              inputRef={ el => this.inputEl=el }
-              componentClass="select" placeholder="Partition">
-            <option value="">Votre partition</option>
-            <option value="YXP">YXP</option>
-            <option value="DMO">DMO</option>
-          </FormControl>
-        </FormGroup>
-
-      <p></p>
-      {this.state.partition && <p>La partition active est {this.state.partition}</p>}
-
-      </div>
-*/
 
 
