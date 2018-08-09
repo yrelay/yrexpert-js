@@ -56,19 +56,20 @@ var Banner = React.createClass({
   <Navbar inverse collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <a href="https://www.yrelay.fr/index.php" target="_blank">{this.title}</a>
+        <a href="https://www.yrelay.fr/" target="_blank">{this.title}</a>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav bsStyle="tabs" activeKey="1" onSelect = {this.props.controller.navOptionSelected}>
         <NavDropdown eventKey="fichier" title="Fichier" id="nav-dropdown">
-          <NavDropdown eventKey="nouveau" title="Nouveau" id="nav-dropdown" horizontal>
-            <MenuItem eventKey="robotandy">Robot Andy</MenuItem>
+          <NavDropdown eventKey="robot" title="Robot" id="nav-dropdown" horizontal>
+            <MenuItem eventKey="robotandy">Andy</MenuItem>
+            <MenuItem eventKey="beatryxrobot">Beatryx</MenuItem>
           </NavDropdown>
-          <MenuItem eventKey="ouvrirunfichier">Ouvrir un fichier</MenuItem>
+          <MenuItem eventKey="reprendreetude">Reprendre une étude</MenuItem>
           <MenuItem divider />
-          <MenuItem eventKey="fermer">Fermer</MenuItem>
+          <MenuItem eventKey="logout">Fermer</MenuItem>
           <MenuItem divider />
           <MenuItem eventKey="logout">Quitter</MenuItem>
         </NavDropdown>
@@ -77,6 +78,13 @@ var Banner = React.createClass({
         <NavDropdown eventKey="navigation" title="Navigation" id="nav-dropdown">
         </NavDropdown>
         <NavDropdown eventKey="rechercher" title="Rechercher" id="nav-dropdown">
+          <NavDropdown eventKey="fichier" title="Fichier" id="nav-dropdown" horizontal>
+            <MenuItem eventKey="rechercherfichier">Rechercher fichier</MenuItem>
+          </NavDropdown>
+          <NavDropdown eventKey="texte" title="Texte" id="nav-dropdown" horizontal>
+            <MenuItem eventKey="rechyrexpert-js">Module yrexpert-js</MenuItem>
+            <MenuItem eventKey="rechrtnyxp">Routines YXP</MenuItem>
+          </NavDropdown>
         </NavDropdown>
         <NavDropdown eventKey="partition" title="Partition" id="nav-dropdown">
           <MenuItem eventKey="allerpartition">Aller sur une partition</MenuItem>
@@ -115,14 +123,6 @@ var Banner = React.createClass({
 
 module.exports = Banner;
 
-/*
-      <Nav pullRight>
-        <NavItem eventKey="allerpartition" href="#">{this.qui}</NavItem>
-      </Nav>
-
-            <MenuItem eventKey="defutilisateur">Définir un utilisateur</MenuItem>
-            <MenuItem eventKey="nouvpartition">Nouvelle partition</MenuItem>
-*/
 
 
 

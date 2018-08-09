@@ -15,7 +15,7 @@ module.exports = function (controller, component) {
     component.hideContainer = (newProps.status !== 'apropos');
   };
 
-  // N'affichez pas le panneau à propos lors du premier rendu après la connexion
+  // N'affichez pas le panneau apropos lors du premier rendu après la connexion
 
   component.hideContainer = true;
 

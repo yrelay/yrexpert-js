@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/js/andy/RobotAndyPanel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/js/andy/RobotAndyPanel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+
+!----------------------------------------------------------------------------!
+!                                                                            !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
+! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
+!                                                                            !
+!----------------------------------------------------------------------------!
+
+*/
+
+"use strict"
+
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+//var Inspector = require('react-json-inspector');
+var fs = require('fs');
+var os = require('os');
+
+var {
+  Button,
+  Glyphicon,
+  OverlayTrigger,
+  Panel,
+  Tooltip,
+  form,
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  HelpBlock,
+  Well
+} = ReactBootstrap;
+
+var RobotAndyPanel = React.createClass({
+
+  componentWillMount: function() {
+
+    this.controller = require('./controller-RobotAndyPanel')(this.props.controller, this);
+
+    this.title = (
+      &lt;h1>Robot Andy&lt;/h1>
+    );
+  },
+
+  getInitialState() {
+    return {
+      status: 'initial',
+      value: '',
+      partition: 'DMO',
+      nameSpace: [],
+      isLoading: false
+    };
+  },
+
+  onPickPartition(e){
+    //console.log('----- onPickPartition : ', this.inputEl.value);
+    this.setState({ partition: this.inputEl.value });
+    //if (this.inputEl.value != '') this.choix(this.inputEl.value);
+  },
+
+  handleChange (event) {
+    this.setState({ value: event.target.value });
+  },
+
+  handleSubmit(event) {
+    event.preventDefault();
+  },
+
+  handleClick() {
+    //alert("-----partition: " + JSON.stringify(this.state.partition));
+    this.setState({isLoading: true});
+    var indice = (new Date()).getTime();
+    this.ajouter_nom(this.state.partition);
+    this.ajouter_date_creation(this.state.partition);
+    this.ajouter_cree_par(this.state.partition);
+    this.set_question(this.state.partition, this.state.value, indice);
+    this.get_reponse(this.state.partition, indice);
+
+    // C'est probablement là où vous auriez un appel `ajax`
+    setTimeout(() => {
+      // Achevée d'une action asynchrone, rétablit l'état de chargement
+      this.setState({isLoading: false});
+      this.setState({ value: '' });
+    }, 1000);
+    },
+
+  componentWillReceiveProps: function(newProps) {
+    this.onNewProps(newProps);
+  },
+
+  render: function() {
+
+    //var componentPath = this.controller.updateComponentPath(this);
+
+    /**
+     * @todo Améliorer le test sur laille de la partition
+     * @todo La taille ne doit pas excéder 50% de la taille disponible en local
+    */
+
+    //var options = [
+    //    { value: 'DMO', label: 'DMO' },
+    //    { value: 'YXP', label: 'YXP' }
+    //];
+    var options = [];
+    //var nameSpace = [ 'DMO', 'YXP' ];
+    var nameSpace = this.nameSpace;
+    for (var i = 0; i &lt; nameSpace.length; i++) {
+        var items = { 'value': nameSpace[i].toUpperCase(), 'label': nameSpace[i].toUpperCase() };
+        options.push(items);
+    }
+    //alert("-----options: " + JSON.stringify(options));
+
+    let isLoading = this.state.isLoading;
+
+    // Créer un clone de données pour assurer un nouveau rendu
+    if (this.data) {
+      var newData = {};
+      Object.assign(newData, this.data);
+    }
+
+    return (
+      &lt;Panel 
+        collapsible 
+        expanded={this.expanded} 
+        header={this.title}
+        bsStyle="primary"
+      >
+
+      &lt;form onSubmit={this.handleSubmit}>
+
+      &lt;div>
+        &lt;FormGroup controlId="formControlsSelect">
+          &lt;ControlLabel>Choisir votre partition&lt;/ControlLabel>
+          &lt;FormControl 
+              onChange={this.onPickPartition.bind(null, this)}
+              inputRef={ el => this.inputEl=el }
+              defaultValue={this.props.partition}
+              componentClass="select" placeholder="Partition">
+            &lt;option value="">Votre partition&lt;/option>
+            &lt;option value="YXP">YXP&lt;/option>
+            &lt;option value="DMO">DMO&lt;/option>
+          &lt;/FormControl>
+        &lt;/FormGroup>
+
+      &lt;p>&lt;/p>
+      {this.state.partition &amp;&amp; &lt;p>La partition active est {this.state.partition}&lt;/p>}
+
+      &lt;/div>
+
+      &lt;div>
+        &lt;FormGroup
+          controlId="formBasicText"
+        >
+          &lt;ControlLabel>Dialoguer avec Andy.&lt;/ControlLabel>
+          &lt;FormControl
+            type="text"
+            value={this.state.value}
+            placeholder="Saisir votre question"
+            onChange={this.handleChange}
+          />
+          &lt;FormControl.Feedback />
+          &lt;HelpBlock>Posez à Andy votre question et il fera de son mieux pour vous aider.&lt;/HelpBlock>
+        &lt;/FormGroup>
+
+        &lt;Button
+          bsStyle="primary"
+          disabled={isLoading}
+          onClick={!isLoading ? this.handleClick : null}>
+          {isLoading ? 'En traitement...' : 'Soumettre'}
+        &lt;/Button>
+
+        &lt;p>&lt;/p>
+        &lt;Well>{this.reponse &amp;&amp; &lt;p>{this.reponse}&lt;/p>}&lt;/Well>
+      &lt;/div>
+
+      &lt;/form>
+
+      &lt;/Panel>
+    );
+  }
+});
+
+module.exports = RobotAndyPanel;
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yrexpert-js.html">lib/yrexpert-js</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_yrexpert-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.loginRpc.html">loginRpc</a></li><li><a href="module-lib_yrexpert-js.handlers.readRPCBDDC.html">readRPCBDDC</a></li><li><a href="module-lib_yrexpert-js.handlers.setRPCBDDC.html">setRPCBDDC</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Aug 09 2018 21:05:19 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,4 +1,32 @@
-/*
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/js/defutilisateur***/DefUtilisateurPanel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/js/defutilisateur***/DefUtilisateurPanel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
 
 !----------------------------------------------------------------------------!
 !                                                                            !
@@ -13,7 +41,7 @@
 
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
-var Inspector = require('react-json-inspector');
+//var Inspector = require('react-json-inspector');
 
 var {
   Button,
@@ -35,7 +63,7 @@ var DefUtilisateurPanel = React.createClass({
     this.controller = require('./controller-DefUtilisateurPanel')(this.props.controller, this);
 
     this.title = (
-      <h1>Nouvelle partition</h1>
+      &lt;h1>Nouvelle partition&lt;/h1>
     );
   },
 
@@ -112,7 +140,7 @@ var DefUtilisateurPanel = React.createClass({
           $(item).find('span.json-inspector__key').first().hide();
           $(item).find('span.json-inspector__value').first().hide();
         }
-        else if (name.indexOf('.') === -1 && that.data[name]) {
+        else if (name.indexOf('.') === -1 &amp;&amp; that.data[name]) {
           $(item).find('span.json-inspector__key').first().addClass('json-inspector__docName');
         }
       });
@@ -136,12 +164,12 @@ var DefUtilisateurPanel = React.createClass({
 
     function FieldGroup({ id, validation, label, help, ...props }) {
       return (
-        <FormGroup controlId={id} validationState={validation}>
-          <ControlLabel>{label}</ControlLabel>
-          <FormControl {...props} />
-          <FormControl.Feedback />
-          {help && <HelpBlock>{help}</HelpBlock>}
-        </FormGroup>
+        &lt;FormGroup controlId={id} validationState={validation}>
+          &lt;ControlLabel>{label}&lt;/ControlLabel>
+          &lt;FormControl {...props} />
+          &lt;FormControl.Feedback />
+          {help &amp;&amp; &lt;HelpBlock>{help}&lt;/HelpBlock>}
+        &lt;/FormGroup>
       );
     }
 
@@ -154,16 +182,16 @@ var DefUtilisateurPanel = React.createClass({
     }
 
     return (
-      <Panel 
+      &lt;Panel 
         collapsible 
         expanded={this.expanded} 
         header={this.title}
         bsStyle="primary"
       >
 
-      <form>
+      &lt;form>
 
-        <FieldGroup
+        &lt;FieldGroup
           id="formWHOIS"
           validation={this.getValidationWHOIS()}
           type="text"
@@ -176,16 +204,16 @@ var DefUtilisateurPanel = React.createClass({
 
 
 
-      </form>
+      &lt;/form>
 
-      <Button
+      &lt;Button
         bsStyle="primary"
         disabled={isLoading}
         onClick={!isLoading ? this.handleClick : null}>
         {isLoading ? 'En traitement...' : 'Soumettre'}
-      </Button>
+      &lt;/Button>
 
-      </Panel>
+      &lt;/Panel>
     );
   }
 });
@@ -193,7 +221,7 @@ var DefUtilisateurPanel = React.createClass({
 module.exports = DefUtilisateurPanel;
 
 /*
-      <Inspector 
+      &lt;Inspector 
         data={newData}
         isExpanded = {this.isExpanded}
         onClick={this.nodeClicked}
@@ -202,27 +230,27 @@ module.exports = DefUtilisateurPanel;
 */
 
 /*
-        <FormGroup
+        &lt;FormGroup
           controlId="formWHOIS"
           validationState={this.getValidationWHOIS()}
         >
-          <ControlLabel>WHOIS : Indiquer nom de l'utisateur.</ControlLabel>
-          <FormControl
+          &lt;ControlLabel>WHOIS : Indiquer nom de l'utisateur.&lt;/ControlLabel>
+          &lt;FormControl
             type="text"
             value={this.state.valueWHOIS}
             placeholder="Saisir le nom"
             onChange={this.handleChangeWHOIS}
           />
-          <FormControl.Feedback />
-          <HelpBlock>Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur.</HelpBlock>
-        </FormGroup>
+          &lt;FormControl.Feedback />
+          &lt;HelpBlock>Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur.&lt;/HelpBlock>
+        &lt;/FormGroup>
 
 */
 
 
 
 /*
-        <FieldGroup
+        &lt;FieldGroup
           id="formWHOIS"
           validationState={this.getValidationWHOIS()}
           type="text"
@@ -232,105 +260,105 @@ module.exports = DefUtilisateurPanel;
           help="Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur."
           onChange={this.handleChangeWHOIS}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formBACK"
           type="text"
           label="BACK : Indiquer le nom du menu de retour."
           placeholder="Saisir le menu."
           value={this.state.valueBACK}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formENTETE"
           type="text"
           label="ENTETE : Indiquer l'entête de la partition ou du service."
           placeholder="Saisir l'entête."
           value={this.state.valueENTETE}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formMACHINE"
           type="text"
           label="MACHINE : Indiquer le nom de la partition ou du service."
           placeholder="Saisir la partition."
           value={this.state.valueMACHINE}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formNOM"
           type="text"
           label="Text"
           placeholder="Enter text."
           value={this.state.valueNOM}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formPASS"
           type="text"
           label="PASS : Indiquer le mot de passe de la partition ou du service."
           placeholder="Saisir le mot de passe."
           value={this.state.valuePASS}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formPRINTER"
           type="number"
           label="PRINTER : Indiquer le N° de l'imprimante."
           placeholder="Saisir l'imprimante."
           value={this.state.valuePRINTER}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formSITE"
           type="number"
           label="SITE : Indiquer le N° du site."
           placeholder="Saisir le site."
           value={this.state.valueSITE}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formSTART"
           type="text"
           label="START : Indiquer le nom du menu au démarrage."
           placeholder="Saisir le menu."
           value={this.state.valueSTART}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formTABLETRAC"
           type="text"
           label="TABLETRAC : Indiquer le nom du menu au démarrage."
           placeholder="Saisir le menu."
           value={this.state.valueTABLETRAC}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formTYPETABLE"
           type="text"
           label="TYPETABLE : Indiquer le nom du menu au démarrage."
           placeholder="Saisir le menu."
           value={this.state.valueTYPETABLE}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formECRANGRAP"
           type="text"
           label="ECRANGRAP : Indiquer le nom du menu au démarrage."
           placeholder="Saisir le menu."
           value={this.state.valueECRANGRAP}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formTYPEECRAN"
           type="text"
           label="TYPEECRAN : Indiquer le nom du menu au démarrage."
           placeholder="Saisir le menu."
           value={this.state.valueTYPEECRAN}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formIMPRCOUR"
           type="text"
           label="IMPRCOUR : Indiquer le nom du menu au démarrage."
           placeholder="Saisir le menu."
           value={this.state.valueIMPRCOUR}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formORDINATEUR"
           type="text"
           label="ORDINATEUR : Indiquer le nom du menu au démarrage."
           placeholder="Saisir le menu."
           value={this.state.valueORDINATEUR}
         />
-        <FieldGroup
+        &lt;FieldGroup
           id="formLANGAGE"
           type="text"
           label="LANGAGE : Indiquer le langage utilisé."
@@ -344,3 +372,26 @@ module.exports = DefUtilisateurPanel;
 
 
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yrexpert-js.html">lib/yrexpert-js</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_yrexpert-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.loginRpc.html">loginRpc</a></li><li><a href="module-lib_yrexpert-js.handlers.readRPCBDDC.html">readRPCBDDC</a></li><li><a href="module-lib_yrexpert-js.handlers.setRPCBDDC.html">setRPCBDDC</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Aug 09 2018 21:05:19 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

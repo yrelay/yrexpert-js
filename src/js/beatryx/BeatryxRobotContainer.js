@@ -19,9 +19,9 @@ var {
   Col
 } = ReactBootstrap;
 
-//var MemoryPanel = require('./MemoryPanel');
+var BeatryxRobotPanel = require('./BeatryxRobotPanel');
 
-module.exports = React.createClass({
+var DocumentStoreContainer = React.createClass({
 
   getInitialState: function() {
     return {
@@ -30,7 +30,7 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function() {
-    //this.controller = require('./controller-MemoryContainer')(this.props.controller, this);
+    this.controller = require('./controller-BeatryxRobotContainer')(this.props.controller, this);
   },
 
   componentWillReceiveProps: function(newProps) {
@@ -41,22 +41,22 @@ module.exports = React.createClass({
 
     //var componentPath = this.controller.updateComponentPath(this);
 
-    if (this.props.status !== 'xxx') {
-      return (
-        <div></div>
-      );
-    }
-    else {
-      return (
-        <Grid>
-          <Row>
-            <Col md={12}>
-              <div>Memory Panel goes here</div>
-            </Col>
-          </Row>
-        </Grid>
-      );
-    }
+    return (
+      <Grid
+        fluid = {true}
+        className = {this.hideContainer ? 'hidden' : ''}
+      >
+        <Row>
+          <Col md={12}>
+            <BeatryxRobotPanel
+              controller = {this.controller}
+            />
+          </Col>
+        </Row>
+      </Grid>
+    );
+
   }
 });
 
+module.exports = DocumentStoreContainer;

@@ -13,7 +13,7 @@
 
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
-var Inspector = require('react-json-inspector');
+//var Inspector = require('react-json-inspector');
 
 var {
   Button,
@@ -30,7 +30,9 @@ var AproposPanel = React.createClass({
 
   getInitialState: function() {
     return {
-      status: 'initial'
+      status: 'initial',
+      index: 0,
+      direction: null
     }
   },
 
@@ -46,9 +48,18 @@ var AproposPanel = React.createClass({
     this.onNewProps(newProps);
   },
 
+  handleSelect(selectedIndex, e) {
+    //alert(`selected=${selectedIndex}, direction=${e.direction}`);
+    this.setState({
+      index: selectedIndex,
+      direction: e.direction
+    });
+  },
+
   render: function() {
 
     //var componentPath = this.controller.updateComponentPath(this);
+    const { index, direction } = this.state;
 
     return (
       <Panel 
@@ -58,26 +69,30 @@ var AproposPanel = React.createClass({
         bsStyle="primary"
       >
 
-      <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={this.handleSelect}>
+      <Carousel
+        activeIndex={index}
+        direction={direction}
+        onSelect={this.handleSelect}
+      >
         <Carousel.Item>
-          <img width={1800} height={640} alt="900x500" src="./images/carousel.jpg"/>
+          <img width={1800} height={640} alt="1800*640" src="./images/carousel.jpg"/>
           <Carousel.Caption>
-            <h3>Votre Système Expert libre</h3>
+            <h3>Votre Système Expert</h3>
             <p>Comme tous les systèmes experts YRexpert se présente comme une coquille vide qu’il va falloir compléter.</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img width={1800} height={640} alt="900x500" src="./images/carousel2.jpg"/>
+          <img width={1800} height={640} alt="1800*640" src="./images/carousel2.jpg"/>
           <Carousel.Caption>
-            <h3>...</h3>
-            <p>...</p>
+            <h3>Licence d’utilisation</h3>
+            <p>Vous trouverez le texte de la GNU General Public License Version 3 sur <a href="https://www.gnu.org/" target="_blank">www.gnu.org</a></p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img width={1800} height={640} alt="900x500" src="./images/carousel3.jpg"/>
+          <img width={1800} height={640} alt="1800*640" src="./images/carousel3.jpg"/>
           <Carousel.Caption>
-            <h3>...</h3>
-            <p>...</p>
+            <h3>Mentions légales</h3>
+            <p>Le présent logiciel est édité et géré par l'entreprise <a href="https://www.yrelay.fr/" target="_blank">Yrelay</a></p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

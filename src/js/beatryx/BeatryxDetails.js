@@ -23,7 +23,7 @@ var {
   Tooltip
 } = ReactBootstrap;
 
-var SessionDetails = React.createClass({
+var BeatryxDetails = React.createClass({
 
   getInitialState: function() {
     return {
@@ -32,7 +32,7 @@ var SessionDetails = React.createClass({
   },
 
   componentWillMount: function() {
-    this.controller = require('./controller-SessionDetails')(this.props.controller, this);
+    this.controller = require('./controller-BeatryxDetails')(this.props.controller, this);
   },
   
   componentWillReceiveProps: function(newProps) {
@@ -43,7 +43,7 @@ var SessionDetails = React.createClass({
 
     //var componentPath = this.controller.updateComponentPath(this);
 
-   //console.log('rendering SessionDetails - ' + JSON.stringify(this.data));
+    //console.log('rendering BeatryxDetails - ' + JSON.stringify(this.data));
 
     if (!this.data) {
       return (
@@ -58,19 +58,28 @@ var SessionDetails = React.createClass({
     return (
       <Panel 
         collapsible 
-        expanded={this.expanded} 
+        expanded = {this.expanded} 
         header = {this.title}
-        bsStyle="info"
+        bsStyle = "info"
       >
         <Inspector 
           data={newData}
+
           isExpanded = {this.isExpanded}
-          onClick={this.nodeClicked}
-          search={false}
+          onClick = {this.nodeClicked}
+          search = {false}
         />
       </Panel>
     );
   }
 });
 
-module.exports = SessionDetails;
+module.exports = BeatryxDetails;
+
+
+
+
+
+
+
+

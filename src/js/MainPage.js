@@ -19,7 +19,7 @@ window.$ = window.jQuery = jQuery;
 var {ToastContainer} = ReactToastr;
 var ToastMessageFactory = React.createFactory(ReactToastr.ToastMessage.animation);
 
-var LoginRpcModal = require('./LoginRpcModal');
+var LoginRpcModal = require('./loginrpc/LoginRpcModal');
 var Banner = require('./Banner');
 var Content = require('./Content');
 var Shutdown = require('./Shutdown');

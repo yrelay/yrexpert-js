@@ -13,45 +13,50 @@
 
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
-
 var {
-  FormControl
+  Grid,
+  Row,
+  Col
 } = ReactBootstrap;
 
-var LoginField = React.createClass({
+//var MemoryPanel = require('./MemoryPanel');
+
+module.exports = React.createClass({
 
   getInitialState: function() {
-    return {value:''}
+    return {
+      status: 'initial'
+    }
   },
 
   componentWillMount: function() {
-    this.controller = require('./controller-LoginField')(this.props.controller, this);
+    //this.controller = require('./controller-MemoryContainer')(this.props.controller, this);
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    this.onNewProps(newProps);
   },
 
   render: function() {
 
-    //console.log('LoginField rendering');
-    //this.controller.updateComponentPath(this);
+    //var componentPath = this.controller.updateComponentPath(this);
 
-    return (
-     <div> 
-      <FormControl
-        type='password'
-        autoFocus
-        value={this.state.value}
-        placeholder={this.props.placeholder}
-        bsStyle={this.validationState()}
-        ref={this.props.fieldname}
-        label={this.props.label}
-        onChange={this.handleChange}
-      />
-      <FormControl.Feedback />
-     </div>
-    )
+    if (this.props.status !== 'xxx') {
+      return (
+        <div></div>
+      );
+    }
+    else {
+      return (
+        <Grid>
+          <Row>
+            <Col md={12}>
+              <div>Le panneau de mémoire va ici</div>
+            </Col>
+          </Row>
+        </Grid>
+      );
+    }
   }
 });
-
-module.exports = LoginField;
-
-
 

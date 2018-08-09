@@ -13,7 +13,7 @@
 
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
-var Inspector = require('react-json-inspector');
+//var Inspector = require('react-json-inspector');
 
 var {
   Button,

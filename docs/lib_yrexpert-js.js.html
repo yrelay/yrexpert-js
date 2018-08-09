@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: lib/yexpert-js.js</title>
+    <title>JSDoc: Source: lib/yrexpert-js.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: lib/yexpert-js.js</h1>
+    <h1 class="page-title">Source: lib/yrexpert-js.js</h1>
 
     
 
@@ -30,7 +30,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
+! YRexpert : (Your Yrelay) Système Expert sous Mumps GT.M et GNU/Linux       !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -39,17 +39,17 @@
 
 var build = require('./build');
 var sessions = require('ewd-session');
-var runRPC = require('yexpert-rpc/lib/proto/runRPC');
-//var httpHandlers = require('yexpert-rpc/lib/proto/httpHandlers');
+var beatryxRobot = require('./beatryxRobot');
+var runRPC = require('yrexpert-rpc/lib/proto/runRPC');
 var fs = require('fs');
 var os = require('os');
 
 /**
- * Module yexpert-js.
- * @module lib/yexper-js
+ * Module yrexpert-js.
+ * @module lib/yrexpert-js
  */
 
-/** Fonction yexpert-js. */
+/** Fonction yrexpert-js. */
 module.exports = {
 
   /** Initialisation. */
@@ -72,10 +72,18 @@ module.exports = {
   /** Gestionnaire d'évènemments. */
   handlers: {
 
+    /**
+     * Exécuter le RPC [RPCUSR ETABLIR CONNEXION].
+     * @constructor
+     * @param {object} messageObj - Message : [ac, vc].
+     * @param {number} session - Session.
+     * @param {string} send - Send.
+     * @param {object} finished - Message de retour de la fonction.
+     */
     loginRpc: function(messageObj, session, send, finished) {
 
       if (session.authenticated) {
-        finished({error: 'Vous êtes déjà connectés à Yexpert-JS'});
+        finished({error: 'Vous êtes déjà connectés à yrexpert-js'});
         return;
       }
 
@@ -108,14 +116,14 @@ module.exports = {
         rpcArgs: [{
           type: 'LITERAL',
           value: accessCode + ';' + verifyCode
-        }],
+        }]
       };
 
       var response = runRPC.call(this, params, session, false);
       console.log('login response: ' + JSON.stringify(response));
       var values = response.value;
       var duz = values[0];
-      var err = values[3]
+      var err = values[3];
       //console.log("-----err: " + JSON.stringify(err));
       if (duz.toString() === '0' &amp;&amp; err !== '') {
         finished({error: err});
@@ -151,48 +159,162 @@ module.exports = {
       }
     },
 
-    rpc: function(messageObj, session, send, finished) {
+    getToken: function(messageObj, session, send, finished) {
+      //console.log("-----getToken: " + JSON.stringify(messageObj));
+      finished(messageObj);    
+    },
+
+    /**
+     * Exécuter le RPC [RPCBDD EXECUTER COMMANDE SET].
+     * @constructor
+     * @param {object} messageObj - Message : [qui, rep, ind, att, val, ice].
+     * @param {number} session - Session.
+     * @param {string} send - Send.
+     * @param {object} finished - Message de retour de la fonction.
+     */
+    setRPCBDDC: function(messageObj, session, send, finished) {
+
+      var partition = messageObj.params.qui;
+      var repertoire = messageObj.params.rep;
+      var individu = messageObj.params.ind;
+      var attribut = messageObj.params.att;
+      var valeur = messageObj.params.val;
+      var indice = messageObj.params.ice;
+      //console.log("-----messageObj.params.qui: " + JSON.stringify(messageObj.params.qui));
+      //console.log("-----messageObj.params.rep: " + JSON.stringify(messageObj.params.rep));
+
+      if (partition === '') {
+        finished({error: "Vous devez indiquer le nom d'une base de données (partition utilisateur)"});
+        return;
+      }
+      if (repertoire === '') {
+        finished({error: "Vous devez indiquer le non d'un répertoire (repertoire)"});
+        return;
+      }
+      if (individu === '') {
+        finished({error: "Vous devez indiquer le nom d'un individu (individu)"});
+        return;
+      }
+      if (attribut === '') {
+        finished({error: "Vous devez indiquer le nom d'un attribut (attribut)"});
+        return;
+      }
+      if (valeur === '') {
+        finished({error: "Vous devez indiquer une valeur pour l'attribut (valeur)"});
+        return;
+      }
+      if (indice === '') {
+        finished({error: "Vous devez indiquer un indice pour l'attribut (indice)"});
+        return;
+      }
 
       if (!this.db.symbolTable) this.db.symbolTable = sessions.symbolTable(this.db);
 
-      var rpcName = messageObj.params.rpcName;
-      if (rpcName === 'RPCUSR ETABLIR CONNEXION' || rpcName === 'RPCUSR VERIFIER CODE') {
-        // Vous devez utiliser le gestionnaire de connexion pour ces RPC
-        finished({error: rpcName + ' RPC ne peut pas être invoqué directement'});
-        return;
-      }
-      var manageSymbolTable = false;      
-      if (rpcName !== 'RPCUSR MESSAGE INTRO') {
-        if (!session.authenticated) {
-          finished({error: "Vous n'avez pas été authentifié sur Yexpert-JS"});
-          return;
-        }
-        manageSymbolTable = true;
-      }
+      params = {
+        rpcName: 'RPCBDD EXECUTER COMMANDE SET',
+        rpcArgs: [
+          {type: 'LITERAL', value: partition}, 
+          {type: 'LITERAL', value: repertoire}, 
+          {type: 'LITERAL', value: individu}, 
+          {type: 'LITERAL', value: attribut}, 
+          {type: 'LITERAL', value: valeur}, 
+          {type: 'LITERAL', value: indice} 
+        ],
+      };
 
-      var results = runRPC.call(this, messageObj.params, session, manageSymbolTable);
-
-      if (manageSymbolTable) {
-         // Nettoyer le processus de back-end Cache / GT.M :
-         this.db.symbolTable.clearclear();
+      var response = runRPC.call(this, params, session, false);
+      var value = response.value;
+      //console.log("-----value: " + JSON.stringify(value));
+      if (value !== 1) {
+        finished({error: value});
       }
-      finished(results);
+      else {
+        // Attribut mofifié avec succès
+        // Enregistrer la table des symboles à la session ...
+        ok = this.db.symbolTable.save(session);
+
+        // Nettoyer le processus de back-end Cache / GT.M:
+        ok = this.db.symbolTable.clear();
+
+        // Réponse de retour
+        var message = value;
+
+        var results = {
+          message: message
+        };
+        finished({ok: true});    
+      }
     },
 
-    exemple: function(messageObj, session, send, finished) {
+    /**
+     * Exécuter le RPC [RPCBDD EXECUTER COMMANDE READ].
+     * @constructor
+     * @param {object} messageObj - Message : [qui, rep, ind, att, ice].
+     * @param {number} session - Session.
+     * @param {string} send - Send.
+     * @param {object} finished - Message de retour de la fonction.
+     */
+    readRPCBDDC: function(messageObj, session, send, finished) {
 
-      var node = {
-        global: 'irelay',
-        subscripts: ['a'],
-        data: 'hello world'
+      var partition = messageObj.params.qui;
+      var repertoire = messageObj.params.rep;
+      var individu = messageObj.params.ind;
+      var attribut = messageObj.params.att;
+      var indice = messageObj.params.ice;
+      //console.log("-----messageObj.params.qui: " + JSON.stringify(messageObj.params.qui));
+      //console.log("-----messageObj.params.rep: " + JSON.stringify(messageObj.params.rep));
+
+      if (partition === '') {
+        finished({error: "Vous devez indiquer le nom d'une base de données (partition utilisateur)"});
+        return;
+      }
+      if (repertoire === '') {
+        finished({error: "Vous devez indiquer le non d'un répertoire (repertoire)"});
+        return;
+      }
+      if (individu === '') {
+        finished({error: "Vous devez indiquer le nom d'un individu (individu)"});
+        return;
+      }
+      if (attribut === '') {
+        finished({error: "Vous devez indiquer le nom d'un attribut (attribut)"});
+        return;
+      }
+      if (indice === '') {
+        finished({error: "Vous devez indiquer un indice pour l'attribut (indice)"});
+        return;
+      }
+
+      if (!this.db.symbolTable) this.db.symbolTable = sessions.symbolTable(this.db);
+
+      params = {
+        rpcName: 'RPCBDD EXECUTER COMMANDE READ',
+        rpcArgs: [
+          {type: 'LITERAL', value: partition}, 
+          {type: 'LITERAL', value: repertoire}, 
+          {type: 'LITERAL', value: individu}, 
+          {type: 'LITERAL', value: attribut}, 
+          {type: 'LITERAL', value: indice} 
+        ],
       };
-      this.db.set(node);
 
-      var func2 = this.db.function({function: 'ZGBLDIR^%GTM', arguments: ['DMO']});
+      var response = runRPC.call(this, params, session, false);
+      console.log("-----response: " + JSON.stringify(response));
 
-      var dir = this.db.global_directory();
-      finished(dir);
-      //finished({ok: 'example executed!'});
+      if (response.value === undefined) {
+        finished({error: "Aucune valeur trouvée pour " + partition + " " + repertoire + " " + individu + " " + attribut + " " + indice});
+      }
+      else {
+        // Attribut mofifié avec succès
+        // Enregistrer la table des symboles à la session ...
+        ok = this.db.symbolTable.save(session);
+
+        // Nettoyer le processus de back-end Cache / GT.M:
+        ok = this.db.symbolTable.clear();
+
+        // Réponse de retour
+        finished({value: response.value});    
+      }
     },
 
     /**
@@ -238,7 +360,7 @@ module.exports = {
         subscripts: []
       };
       var result = this.db.get(node);
-      //console.log("-----getQui: " + JSON.stringify(result.data));
+      //console.log("-----getQui: " + JSON.stringify(result));
       finished({qui: result.data});
     },
 
@@ -254,10 +376,11 @@ module.exports = {
         finished({ok: true});    
       }
       else {
-        finished({error: 'Invalid partition'});
+        finished({error: 'Partition non valide'});
       }
     },
 
+    /* A supprimer */
     login: function(messageObj, session, send, finished) {
 
       if (messageObj.params.password === this.userDefined.config.managementPassword) {
@@ -290,15 +413,15 @@ module.exports = {
           qoper8Build: this.build,
           docStoreBuild: this.documentStore.build,
           xpressBuild: this.xpress.build,
-          yexpertmVersion: rep.data,
-          yexpertjsBuild: build
+          yrexpertmVersion: rep.data,
+          yrexpertjsBuild: build
         };
         //console.log("-----buildDetails: " + JSON.stringify(buildDetails));
         if (this.userDefined.config &amp;&amp; this.userDefined.config.qxBuild) buildDetails.qxBuild = this.userDefined.config.qxBuild;
         finished(buildDetails);
       }
       else {
-        finished({error: 'Unauthenticated'});
+        finished({error: 'Non authentifié'});
       }
     },
 
@@ -310,7 +433,7 @@ module.exports = {
         finished({ok: true});
       }
       else {
-        finished({error: 'Unauthenticated'});
+        finished({error: 'Non authentifié'});
       }
     },
 
@@ -320,7 +443,7 @@ module.exports = {
         finished({closeSocket: true});
       }
       else {
-        finished({error: 'Unauthenticated'});
+        finished({error: 'Non authentifié'});
       }
     },
 
@@ -329,7 +452,7 @@ module.exports = {
         finished({ok: true});
       }
       else {
-        finished({error: 'Unauthenticated'});
+        finished({error: 'Non authentifié'});
       }
     },
 
@@ -397,7 +520,7 @@ module.exports = {
         ewdSession.data.forEachChild(function(name, childNode) {
           data[name] = expandText;
           if (childNode.hasValue) data[name] = childNode.value;
-          if (name === 'ewd_symbolTable') data[name] = 'Mumps Symbol Table Data';
+          if (name === 'ewd_symbolTable') data[name] = 'Données de table de symboles mumps';
         });
         finished({
           token: token,
@@ -408,7 +531,7 @@ module.exports = {
       else {
         finished({
           token: token,
-          error: 'Session no longer exists'
+          error: 'La session n existe plus'
         });
       }
     },
@@ -431,16 +554,109 @@ module.exports = {
         });
       }
       else {
-        finished({error: 'Session no longer exists'});
+        finished({error: 'La session n existe plus'});
+      }
+    },
+
+
+
+    getBeatryxRobot: function(messageObj, beatryx, send, finished) {
+      console.log("-----this.beatryxRobot: " + JSON.stringify(this.beatryxRobot));
+      var beatryxRobot = [];
+      beatryxRobot.push({
+        id: 123456789,
+        token: "ewdSession.token",
+        application: "Raison sociale",
+        expiry: "31/12/2017",
+        disabled: true
+      });
+      finished(beatryxRobot);
+/**
+      console.log("-----messageObj: " + JSON.stringify(messageObj));
+      console.log("-----beatryx: " + JSON.stringify(beatryx));
+      console.log("-----this.beatryxRobot: " + JSON.stringify(this.beatryxRobot));
+      console.log("-----this.beatryxRobot.active(): " + JSON.stringify(this.beatryxRobot.active()));
+      var activeBeatryxRobot = this.beatryxRobot.active();
+      var beatryxRobot = [];
+      var disabled;
+      activeBeatryxRobot.forEach(function(ewdSession) {
+        disabled = false;
+        if (ewdSession.id.toString() === session.id.toString()) disabled = true;
+        beatryxRobot.push({
+          id: ewdSession.id,
+          token: ewdSession.token,
+          application: ewdSession.application,
+          expiry: ewdSession.expiryTime,
+          disabled: disabled
+        });
+      });
+      finished(beatryxRobot);
+*/
+    },
+
+    stopBeatryx: function(messageObj, beatryx, send, finished) {
+      var ewdSession = this.beatryxRobot.byToken(messageObj.params.token);
+      if (ewdSession) ewdSession.delete();
+      finished({ok: true});
+    },
+
+    showBeatryx: function(messageObj, beatryx, send, finished) {
+      var token = messageObj.params.token;
+      var ewdSession = this.beatryxRobot.byToken(token);
+      if (ewdSession) {
+        var data = {};
+        var expandText = ' -->';
+        ewdSession.data.forEachChild(function(name, childNode) {
+          data[name] = expandText;
+          if (childNode.hasValue) data[name] = childNode.value;
+          if (name === 'ewd_symbolTable') data[name] = 'Données de table de symboles mumps';
+        });
+        finished({
+          token: token,
+          id: ewdSession.id,
+          data: data
+        });
+      }
+      else {
+        finished({
+          token: token,
+          error: 'La session n existe plus'
+        });
+      }
+    },
+
+    getBeatryxSubscripts: function(messageObj, beatryx, send, finished) {
+      var subs = messageObj.params.path.split('.');
+      var token = messageObj.params.token;
+      var ewdSession = this.beatryxRobot.byToken(token);
+      if (ewdSession) {
+        var documentName = ewdSession.documentName;
+        var subscripts = ewdSession.data._node.subscripts.concat(subs);
+        var doc = new this.documentStore.DocumentNode(documentName, subscripts);
+        var data = {};
+        doc.forEachChild(function(name, childNode) {
+          data[name] = messageObj.params.expandText;
+          if (childNode.hasValue) data[name] = childNode.value;
+        });
+        finished({
+          data: data
+        });
+      }
+      else {
+        finished({error: 'La session n existe plus'});
       }
     }
+
+
+
+
+
+
+
+
   },
-
-
-
   workerResponseHandlers: {
-    // allow interception by master process to augment / process the request after authentication in worker
-
+    // Permettre l'interception par le processus maître d'augmenter/traiter la demande après l'authentification dans le worker
     getMasterProcessDetails: function(message) {
       var stats = this.getStats();
       return {
@@ -452,7 +668,7 @@ module.exports = {
     },
 
     getWorkerDetails: function(message, send) {
-      // use special handler function for getting stats for master and workers
+      // utiliser la fonction de gestionnaire spécial pour obtenir des statistiques pour master et les workers
       var that = this;
       this.handleStats(function(messageObj) {
         var resultObj = {
@@ -468,12 +684,12 @@ module.exports = {
 
       if (message.displayButton) return message ;
 
-      // delay slightly to allow response to be sent to browser
+      // retarder légèrement pour permettre l'envoi de la réponse au navigateur
       var that = this;
       setTimeout(function() {
         that.stop();
       }, 2000);
-      //return {disconnect: true, error: 'EWD AppRunner has been shut down'};
+      //return {disconnect: true, error: 'EWD AppRunner a été arrêté'};
       return {ok: true};
     },
 
@@ -504,13 +720,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yexper-js.html">lib/yexper-js</a></li></ul><h3>Classes</h3><ul><li><a href="EventPropagators.html">EventPropagators</a></li><li><a href="ForEachBookKeeping.html">ForEachBookKeeping</a></li><li><a href="MapBookKeeping.html">MapBookKeeping</a></li><li><a href="module-lib_yexper-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yexper-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="ReactClass.html">ReactClass</a></li><li><a href="ReactDOMComponent.html">ReactDOMComponent</a></li><li><a href="ReactDOMTextComponent.html">ReactDOMTextComponent</a></li><li><a href="ReactMountReady.html">ReactMountReady</a></li><li><a href="ReactMultiChild.html">ReactMultiChild</a></li><li><a href="ReactOwner.html">ReactOwner</a></li><li><a href="ReactReconcileTransaction.html">ReactReconcileTransaction</a></li><li><a href="ReactServerRenderingTransaction.html">ReactServerRenderingTransaction</a></li><li><a href="ReactServerUpdateQueue.html">ReactServerUpdateQueue</a></li><li><a href="Transaction.html">Transaction</a></li></ul><h3>Interfaces</h3><ul><li><a href="DragEvent.html">DragEvent</a></li><li><a href="Event.html">Event</a></li><li><a href="FocusEvent.html">FocusEvent</a></li><li><a href="KeyboardEvent.html">KeyboardEvent</a></li><li><a href="MouseEvent.html">MouseEvent</a></li><li><a href="ReactClassInterface.html">ReactClassInterface</a></li><li><a href="TouchEvent.html">TouchEvent</a></li><li><a href="UIEvent.html">UIEvent</a></li><li><a href="WheelEvent.html">WheelEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#animation">animation</a></li><li><a href="global.html#autoFocus">autoFocus</a></li><li><a href="global.html#backdrop">backdrop</a></li><li><a href="global.html#backdropClassName">backdropClassName</a></li><li><a href="global.html#backdropStyle">backdropStyle</a></li><li><a href="global.html#backdropTransitionTimeout">backdropTransitionTimeout</a></li><li><a href="global.html#componentWillReceiveProps">componentWillReceiveProps</a></li><li><a href="global.html#container">container</a></li><li><a href="global.html#containerClassName">containerClassName</a></li><li><a href="global.html#defaultOverlayShown">defaultOverlayShown</a></li><li><a href="global.html#delay">delay</a></li><li><a href="global.html#delayHide">delayHide</a></li><li><a href="global.html#delayShow">delayShow</a></li><li><a href="global.html#destructor">destructor</a></li><li><a href="global.html#dialogComponentClass">dialogComponentClass</a></li><li><a href="global.html#dialogTransitionTimeout">dialogTransitionTimeout</a></li><li><a href="global.html#enforceFocus">enforceFocus</a></li><li><a href="global.html#ensureScrollValueMonitoring">ensureScrollValueMonitoring</a></li><li><a href="global.html#getData">getData</a></li><li><a href="global.html#getText">getText</a></li><li><a href="global.html#isEnabled">isEnabled</a></li><li><a href="global.html#isExpanded">isExpanded</a></li><li><a href="global.html#isPersistent">isPersistent</a></li><li><a href="global.html#keyboard">keyboard</a></li><li><a href="global.html#listenTo">listenTo</a></li><li><a href="global.html#manager">manager</a></li><li><a href="global.html#mountComponent">mountComponent</a></li><li><a href="global.html#onBackdropClick">onBackdropClick</a></li><li><a href="global.html#onEnter">onEnter</a></li><li><a href="global.html#onEntered">onEntered</a></li><li><a href="global.html#onEntering">onEntering</a></li><li><a href="global.html#onEscapeKeyUp">onEscapeKeyUp</a></li><li><a href="global.html#onExit">onExit</a></li><li><a href="global.html#onExited">onExited</a></li><li><a href="global.html#onExiting">onExiting</a></li><li><a href="global.html#onHide">onHide</a></li><li><a href="global.html#onShow">onShow</a></li><li><a href="global.html#overlay">overlay</a></li><li><a href="global.html#persist">persist</a></li><li><a href="global.html#placement">placement</a></li><li><a href="global.html#ReactEventListener">ReactEventListener</a></li><li><a href="global.html#receiveComponent">receiveComponent</a></li><li><a href="global.html#renderBackdrop">renderBackdrop</a></li><li><a href="global.html#rootClose">rootClose</a></li><li><a href="global.html#setEnabled">setEnabled</a></li><li><a href="global.html#show">show</a></li><li><a href="global.html#supportsEventPageXY">supportsEventPageXY</a></li><li><a href="global.html#tabClassName">tabClassName</a></li><li><a href="global.html#title">title</a></li><li><a href="global.html#toggleLabel">toggleLabel</a></li><li><a href="global.html#transition">transition</a></li><li><a href="global.html#trigger">trigger</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yrexpert-js.html">lib/yrexpert-js</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_yrexpert-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.loginRpc.html">loginRpc</a></li><li><a href="module-lib_yrexpert-js.handlers.readRPCBDDC.html">readRPCBDDC</a></li><li><a href="module-lib_yrexpert-js.handlers.setRPCBDDC.html">setRPCBDDC</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Feb 11 2017 17:06:15 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Aug 09 2018 21:05:19 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

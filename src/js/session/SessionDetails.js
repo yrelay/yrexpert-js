@@ -2,7 +2,7 @@
 
 !----------------------------------------------------------------------------!
 !                                                                            !
-! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
+! Yexpert : (your) Système Expert sous Mumps GT.M et GNU/Linux               !
 ! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
 !                                                                            !
 !----------------------------------------------------------------------------!
@@ -16,15 +16,14 @@ var ReactBootstrap = require('react-bootstrap');
 var Inspector = require('react-json-inspector');
 
 var {
+  Button,
+  Glyphicon,
+  OverlayTrigger,
   Panel,
-  Grid,
-  Row,
-  Col,
-  Image,
-  ResponsiveEmbed
+  Tooltip
 } = ReactBootstrap;
 
-var AproposPanel = React.createClass({
+var SessionDetails = React.createClass({
 
   getInitialState: function() {
     return {
@@ -33,13 +32,9 @@ var AproposPanel = React.createClass({
   },
 
   componentWillMount: function() {
-    this.controller = require('./controller-AproposPanel')(this.props.controller, this);
-
-    this.title = (
-      <h1>Terminal</h1>
-    );
+    this.controller = require('./controller-SessionDetails')(this.props.controller, this);
   },
-
+  
   componentWillReceiveProps: function(newProps) {
     this.onNewProps(newProps);
   },
@@ -48,39 +43,41 @@ var AproposPanel = React.createClass({
 
     //var componentPath = this.controller.updateComponentPath(this);
 
+   //console.log('rendering SessionDetails - ' + JSON.stringify(this.data));
+
+    if (!this.data) {
+      return (
+        <div></div>
+      );
+    }
+
+    // create a clone of data to ensure re-rendering
+    var newData = {};
+    Object.assign(newData, this.data);
+   
     return (
       <Panel 
         collapsible 
         expanded={this.expanded} 
-        header={this.title}
-        bsStyle="primary"
+        header = {this.title}
+        bsStyle="info"
       >
-
-      <div style={{width: 'auto', height: 'auto'}}>
-        <ResponsiveEmbed a16by9>
-          <embed type="text/html" src="http://localhost:8081/yrexpert-term/index.html" />
-        </ResponsiveEmbed>
-      </div>
-
+        <Inspector 
+          data={newData}
+          isExpanded = {this.isExpanded}
+          onClick={this.nodeClicked}
+          search={false}
+        />
       </Panel>
     );
   }
 });
 
-module.exports = AproposPanel;
+module.exports = SessionDetails;
 
-/*
-        {
-        <Grid>
-          <Row>
-            <Col md={12}>
-              <iframe height="430px" width="710px" src="http://localhost:8081/yrexpert-term/index.html" frameborder="0" allowfullscreen></iframe>
-            </Col>
-          </Row>
-        </Grid>
 
-        }
-*/
+
+
 
 
 

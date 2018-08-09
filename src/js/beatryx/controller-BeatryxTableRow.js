@@ -11,31 +11,28 @@
 
 module.exports = function (controller, component) {
 
-  component.handleChange = function(e) {
-    // Mise à jour de l'affichage du champ dans le composant d'entrée :
-
-    var fieldName = component.props.fieldname;
-    var value = e.target.value;
-
-    component.setState({
-      value: value
-    });
-
-    // Puis passer au composant parent LoginModal :
-
-    controller.LoginModal.onLoginFieldChange({
-      value: value,
-      ref: fieldName
-    });
+  component.onNewProps = function(newProps) {
   };
 
-  component.validationState = function() {
-    if (component.state.value.length === 0) return 'error';
+  component.stopBeatryx = function() {
+    var message = {
+      type: 'stopBeatryx',
+      params: {
+        token: component.props.token
+      }
+    };
+    controller.send(message);
+  };
+
+  component.showBeatryx = function() {
+    var message = {
+      type: 'showBeatryx',
+      params: {
+        token: component.props.token
+      }
+    };
+    controller.send(message);
   };
 
   return controller;
 };
-
-
-
-

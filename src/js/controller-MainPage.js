@@ -58,21 +58,32 @@ module.exports = function (controller, component) {
     controller.stopTimers();
   });
 
+  // Fichier
   controller.on('robotandy', function() {component.setState({status: 'robotandy'});});
-  controller.on('defutilisateur', function() {component.setState({status: 'defutilisateur'});});
-  controller.on('nouvpartition', function() {component.setState({status: 'nouvpartition'});});
+  controller.on('beatryxrobot', function() {component.setState({status: 'beatryxrobot'});});
 
+  // Editer
+
+  // Navigation
+
+  // Rechercher
+  controller.on('rechercherfichier', function() {component.setState({status: 'rechercherfichier'});});
+
+  // Partition
   controller.on('allerpartition', function() {component.setState({status: 'allerpartition'});});
 
+  // Exécuter
+  controller.on('terminal', function() {component.setState({status: 'terminal'});});
+  controller.on('overview', function() {component.setState({status: 'overview'});});
+  controller.on('docstore', function() {component.setState({status: 'docstore'});});
+  controller.on('sessions', function() {component.setState({status: 'sessions'});});
+
+
+  // Fenêtre
+
+  // Aide
   controller.on('bienvenue', function() {component.setState({status: 'bienvenue'});});
   controller.on('apropos', function() {component.setState({status: 'apropos'});});
-
-
-
-
-
-
-
 
 
   controller.on('logout', function() {
@@ -85,29 +96,7 @@ module.exports = function (controller, component) {
     });
   });
 
-  controller.on('terminal', function() {
-	  component.setState({
-        status: 'terminal'
-      });
-  });
 
-  controller.on('overview', function() {
-	  component.setState({
-        status: 'overview'
-      });
-  });
-
-  controller.on('docstore', function() {
-	  component.setState({
-        status: 'docstore'
-      });
-  });
-
-  controller.on('sessions', function() {
-    component.setState({
-      status: 'sessions'
-    });
-  });
 
   controller.on('ewd-reregistered', function() {
     console.log('Réenregistré - redémarrer les minuteries');
