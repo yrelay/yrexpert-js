@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/js/defutilisateur***/DefUtilisateurPanel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/js/defutilisateur***/DefUtilisateurPanel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+
+!----------------------------------------------------------------------------!
+!                                                                            !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
+! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
+!                                                                            !
+!----------------------------------------------------------------------------!
+
+*/
+
+"use strict"
+
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+//var Inspector = require('react-json-inspector');
+
+var {
+  Button,
+  Glyphicon,
+  OverlayTrigger,
+  Panel,
+  Tooltip,
+  form,
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  HelpBlock
+} = ReactBootstrap;
+
+var DefUtilisateurPanel = React.createClass({
+
+  componentWillMount: function() {
+
+    this.controller = require('./controller-DefUtilisateurPanel')(this.props.controller, this);
+
+    this.title = (
+      &lt;h1>Nouvelle partition&lt;/h1>
+    );
+  },
+
+// *******
+
+  getInitialState() {
+    return {
+      valueWHOIS: 'DMO',
+      valueBACK: 'GENERAL',
+      valueENTETE: 'DEMO',
+      valueMACHINE: 'DMO',
+      valueNOM: 'DEMO',
+      valuePASS: 'DMO',
+      valuePRINTER: '30',
+      valueSITE: '1',
+      valueSTART: 'GENERAL',
+      valueTABLETRAC: '30',
+      valueTYPETABLE: 'HP-KYO',
+      valueECRANGRAP: '0',
+      valueTYPEECRAN: 'TEKTRO-4014',
+      valueIMPRCOUR: '66',
+      valueORDINATEUR: 'IBM-PC',
+      valueLANGAGE: 'M11',
+      isLoading: false,
+      status: 'initial'
+    };
+  },
+
+  // WHOIS
+  getValidationWHOIS() {
+    const length = this.state.valueWHOIS.length;
+    if (length > 5) return 'error';
+    else if (length > 3) return 'warning';
+    else if (length == 3) return 'success';
+  },
+
+  handleChangeWHOIS(e) {
+    const re = /[a-zA-Z]/g;
+    const np = e.target.value.replace(re,"");
+    if (e.target.value.replace(re,"")=="") {
+      this.setState({
+        valueWHOIS: e.target.value.toUpperCase(),
+      });
+    } else {
+      this.setState({
+        valueWHOIS: e.target.value.substring(0,e.target.value.length-1)
+      });
+    }
+  },
+
+// ******2
+
+  handleClick() {
+    this.setState({isLoading: true});
+    this.refresh();
+
+    // This probably where you would have an `ajax` call
+    setTimeout(() => {
+      // Completed of async action, set loading state back
+      this.setState({isLoading: false});
+    }, 2000);
+    },
+/*
+  componentDidUpdate: function() {
+
+    //console.log('status: ' + this.state.status);
+    var that = this;
+
+    setTimeout(function() {
+      $('.json-inspector__leaf').each(function(ix, item) {
+        var id = $(item).attr('id');
+        var name = id.split('root.')[1];
+        if (!name) {
+          $(item).find('span.json-inspector__key').first().hide();
+          $(item).find('span.json-inspector__value').first().hide();
+        }
+        else if (name.indexOf('.') === -1 &amp;&amp; that.data[name]) {
+          $(item).find('span.json-inspector__key').first().addClass('json-inspector__docName');
+        }
+      });
+    }, 100);
+  },
+*/  
+// ******
+
+  componentWillReceiveProps: function(newProps) {
+    this.onNewProps(newProps);
+  },
+
+  render: function() {
+
+    //var componentPath = this.controller.updateComponentPath(this);
+
+    /**
+     * @todo Améliorer le test sur laille de la partition
+     * @todo La taille ne doit pas excéder 50% de la taille disponible en local
+    */
+
+    function FieldGroup({ id, validation, label, help, ...props }) {
+      return (
+        &lt;FormGroup controlId={id} validationState={validation}>
+          &lt;ControlLabel>{label}&lt;/ControlLabel>
+          &lt;FormControl {...props} />
+          &lt;FormControl.Feedback />
+          {help &amp;&amp; &lt;HelpBlock>{help}&lt;/HelpBlock>}
+        &lt;/FormGroup>
+      );
+    }
+
+    let isLoading = this.state.isLoading;
+
+    // Créer un clone de données pour assurer un nouveau rendu
+    if (this.data) {
+      var newData = {};
+      Object.assign(newData, this.data);
+    }
+
+    return (
+      &lt;Panel 
+        collapsible 
+        expanded={this.expanded} 
+        header={this.title}
+        bsStyle="primary"
+      >
+
+      &lt;form>
+
+        &lt;FieldGroup
+          id="formWHOIS"
+          validation={this.getValidationWHOIS()}
+          type="text"
+          label="WHOIS : Indiquer le nom de l'utilisateur."
+          placeholder="Saisir l'utilisateur."
+          value={this.state.valueWHOIS}
+          help="Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur."
+          onChange={this.handleChangeWHOIS}
+        />
+
+
+
+      &lt;/form>
+
+      &lt;Button
+        bsStyle="primary"
+        disabled={isLoading}
+        onClick={!isLoading ? this.handleClick : null}>
+        {isLoading ? 'En traitement...' : 'Soumettre'}
+      &lt;/Button>
+
+      &lt;/Panel>
+    );
+  }
+});
+
+module.exports = DefUtilisateurPanel;
+
+/*
+      &lt;Inspector 
+        data={newData}
+        isExpanded = {this.isExpanded}
+        onClick={this.nodeClicked}
+        search={false}
+      />
+*/
+
+/*
+        &lt;FormGroup
+          controlId="formWHOIS"
+          validationState={this.getValidationWHOIS()}
+        >
+          &lt;ControlLabel>WHOIS : Indiquer nom de l'utisateur.&lt;/ControlLabel>
+          &lt;FormControl
+            type="text"
+            value={this.state.valueWHOIS}
+            placeholder="Saisir le nom"
+            onChange={this.handleChangeWHOIS}
+          />
+          &lt;FormControl.Feedback />
+          &lt;HelpBlock>Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur.&lt;/HelpBlock>
+        &lt;/FormGroup>
+
+*/
+
+
+
+/*
+        &lt;FieldGroup
+          id="formWHOIS"
+          validationState={this.getValidationWHOIS()}
+          type="text"
+          label="WHOIS : Indiquer le nom de l'utilisateur."
+          placeholder="Saisir l'utilisateur."
+          value={this.state.valueWHOIS}
+          help="Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur."
+          onChange={this.handleChangeWHOIS}
+        />
+        &lt;FieldGroup
+          id="formBACK"
+          type="text"
+          label="BACK : Indiquer le nom du menu de retour."
+          placeholder="Saisir le menu."
+          value={this.state.valueBACK}
+        />
+        &lt;FieldGroup
+          id="formENTETE"
+          type="text"
+          label="ENTETE : Indiquer l'entête de la partition ou du service."
+          placeholder="Saisir l'entête."
+          value={this.state.valueENTETE}
+        />
+        &lt;FieldGroup
+          id="formMACHINE"
+          type="text"
+          label="MACHINE : Indiquer le nom de la partition ou du service."
+          placeholder="Saisir la partition."
+          value={this.state.valueMACHINE}
+        />
+        &lt;FieldGroup
+          id="formNOM"
+          type="text"
+          label="Text"
+          placeholder="Enter text."
+          value={this.state.valueNOM}
+        />
+        &lt;FieldGroup
+          id="formPASS"
+          type="text"
+          label="PASS : Indiquer le mot de passe de la partition ou du service."
+          placeholder="Saisir le mot de passe."
+          value={this.state.valuePASS}
+        />
+        &lt;FieldGroup
+          id="formPRINTER"
+          type="number"
+          label="PRINTER : Indiquer le N° de l'imprimante."
+          placeholder="Saisir l'imprimante."
+          value={this.state.valuePRINTER}
+        />
+        &lt;FieldGroup
+          id="formSITE"
+          type="number"
+          label="SITE : Indiquer le N° du site."
+          placeholder="Saisir le site."
+          value={this.state.valueSITE}
+        />
+        &lt;FieldGroup
+          id="formSTART"
+          type="text"
+          label="START : Indiquer le nom du menu au démarrage."
+          placeholder="Saisir le menu."
+          value={this.state.valueSTART}
+        />
+        &lt;FieldGroup
+          id="formTABLETRAC"
+          type="text"
+          label="TABLETRAC : Indiquer le nom du menu au démarrage."
+          placeholder="Saisir le menu."
+          value={this.state.valueTABLETRAC}
+        />
+        &lt;FieldGroup
+          id="formTYPETABLE"
+          type="text"
+          label="TYPETABLE : Indiquer le nom du menu au démarrage."
+          placeholder="Saisir le menu."
+          value={this.state.valueTYPETABLE}
+        />
+        &lt;FieldGroup
+          id="formECRANGRAP"
+          type="text"
+          label="ECRANGRAP : Indiquer le nom du menu au démarrage."
+          placeholder="Saisir le menu."
+          value={this.state.valueECRANGRAP}
+        />
+        &lt;FieldGroup
+          id="formTYPEECRAN"
+          type="text"
+          label="TYPEECRAN : Indiquer le nom du menu au démarrage."
+          placeholder="Saisir le menu."
+          value={this.state.valueTYPEECRAN}
+        />
+        &lt;FieldGroup
+          id="formIMPRCOUR"
+          type="text"
+          label="IMPRCOUR : Indiquer le nom du menu au démarrage."
+          placeholder="Saisir le menu."
+          value={this.state.valueIMPRCOUR}
+        />
+        &lt;FieldGroup
+          id="formORDINATEUR"
+          type="text"
+          label="ORDINATEUR : Indiquer le nom du menu au démarrage."
+          placeholder="Saisir le menu."
+          value={this.state.valueORDINATEUR}
+        />
+        &lt;FieldGroup
+          id="formLANGAGE"
+          type="text"
+          label="LANGAGE : Indiquer le langage utilisé."
+          placeholder="Saisir le langage."
+          value={this.state.valueLANGAGE}
+        />
+*/
+
+
+
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yrexpert-js.html">lib/yrexpert-js</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_yrexpert-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.loginRpc.html">loginRpc</a></li><li><a href="module-lib_yrexpert-js.handlers.readRPCBDDC.html">readRPCBDDC</a></li><li><a href="module-lib_yrexpert-js.handlers.setRPCBDDC.html">setRPCBDDC</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Aug 12 2018 10:34:43 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

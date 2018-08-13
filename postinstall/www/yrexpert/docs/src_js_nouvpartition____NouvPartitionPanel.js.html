@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/js/nouvpartition***/NouvPartitionPanel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/js/nouvpartition***/NouvPartitionPanel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+
+!----------------------------------------------------------------------------!
+!                                                                            !
+! YRexpert : (Your Relay) Système Expert sous Mumps GT.M et GNU/Linux        !
+! Copyright (C) 2001-2015 by Hamid LOUAKED (HL).                             !
+!                                                                            !
+!----------------------------------------------------------------------------!
+
+*/
+
+"use strict"
+
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+//var Inspector = require('react-json-inspector');
+
+var {
+  Button,
+  Glyphicon,
+  OverlayTrigger,
+  Panel,
+  Tooltip,
+  form,
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  HelpBlock
+} = ReactBootstrap;
+
+var NouvPartitionPanel = React.createClass({
+
+  componentWillMount: function() {
+
+    this.controller = require('./controller-NouvPartitionPanel')(this.props.controller, this);
+
+    this.title = (
+      &lt;h1>Nouvelle partition&lt;/h1>
+    );
+  },
+
+// *******
+
+  getInitialState() {
+    return {
+      valueNomPartition: 'DMO',
+      valueTaillePartition: 1,
+      isLoading: false,
+      status: 'initial'
+    };
+  },
+
+  getValidationNomPartition() {
+    const length = this.state.valueNomPartition.length;
+    if (length > 5) return 'error';
+    else if (length > 3) return 'warning';
+    else if (length == 3) return 'success';
+  },
+
+  getValidationTaillePartition() {
+    const taille = this.state.valueTaillePartition;
+    if (taille > 0 &amp;&amp; taille &lt;= 5) return 'success';
+    else if (taille > 1 &amp;&amp; taille &lt;= 10) return 'warning';
+    else if (taille &lt;= 0 || taille > 10) return 'error';
+  },
+
+  handleChangeNomPartition(e) {
+    const re = /[a-zA-Z]/g;
+    const np = e.target.value.replace(re,"");
+    if (e.target.value.replace(re,"")=="") {
+      this.setState({
+        valueNomPartition: e.target.value.toUpperCase(),
+      });
+    } else {
+      this.setState({
+        valueNomPartition: e.target.value.substring(0,e.target.value.length-1)
+      });
+    }
+  },
+
+// ******2
+
+  handleChangeTaillePartition(e) {
+    this.setState({
+      valueTaillePartition: e.target.value
+    });
+  },
+
+  handleClick() {
+    this.setState({isLoading: true});
+    this.refresh();
+
+    // This probably where you would have an `ajax` call
+    setTimeout(() => {
+      // Completed of async action, set loading state back
+      this.setState({isLoading: false});
+    }, 2000);
+    },
+/*
+  componentDidUpdate: function() {
+
+    //console.log('status: ' + this.state.status);
+    var that = this;
+
+    setTimeout(function() {
+      $('.json-inspector__leaf').each(function(ix, item) {
+        var id = $(item).attr('id');
+        var name = id.split('root.')[1];
+        if (!name) {
+          $(item).find('span.json-inspector__key').first().hide();
+          $(item).find('span.json-inspector__value').first().hide();
+        }
+        else if (name.indexOf('.') === -1 &amp;&amp; that.data[name]) {
+          $(item).find('span.json-inspector__key').first().addClass('json-inspector__docName');
+        }
+      });
+    }, 100);
+  },
+*/  
+// ******
+
+  componentWillReceiveProps: function(newProps) {
+    this.onNewProps(newProps);
+  },
+
+  render: function() {
+
+    //var componentPath = this.controller.updateComponentPath(this);
+
+    /**
+     * @todo Améliorer le test sur laille de la partition
+     * @todo La taille ne doit pas excéder 50% de la taille disponible en local
+    */
+
+    let isLoading = this.state.isLoading;
+
+    // Créer un clone de données pour assurer un nouveau rendu
+    if (this.data) {
+      var newData = {};
+      Object.assign(newData, this.data);
+    }
+
+    return (
+      &lt;Panel 
+        collapsible 
+        expanded={this.expanded} 
+        header={this.title}
+        bsStyle="primary"
+      >
+
+      &lt;form>
+        &lt;FormGroup
+          controlId="formBasicText"
+          validationState={this.getValidationNomPartition()}
+        >
+          &lt;ControlLabel>Indiquer le nom de votre nouvelle partition.&lt;/ControlLabel>
+          &lt;FormControl
+            type="text"
+            value={this.state.valueNomPartition}
+            placeholder="Saisir votre partition"
+            onChange={this.handleChangeNomPartition}
+          />
+          &lt;FormControl.Feedback />
+          &lt;HelpBlock>Le nom doit être en majscules, comporter 3 caractères au minimum et 5 caractères au maximum.&lt;/HelpBlock>
+        &lt;/FormGroup>
+
+        &lt;FormGroup
+          controlId="formTaillePartition"
+          validationState={this.getValidationTaillePartition()}
+        >
+          &lt;ControlLabel>Indiquer la taille en Go de votre nouvelle partition.&lt;/ControlLabel>
+          &lt;FormControl
+            type="number"
+            value={this.state.valueTaillePartition}
+            placeholder="Saisir la taille de votre partition"
+            onChange={this.handleChangeTaillePartition}
+          />
+          &lt;FormControl.Feedback />
+          &lt;HelpBlock>La taille recommandée est de 1 Go et limitée à 10 Go.&lt;/HelpBlock>
+        &lt;/FormGroup>
+      &lt;/form>
+
+      &lt;Button
+        bsStyle="primary"
+        disabled={isLoading}
+        onClick={!isLoading ? this.handleClick : null}>
+        {isLoading ? 'En traitement...' : 'Soumettre'}
+      &lt;/Button>
+
+      &lt;/Panel>
+    );
+  }
+});
+
+module.exports = NouvPartitionPanel;
+
+/*
+      &lt;Inspector 
+        data={newData}
+        isExpanded = {this.isExpanded}
+        onClick={this.nodeClicked}
+        search={false}
+      />
+*/
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-lib_yrexpert-js.html">lib/yrexpert-js</a></li></ul><h3>Classes</h3><ul><li><a href="module-lib_yrexpert-js.handlers.cdNameSpace.html">cdNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.getNameSpace.html">getNameSpace</a></li><li><a href="module-lib_yrexpert-js.handlers.loginRpc.html">loginRpc</a></li><li><a href="module-lib_yrexpert-js.handlers.readRPCBDDC.html">readRPCBDDC</a></li><li><a href="module-lib_yrexpert-js.handlers.setRPCBDDC.html">setRPCBDDC</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Aug 12 2018 10:34:43 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
