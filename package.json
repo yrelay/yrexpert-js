@@ -1,8 +1,8 @@
 {
   "name": "yrexpert-js",
   "description": "L'interface Web pour votre système expert...",
-  "keywords": [ "expert", "system", "systeme","ai","artificial", "intelligence", "ai", "artificielle" ],
-  "version": "0.0.177",
+  "keywords": [ "expert", "system", "systeme", "ai", "artificial", "intelligence", "ai", "artificielle" ],
+  "version": "0.0.178",
   "license": "GPL-3.0",
   "author": {
     "name": "Yrelay",
@@ -42,7 +42,7 @@
     "react-bootstrap": ">=0.31.3",
     "react-dom": ">=0.14.8",
     "react-json-inspector": "",
-    "react-toastr": ">=2.9.3",
+    "react-toastr": "^2.9.5",
     "reactify": ">=1.1.1",
     "socket.io-client": ">=2.0.3",
     "toastr": ">=2.1.2",
