@@ -1,8 +1,7 @@
 {
   "name": "yrexpert-js",
   "description": "L'interface Web pour votre système expert...",
-  "keywords": [ "expert", "system", "systeme", "ai", "artificial", "intelligence", "ai", "artificielle" ],
-  "version": "0.0.183",
+  "version": "0.0.184",
   "license": "GPL-3.0",
   "author": {
     "name": "Yrelay",
@@ -54,7 +53,7 @@
     "babel-preset-react": "^6.24.1",
     "webpack": "",
     "webpack-dev-server": "",
-    "@babel/core": "^7.0.0-0",
+    "@babel/core": "^7.0.0",
     "babel-loader": "",
     "babel-preset-react-hmre": "",
     "react-router": "",
@@ -84,5 +83,17 @@
   },
   "bugs": {
     "url": "https://github.com/yrelay/yrexpert-js/issues"
-  }
+  },
+  "keywords": [ "expert",
+                "system",
+                "systeme",
+                "engine",
+                "inference",
+                "moteur",
+                "ai",
+                "artificial",
+                "intelligence",
+                "ai",
+                "artificielle"
+  ]
 }
