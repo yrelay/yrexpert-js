@@ -1,7 +1,7 @@
 {
   "name": "yrexpert-js",
   "description": "L'interface Web pour votre système expert...",
-  "version": "0.0.185",
+  "version": "0.0.186",
   "license": "GPL-3.0",
   "author": {
     "name": "Yrelay",
@@ -48,35 +48,17 @@
     "yrexpert-gtm": ">=0.0.0",
     "yrexpert-rpc": ">=0.0.0",
     "yrexpert-term": ">=0.0.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "@babel/preset-env": "^7.0.0-rc.1",
-    "babel-preset-react": "^6.24.1",
+    "@babel/core": "^7.0.0-rc.1",
     "webpack": "",
     "webpack-dev-server": "",
-    "@babel/core": "^7.0.0-rc.1",
-    "babel-loader": "",
-    "babel-preset-react-hmre": "",
     "react-router": "",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-preset-stage-1": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-preset-stage-3": "^6.24.1",
     "babelify": "^7.3.0",
     "react-select": "^1.0.0-rc.10",
     "find-up": "",
     "globby": ""
   },
   "devDependencies": {},
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "react",
-      "stage-3"
-    ],
-    "plugins": [
-      "transform-class-properties"
-    ]
-  },
   "scripts": {
     "postinstall": "node postinstall/install",
     "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot"
