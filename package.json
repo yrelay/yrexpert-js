@@ -2,7 +2,7 @@
   "name": "yrexpert-js",
   "description": "L'interface Web pour votre système expert...",
   "keywords": [ "expert", "system", "systeme", "ai", "artificial", "intelligence", "ai", "artificielle" ],
-  "version": "0.0.180",
+  "version": "0.0.183",
   "license": "GPL-3.0",
   "author": {
     "name": "Yrelay",
@@ -50,11 +50,11 @@
     "yrexpert-rpc": ">=0.0.0",
     "yrexpert-term": ">=0.0.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "@babel/preset-env": ">=7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
     "babel-preset-react": "^6.24.1",
     "webpack": "",
     "webpack-dev-server": "",
-    "babel-core": "",
+    "@babel/core": "^7.0.0-0",
     "babel-loader": "",
     "babel-preset-react-hmre": "",
     "react-router": "",
@@ -70,7 +70,7 @@
   "devDependencies": {},
   "babel": {
     "presets": [
-      "env",
+      "@babel/preset-env",
       "react",
       "stage-3"
     ],
