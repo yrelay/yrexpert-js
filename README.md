@@ -1,9 +1,11 @@
 ![yrexpert_logo.png](./images/yrexpert_logo.png)
 
-# Interface Web pour votre système expert...
+[![npm package](https://nodei.co/npm/request.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/yrexpert-js/)
 
 [![npm version][npm-image]][npm-url]
 [![npm downloads][downloads-image]][downloads-url]
+
+# Interface Web pour votre système expert...
 
 Cette arborescence fournit une interface Web et les outils que vous aurez besoin pour votre système expert. Elle est maintenue par [https://www.yrelay.fr/](https://www.yrelay.fr/) et diffusée sous licence libre. Cette version comprend des contributions communautaires libres acceptées par [https://www.yrelay.fr/](https://www.yrelay.fr/).
 
