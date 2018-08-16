@@ -1,6 +1,6 @@
 ![yrexpert_logo.png](./images/yrexpert_logo.png)
 
-[![npm package](https://nodei.co/npm/request.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/yrexpert-js/)
+[![npm package](https://nodei.co/npm/yrexpert-js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/yrexpert-js/)
 
 [![npm version][npm-image]][npm-url]
 [![npm downloads][downloads-image]][downloads-url]
