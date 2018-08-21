@@ -22,16 +22,15 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "ewd-client": "^1.17.0",
     "ewd-document-store": "^1.18.0",
     "ewd-qoper8": "^3.16.0",
     "ewd-qoper8-express": "^3.21.3",
     "ewd-react-tools": "^1.0.0",
     "ewd-session": "^2.18.1",
     "ewd-xpress": "^1.35.0",
-    "ewd-xpress-monitor": "^1.10.0",
     "ewd-xpress-react": "^1.4.0",
+    "qewd": "^2.38.0",
+    "qewd-monitor": "^2.4.0",
     "express": "^4.16.0",
     "jquery": "^3.2.1",
     "jsdoc": "^3.5.5",
