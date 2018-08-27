@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Panel,
@@ -25,7 +26,7 @@ var {
 var WorkerProcessDetails = require('./WorkerProcessDetails');
 var Spinner = require('./Spinner');
 
-var WorkerProcessDetailsTable = React.createClass({
+var WorkerProcessDetailsTable = createReactClass({
 
   getInitialState: function() {
     return {

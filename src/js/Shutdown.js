@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Button,
@@ -20,7 +21,7 @@ var {
 
 var controller;
 
-module.exports = React.createClass({
+module.exports = createReactClass({
 
   startMonitor: function() {
     location.reload();

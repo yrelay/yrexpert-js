@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Button,
@@ -22,7 +23,7 @@ var {
   Tooltip
 } = ReactBootstrap;
 
-var SessionTableRow = React.createClass({
+var SessionTableRow = createReactClass({
 
   getInitialState: function() {
     return {

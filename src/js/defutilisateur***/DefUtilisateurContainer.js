@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Grid,
@@ -21,7 +22,7 @@ var {
 
 var DefUtilisateurPanel = require('./DefUtilisateurPanel');
 
-var DefUtilisateurContainer = React.createClass({
+var DefUtilisateurContainer = createReactClass({
 
   getInitialState: function() {
     return {

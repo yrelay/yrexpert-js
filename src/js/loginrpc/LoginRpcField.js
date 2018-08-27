@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 
 var {
@@ -23,7 +24,7 @@ var {
   Checkbox
 } = ReactBootstrap;
 
-var LoginRpcField = React.createClass({
+var LoginRpcField = createReactClass({
 
   getInitialState: function() {
     return {

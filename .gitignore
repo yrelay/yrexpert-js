@@ -1,8 +1,22 @@
 testing/
 unstable/
-./node_modules/ # uniquement à la racine
+node_modules/
+!postinstall/node_modules/
 log/
 *.log
+
+.*.swp
+._*
+.DS_Store
+.git
+.hg
+.npmrc
+.lock-wscript
+.svn
+.wafpickle-*
+config.gypi
+CVS
+npm-debug.log
 
 
 

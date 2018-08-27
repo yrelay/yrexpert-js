@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 //var Inspector = require('react-json-inspector');
 
@@ -24,7 +25,7 @@ var {
   FormControl
 } = ReactBootstrap;
 
-var AllerPartitionPanel = React.createClass({
+var AllerPartitionPanel = createReactClass({
 
   componentWillMount: function() {
     this.controller = require('./controller-AllerPartitionPanel')(this.props.controller, this);

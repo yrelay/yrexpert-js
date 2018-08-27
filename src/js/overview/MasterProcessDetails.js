@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Panel,
@@ -23,7 +24,7 @@ var {
   Tooltip
 } = ReactBootstrap;
 
-var MasterProcessDetails = React.createClass({
+var MasterProcessDetails = createReactClass({
 
   getInitialState: function() {
     return {

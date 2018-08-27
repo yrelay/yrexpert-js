@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Grid,
@@ -21,7 +22,7 @@ var {
 
 var AproposPanel = require('./AproposPanel');
 
-var AproposContainer = React.createClass({
+var AproposContainer = createReactClass({
 
   getInitialState: function() {
     return {

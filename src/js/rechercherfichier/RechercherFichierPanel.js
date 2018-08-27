@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 //var Inspector = require('react-json-inspector');
 
@@ -33,7 +34,7 @@ var {
   Modal
 } = ReactBootstrap;
 
-var RechercherFichierPanel = React.createClass({
+var RechercherFichierPanel = createReactClass({
 
   getInitialState: function() {
     return {

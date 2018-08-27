@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 //var Inspector = require('react-json-inspector');
 
@@ -24,7 +25,7 @@ var {
   ResponsiveEmbed
 } = ReactBootstrap;
 
-var AproposPanel = React.createClass({
+var AproposPanel = createReactClass({
 
   getInitialState: function() {
     return {

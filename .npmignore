@@ -2,6 +2,7 @@ testing/
 unstable/
 .git*
 node_modules/
+!postinstall/node_modules/
 test/
 log/
 *.log

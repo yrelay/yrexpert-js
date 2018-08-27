@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactToastr = require('react-toastr');
 var jQuery = require('jquery');
 window.$ = window.jQuery = jQuery;
@@ -27,7 +28,7 @@ var Shutdown = require('./Shutdown');
 var controller;
 var title = 'yrexpert-js';
 
-var MainPage = React.createClass({
+var MainPage = createReactClass({
 
   getInitialState: function() {
     return {

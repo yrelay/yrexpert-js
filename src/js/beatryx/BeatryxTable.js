@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var moment = require('moment');
 var {
@@ -25,7 +26,7 @@ var {
 
 var BeatryxTableRow = require('./BeatryxTableRow');
 
-var BeatryxTable = React.createClass({
+var BeatryxTable = createReactClass({
 
   getInitialState: function() {
     return {

@@ -12,13 +12,14 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Panel,
   Table
 } = ReactBootstrap;
 
-var BuildDetails = React.createClass({
+var BuildDetails = createReactClass({
 
   getInitialState: function() {
     return {

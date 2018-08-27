@@ -12,6 +12,8 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
+
 // Fichier
 var RobotAndyContainer = require('./andy/RobotAndyContainer');
 var BeatryxRobotContainer = require('./beatryx/BeatryxRobotContainer');
@@ -39,7 +41,7 @@ var BienvenueContainer = require('./bienvenue/BienvenueContainer');
 var AproposContainer = require('./apropos/AproposContainer');
 
 
-var Content = React.createClass({
+var Content = createReactClass({
 
   getInitialState: function() {
     return {

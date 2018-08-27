@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Panel,
@@ -24,7 +25,7 @@ var BuildDetails = require('./BuildDetails');
 var MasterProcessDetails = require('./MasterProcessDetails');
 var WorkerProcessDetailsTable = require('./WorkerProcessDetailsTable');
 
-var OverviewPanel = React.createClass({
+var OverviewPanel = createReactClass({
 
   getInitialState: function() {
     return {

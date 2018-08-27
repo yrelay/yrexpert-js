@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react'); 
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var {
   Button,
@@ -21,7 +22,7 @@ var {
 
 var value;
 
-var Spinner = React.createClass({
+var Spinner = createReactClass({
 
   getInitialState: function() {
     return {

@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 
 
@@ -25,7 +26,7 @@ var {
 
 var LoginRpcField = require('./LoginRpcField');
 
-var LoginRpcModal = React.createClass({
+var LoginRpcModal = createReactClass({
 
   componentWillMount: function() {
     this.controller = require('./controller-LoginRpcModal')(this.props.controller, this);

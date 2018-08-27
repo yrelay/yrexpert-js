@@ -12,6 +12,7 @@
 "use strict"
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactBootstrap = require('react-bootstrap');
 var Inspector = require('react-json-inspector');
 
@@ -23,7 +24,7 @@ var {
   Tooltip
 } = ReactBootstrap;
 
-var BeatryxDetails = React.createClass({
+var BeatryxDetails = createReactClass({
 
   getInitialState: function() {
     return {

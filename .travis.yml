@@ -1,8 +1,17 @@
+sudo: required
 os:
   - linux
-  - osx
 language: node_js
 node_js:
   - '10'
   - '8'
   - '6'
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo curl -o- https://raw.githubusercontent.com/yrelay/yrexpert-box/master/gtm/installerGTM.sh | bash; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat > yrexpert-jsSilent.js << { "silent": true, "extras": true }; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat > yrexpert-termSilent.js << { "silent": true, "extras": true }; fi
+
+
+
+
+
