@@ -45,31 +45,34 @@
     "yrexpert-gtm": "^0.0.2",
     "yrexpert-rpc": "^0.0.7",
     "yrexpert-term": "^0.0.6",
-
     "@babel/preset-env": "^7.0.0-rc.3",
     "@babel/core": "^7.0.0-rc.3",
     "@babel/preset-react": "^7.0.0-rc.3",
-
-    "babel-core": "^7.0.0-bridge.0"
+    "babel-core": "^7.0.0-bridge.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {},
   "scripts": {
     "postinstall": "node postinstall/install",
-    "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot"
+    "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "bugs": {
     "url": "https://github.com/yrelay/yrexpert-js/issues"
   },
-  "keywords": [ "expert",
-                "system",
-                "systeme",
-                "engine",
-                "inference",
-                "moteur",
-                "ai",
-                "artificial",
-                "intelligence",
-                "ai",
-                "artificielle"
-  ]
+  "keywords": [
+    "expert",
+    "system",
+    "systeme",
+    "engine",
+    "inference",
+    "moteur",
+    "ai",
+    "artificial",
+    "intelligence",
+    "ai",
+    "artificielle"
+  ],
+  "snyk": true
 }
