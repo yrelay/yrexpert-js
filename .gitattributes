@@ -1,4 +1,4 @@
 # forcer le langauge sur JavaScript
-linguist-language=JavaScript
-
+* linguist-vendored
+*.js linguist-vendored=false
 
