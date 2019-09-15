@@ -9,18 +9,10 @@
 */
 
 module.exports = function (controller, component) {
+  component.onNewProps = function (newProps) {
+  }
 
-  component.onNewProps = function(newProps) {
-  };
+  component.expanded = true
 
-  component.expanded = true;
-
-  return controller;
-};
-
-
-
-
-
-
-
+  return controller
+}

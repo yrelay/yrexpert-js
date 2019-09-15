@@ -9,78 +9,62 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
-var Inspector = require('react-json-inspector');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
+var Inspector = require('react-json-inspector')
 
-var {
-  Button,
-  Glyphicon,
-  OverlayTrigger,
-  Panel,
-  Tooltip
-} = ReactBootstrap;
+var { Panel } = ReactBootstrap
 
 var SessionDetails = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-SessionDetails')(this.props.controller, this);
-  },
-  
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillMount: function () {
+    this.controller = require('./controller-SessionDetails')(this.props.controller, this)
   },
 
-  render: function() {
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
+  },
 
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
-   //console.log('rendering SessionDetails - ' + JSON.stringify(this.data));
+    // console.log('rendering SessionDetails - ' + JSON.stringify(this.data));
 
     if (!this.data) {
       return (
-        <div></div>
-      );
+        <div />
+      )
     }
 
     // create a clone of data to ensure re-rendering
-    var newData = {};
-    Object.assign(newData, this.data);
-   
+    var newData = {}
+    Object.assign(newData, this.data)
+
     return (
-      <Panel 
-        collapsible 
-        expanded={this.expanded} 
-        header = {this.title}
-        bsStyle="info"
+      <Panel
+        collapsible
+        expanded={this.expanded}
+        header={this.title}
+        bsStyle='info'
       >
-        <Inspector 
+        <Inspector
           data={newData}
-          isExpanded = {this.isExpanded}
+          isExpanded={this.isExpanded}
           onClick={this.nodeClicked}
           search={false}
         />
       </Panel>
-    );
+    )
   }
-});
+})
 
-module.exports = SessionDetails;
-
-
-
-
-
-
-
-
-
+module.exports = SessionDetails

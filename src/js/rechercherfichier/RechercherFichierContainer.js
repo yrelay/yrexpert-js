@@ -9,58 +9,53 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Grid,
   Row,
   Col
-} = ReactBootstrap;
+} = ReactBootstrap
 
-var RechercherFichierPanel = require('./RechercherFichierPanel');
+var RechercherFichierPanel = require('./RechercherFichierPanel')
 
 var RechercherFichierContainer = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-RechercherFichierContainer')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-RechercherFichierContainer')(this.props.controller, this)
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
     return (
       <Grid
-        fluid = {true}
-        className = {this.hideContainer ? 'hidden' : ''}
+        fluid
+        className={this.hideContainer ? 'hidden' : ''}
       >
         <Row>
           <Col md={12}>
             <RechercherFichierPanel
-              controller = {this.controller}
+              controller={this.controller}
             />
           </Col>
         </Row>
       </Grid>
-    );
-
+    )
   }
-});
+})
 
-module.exports = RechercherFichierContainer;
-
-
-
+module.exports = RechercherFichierContainer

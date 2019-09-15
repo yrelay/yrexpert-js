@@ -9,66 +9,61 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
-//var Inspector = require('react-json-inspector');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
+// var Inspector = require('react-json-inspector');
 
 var {
   Panel,
-  Grid,
-  Row,
-  Col,
-  Image,
   ResponsiveEmbed
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var AproposPanel = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-TerminalPanel')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-TerminalPanel')(this.props.controller, this)
 
     this.title = (
       <h1>Terminal</h1>
-    );
+    )
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
     return (
-      <Panel 
-        collapsible 
-        expanded={this.expanded} 
+      <Panel
+        collapsible
+        expanded={this.expanded}
         header={this.title}
-        bsStyle="primary"
+        bsStyle='primary'
       >
 
-      <div style={{width: 'auto', height: 'auto'}}>
-        <ResponsiveEmbed a16by9>
-          <embed type="text/html" src="http://localhost:8081/yrexpert-term/index.html" />
-        </ResponsiveEmbed>
-      </div>
+        <div style={{ width: 'auto', height: 'auto' }}>
+          <ResponsiveEmbed a16by9>
+            <embed type='text/html' src='http://localhost:8081/yrexpert-term/index.html' />
+          </ResponsiveEmbed>
+        </div>
 
       </Panel>
-    );
+    )
   }
-});
+})
 
-module.exports = AproposPanel;
+module.exports = AproposPanel
 
 /*
         {
@@ -82,8 +77,3 @@ module.exports = AproposPanel;
 
         }
 */
-
-
-
-
-

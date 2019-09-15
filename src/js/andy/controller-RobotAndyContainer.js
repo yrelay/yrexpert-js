@@ -10,13 +10,12 @@
 */
 
 module.exports = function (controller, component) {
-
-  component.onNewProps = function(newProps) {
-    component.hideContainer = (newProps.status !== 'robotandy');
-  };
+  component.onNewProps = function (newProps) {
+    component.hideContainer = (newProps.status !== 'robotandy')
+  }
 
   // N'affichez pas le panneau RobotAndy lors du premier rendu après la connexion
-  component.hideContainer = true;
+  component.hideContainer = true
 
-  return controller;
-};
+  return controller
+}

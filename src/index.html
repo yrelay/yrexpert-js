@@ -9,55 +9,59 @@
 !                                                                            !
 !----------------------------------------------------------------------------!
 
-    <script src="https://unpkg.com/react-select/dist/react-select.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/react-select/dist/react-select.css">
-
 -->
 
-  <head>
+<head>
     <title id="titreYRexpert-js">yrexpert-js : L'interface Web pour votre système expert...</title>
     <link rel="shortcut icon" href="images/yrexpert_logo.png" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.css">
     <link rel="stylesheet" href="json-inspector.css">
-
-    <!-- react-select -->
-    <script src="https://unpkg.com/react@15.6.1/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15.6.1/dist/react-dom.js"></script>
-    <script src="https://unpkg.com/prop-types@15.5.10/prop-types.js"></script>
-    <script src="https://unpkg.com/classnames@2.2.5/index.js"></script>
-    <script src="https://unpkg.com/react-input-autosize@2.0.0/dist/react-input-autosize.js"></script>
-    <script src="https://unpkg.com/react-select@1.2.1/dist/react-select.js"></script>
-
-    <link rel="stylesheet" href="https://unpkg.com/react-select@1.2.1/dist/react-select.css">
-
     <style>
-      .modal-container {
-        position: relative
-      }
-      .modal-container .modal, .modal-container .modal-backdrop {
-        position: absolute
-      }
-      .hidden {
-        display: none
-      }
-      .overviewTable {
-        font-size: 12
-      }
-      .pushRight {
-        text-align: right
-      }
+        .modal-container {
+            position: relative
+        }
+        
+        .modal-container .modal,
+        .modal-container .modal-backdrop {
+            position: absolute
+        }
+        
+        .hidden {
+            display: none
+        }
+        
+        .overviewTable {
+            font-size: 12
+        }
+        
+        .pushRight {
+            text-align: right
+        }
     </style>
     <link rel="stylesheet" href="Select.css">
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="content"></div>
+
+    <script>
+        /*
+                        // Mappage facultatif du chemin socket.io - à utiliser si le proxy est utilisé via nginx vers plusieurs instances QEWD
+
+                      var qewd = {
+                        io_path: '/proxypath'
+                      };
+
+                      */
+    </script>
 
     <script src="bundle.js"></script>
 
-  </body>
+</body>
+
 </html>

@@ -9,99 +9,93 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
-//var Inspector = require('react-json-inspector');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
+// var Inspector = require('react-json-inspector');
 
 var {
   Panel,
-  ButtonToolbar,
-  Button,
   FormGroup,
   ControlLabel,
   FormControl
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var AllerPartitionPanel = createReactClass({
 
-  componentWillMount: function() {
-    this.controller = require('./controller-AllerPartitionPanel')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-AllerPartitionPanel')(this.props.controller, this)
 
     this.title = (
       <h1>Choix d'une partition</h1>
-    );
+    )
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial',
       value: 'YXP'
     }
   },
 
-  onPickPartition(e){
-    //console.log('----- onPickPartition : ', this.inputEl.value);
-    this.setState({ partition: this.inputEl.value });
-    if (this.inputEl.value != '') this.choix(this.inputEl.value);
+  onPickPartition (e) {
+    // console.log('----- onPickPartition : ', this.inputEl.value);
+    this.setState({ partition: this.inputEl.value })
+    if (this.inputEl.value !== '') this.choix(this.inputEl.value)
   },
 
-  render: function() {
-
-    //var options = [
+  render: function () {
+    // var options = [
     //    { value: 'DMO', label: 'DMO' },
     //    { value: 'YXP', label: 'YXP' }
-    //];
-    var options = [];
-    //var partition = [ 'DMO', 'YXP' ];
-    var partition = this.partition;
+    // ];
+    var options = []
+    // var partition = [ 'DMO', 'YXP' ];
+    var partition = this.partition
     for (var i = 0; i < partition.length; i++) {
-        var items = { 'value': partition[i].toUpperCase(), 'label': partition[i].toUpperCase() };
-        options.push(items);
+      var items = { value: partition[i].toUpperCase(), label: partition[i].toUpperCase() }
+      options.push(items)
     }
 
     return (
-      <Panel 
-        collapsible 
-        expanded={this.expanded} 
+      <Panel
+        collapsible
+        expanded={this.expanded}
         header={this.title}
-        bsStyle="primary"
+        bsStyle='primary'
       >
 
-      <form>
+        <form>
 
-      <div>
-        <FormGroup controlId="formControlsSelect">
-          <ControlLabel>Selection</ControlLabel>
-          <FormControl 
-              onChange={this.onPickPartition.bind(null, this)}
-              inputRef={ el => this.inputEl=el }
-              componentClass="select" placeholder="Partition">
-            <option value="">Votre partition</option>
-            <option value="YXP">YXP</option>
-            <option value="DMO">DMO</option>
-          </FormControl>
-        </FormGroup>
-      </div>
+          <div>
+            <FormGroup controlId='formControlsSelect'>
+              <ControlLabel>Selection</ControlLabel>
+              <FormControl
+                onChange={this.onPickPartition.bind(null, this)}
+                inputRef={el => this.inputEl = el}
+                componentClass='select' placeholder='Partition'
+              >
+                <option value=''>Votre partition</option>
+                <option value='YXP'>YXP</option>
+                <option value='DMO'>DMO</option>
+              </FormControl>
+            </FormGroup>
+          </div>
 
-      <p></p>
-      {this.state.partition && <p>La partition active est {this.state.partition}</p>}
+          <p />
+          {this.state.partition && <p>La partition active est {this.state.partition}</p>}
 
-      </form>
+        </form>
       </Panel>
-    );
+    )
   }
 
-});
+})
 
-module.exports = AllerPartitionPanel;
-
-
-
-
+module.exports = AllerPartitionPanel

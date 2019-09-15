@@ -9,45 +9,43 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Grid,
   Row,
   Col
-} = ReactBootstrap;
+} = ReactBootstrap
 
-//var MemoryPanel = require('./MemoryPanel');
+// var MemoryPanel = require('./MemoryPanel');
 
 module.exports = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    //this.controller = require('./controller-MemoryContainer')(this.props.controller, this);
+  componentWillMount: function () {
+    // this.controller = require('./controller-MemoryContainer')(this.props.controller, this);
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
     if (this.props.status !== 'xxx') {
       return (
-        <div></div>
-      );
-    }
-    else {
+        <div />
+      )
+    } else {
       return (
         <Grid>
           <Row>
@@ -56,8 +54,7 @@ module.exports = createReactClass({
             </Col>
           </Row>
         </Grid>
-      );
+      )
     }
   }
-});
-
+})

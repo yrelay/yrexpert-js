@@ -9,101 +9,97 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Button,
   Glyphicon,
   OverlayTrigger,
-  Popover,
-  Table,
   Tooltip
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var SessionTableRow = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-SessionTableRow')(this.props.controller, this);
-    var id = 'Session' + this.props.pid + 'StopBtn';
+  componentWillMount: function () {
+    this.controller = require('./controller-SessionTableRow')(this.props.controller, this)
+    var id = 'Session' + this.props.pid + 'StopBtn'
     this.stopTooltip = (
       <Tooltip
-        id = {id}
+        id={id}
       >
         Stop and Delete this Session
       </Tooltip>
-    );
-    id = 'Session' + this.props.pid + 'ShowBtn';
+    )
+    id = 'Session' + this.props.pid + 'ShowBtn'
     this.showTooltip = (
       <Tooltip
-        id = {id}
+        id={id}
       >
         Show Session Details
       </Tooltip>
-    );
-
+    )
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //console.log('Rendering SessionTableRow');
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // console.log('Rendering SessionTableRow');
+    // var componentPath = this.controller.updateComponentPath(this);
 
     return (
       <tr>
         <td>
-            {this.props.pid}
+          {this.props.pid}
         </td>
         <td>{this.props.application}</td>
         <td>{this.props.expiry}</td>
         <td>
-          <OverlayTrigger 
-            placement="top" 
+          <OverlayTrigger
+            placement='top'
             overlay={this.stopTooltip}
           >
-            <Button 
-              bsStyle="danger"
-              onClick = {this.stopSession}
-              bsSize="small"
-              disabled = {this.props.disabled}
+            <Button
+              bsStyle='danger'
+              onClick={this.stopSession}
+              bsSize='small'
+              disabled={this.props.disabled}
             >
-              <Glyphicon 
-                glyph="remove"
+              <Glyphicon
+                glyph='remove'
               />
             </Button>
           </OverlayTrigger>
         </td>
         <td>
-          <OverlayTrigger 
-            placement="top" 
+          <OverlayTrigger
+            placement='top'
             overlay={this.showTooltip}
           >
-            <Button 
-              bsStyle="info"
-              onClick = {this.showSession}
-              bsSize="small"
+            <Button
+              bsStyle='info'
+              onClick={this.showSession}
+              bsSize='small'
             >
-              <Glyphicon 
-                glyph="list-alt"
+              <Glyphicon
+                glyph='list-alt'
               />
             </Button>
           </OverlayTrigger>
         </td>
       </tr>
-    );
+    )
   }
-});
+})
 
-module.exports = SessionTableRow;
+module.exports = SessionTableRow

@@ -9,58 +9,54 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Grid,
   Row,
   Col
-} = ReactBootstrap;
+} = ReactBootstrap
 
-var OverviewPanel = require('./OverviewPanel');
+var OverviewPanel = require('./OverviewPanel')
 
 var OverviewContainer = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-OverviewContainer')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-OverviewContainer')(this.props.controller, this)
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //var componentPath = this.controller.updateComponentPath(this);
-    //console.log('OverviewContainer - this.hideContainer = ' + this.hideContainer);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
+    // console.log('OverviewContainer - this.hideContainer = ' + this.hideContainer);
 
     return (
       <Grid
-        fluid = {true}
-        className = {this.hideContainer ? 'hidden' : ''}
+        fluid
+        className={this.hideContainer ? 'hidden' : ''}
       >
         <Row>
           <Col md={12}>
             <OverviewPanel
-              controller = {this.controller}
+              controller={this.controller}
             />
           </Col>
         </Row>
       </Grid>
-    );
+    )
   }
-});
+})
 
-module.exports = OverviewContainer;
-
-
-
+module.exports = OverviewContainer

@@ -10,14 +10,13 @@
 */
 
 module.exports = function (controller, component) {
-
-  component.onNewProps = function(newProps) {
-    component.hideContainer = (newProps.status !== 'nouvpartition');
-  };
+  component.onNewProps = function (newProps) {
+    component.hideContainer = (newProps.status !== 'nouvpartition')
+  }
 
   // N'affichez pas le panneau NouvPartition lors du premier rendu après la connexion
 
-  component.hideContainer = true;
+  component.hideContainer = true
 
-  return controller;
-};
+  return controller
+}

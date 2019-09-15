@@ -9,40 +9,35 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
-//var Inspector = require('react-json-inspector');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
+// var Inspector = require('react-json-inspector');
 
 var {
   Button,
-  Glyphicon,
-  OverlayTrigger,
   Panel,
-  Tooltip,
-  form,
   FormGroup,
   ControlLabel,
   FormControl,
   HelpBlock
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var DefUtilisateurPanel = createReactClass({
 
-  componentWillMount: function() {
-
-    this.controller = require('./controller-DefUtilisateurPanel')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-DefUtilisateurPanel')(this.props.controller, this)
 
     this.title = (
       <h1>Nouvelle partition</h1>
-    );
+    )
   },
 
-// *******
+  // *******
 
-  getInitialState() {
+  getInitialState () {
     return {
       valueWHOIS: 'DMO',
       valueBACK: 'GENERAL',
@@ -62,44 +57,43 @@ var DefUtilisateurPanel = createReactClass({
       valueLANGAGE: 'M11',
       isLoading: false,
       status: 'initial'
-    };
-  },
-
-  // WHOIS
-  getValidationWHOIS() {
-    const length = this.state.valueWHOIS.length;
-    if (length > 5) return 'error';
-    else if (length > 3) return 'warning';
-    else if (length == 3) return 'success';
-  },
-
-  handleChangeWHOIS(e) {
-    const re = /[a-zA-Z]/g;
-    const np = e.target.value.replace(re,"");
-    if (e.target.value.replace(re,"")=="") {
-      this.setState({
-        valueWHOIS: e.target.value.toUpperCase(),
-      });
-    } else {
-      this.setState({
-        valueWHOIS: e.target.value.substring(0,e.target.value.length-1)
-      });
     }
   },
 
-// ******2
+  // WHOIS
+  getValidationWHOIS () {
+    const length = this.state.valueWHOIS.length
+    if (length > 5) return 'error'
+    else if (length > 3) return 'warning'
+    else if (length === 3) return 'success'
+  },
 
-  handleClick() {
-    this.setState({isLoading: true});
-    this.refresh();
+  handleChangeWHOIS (e) {
+    const re = /[a-zA-Z]/g
+    if (e.target.value.replace(re, '') === '') {
+      this.setState({
+        valueWHOIS: e.target.value.toUpperCase()
+      })
+    } else {
+      this.setState({
+        valueWHOIS: e.target.value.substring(0, e.target.value.length - 1)
+      })
+    }
+  },
+
+  // ******2
+
+  handleClick () {
+    this.setState({ isLoading: true })
+    this.refresh()
 
     // This probably where you would have an `ajax` call
     setTimeout(() => {
       // Completed of async action, set loading state back
-      this.setState({isLoading: false});
-    }, 2000);
-    },
-/*
+      this.setState({ isLoading: false })
+    }, 2000)
+  },
+  /*
   componentDidUpdate: function() {
 
     //console.log('status: ' + this.state.status);
@@ -119,23 +113,22 @@ var DefUtilisateurPanel = createReactClass({
       });
     }, 100);
   },
-*/  
-// ******
+*/
+  // ******
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
     /**
      * @todo Améliorer le test sur laille de la partition
      * @todo La taille ne doit pas excéder 50% de la taille disponible en local
     */
 
-    function FieldGroup({ id, validation, label, help, ...props }) {
+    function FieldGroup ({ id, validation, label, help, ...props }) {
       return (
         <FormGroup controlId={id} validationState={validation}>
           <ControlLabel>{label}</ControlLabel>
@@ -143,58 +136,57 @@ var DefUtilisateurPanel = createReactClass({
           <FormControl.Feedback />
           {help && <HelpBlock>{help}</HelpBlock>}
         </FormGroup>
-      );
+      )
     }
 
-    let isLoading = this.state.isLoading;
+    const isLoading = this.state.isLoading
 
     // Créer un clone de données pour assurer un nouveau rendu
     if (this.data) {
-      var newData = {};
-      Object.assign(newData, this.data);
+      var newData = {}
+      Object.assign(newData, this.data)
     }
 
     return (
-      <Panel 
-        collapsible 
-        expanded={this.expanded} 
+      <Panel
+        collapsible
+        expanded={this.expanded}
         header={this.title}
-        bsStyle="primary"
+        bsStyle='primary'
       >
 
-      <form>
+        <form>
 
-        <FieldGroup
-          id="formWHOIS"
-          validation={this.getValidationWHOIS()}
-          type="text"
-          label="WHOIS : Indiquer le nom de l'utilisateur."
-          placeholder="Saisir l'utilisateur."
-          value={this.state.valueWHOIS}
-          help="Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur."
-          onChange={this.handleChangeWHOIS}
-        />
+          <FieldGroup
+            id='formWHOIS'
+            validation={this.getValidationWHOIS()}
+            type='text'
+            label="WHOIS : Indiquer le nom de l'utilisateur."
+            placeholder="Saisir l'utilisateur."
+            value={this.state.valueWHOIS}
+            help='Le nom doit être en majscules, comporter des lettres ou des nombres, le point est autorisé comme séparateur.'
+            onChange={this.handleChangeWHOIS}
+          />
 
+        </form>
 
-
-      </form>
-
-      <Button
-        bsStyle="primary"
-        disabled={isLoading}
-        onClick={!isLoading ? this.handleClick : null}>
-        {isLoading ? 'En traitement...' : 'Soumettre'}
-      </Button>
+        <Button
+          bsStyle='primary'
+          disabled={isLoading}
+          onClick={!isLoading ? this.handleClick : null}
+        >
+          {isLoading ? 'En traitement...' : 'Soumettre'}
+        </Button>
 
       </Panel>
-    );
+    )
   }
-});
+})
 
-module.exports = DefUtilisateurPanel;
+module.exports = DefUtilisateurPanel
 
 /*
-      <Inspector 
+      <Inspector
         data={newData}
         isExpanded = {this.isExpanded}
         onClick={this.nodeClicked}
@@ -219,8 +211,6 @@ module.exports = DefUtilisateurPanel;
         </FormGroup>
 
 */
-
-
 
 /*
         <FieldGroup
@@ -339,9 +329,3 @@ module.exports = DefUtilisateurPanel;
           value={this.state.valueLANGAGE}
         />
 */
-
-
-
-
-
-

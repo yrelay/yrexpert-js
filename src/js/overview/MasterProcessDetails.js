@@ -9,11 +9,11 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Panel,
   Table,
@@ -22,44 +22,42 @@ var {
   OverlayTrigger,
   Popover,
   Tooltip
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var MasterProcessDetails = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-MasterProcessDetails')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-MasterProcessDetails')(this.props.controller, this)
     this.title = (
       <h2>Détails du processus maître</h2>
-    );
+    )
     this.tooltip = (
-      <Tooltip 
-        id = "masterProcessShutdownBtn"
+      <Tooltip
+        id='masterProcessShutdownBtn'
       >
         Shutdown ewd-xpress
       </Tooltip>
-    );
-
+    )
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //console.log('Rendering MasterProcessDetails!');
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // console.log('Rendering MasterProcessDetails!');
+    // var componentPath = this.controller.updateComponentPath(this);
 
     var memoryPopover = (
       <Popover
-        id="master-process-memory"
-        title="Master Process Memory"
+        id='master-process-memory'
+        title='Master Process Memory'
       >
         <Table>
           <tbody>
@@ -78,39 +76,39 @@ var MasterProcessDetails = createReactClass({
           </tbody>
         </Table>
       </Popover>
-    );
+    )
 
     return (
-      <Panel 
+      <Panel
         header={this.title}
-        bsStyle="info"
+        bsStyle='info'
       >
-        <Table 
-          responsive  
-          className = "overviewTable"
+        <Table
+          responsive
+          className='overviewTable'
         >
           <tbody>
             <tr>
               <td>
                 <OverlayTrigger
                   trigger={['hover', 'focus']}
-                  placement="right"
+                  placement='right'
                   overlay={memoryPopover}
                 >
                   <span>{this.pid}</span>
                 </OverlayTrigger>
               </td>
-              <td className="pushRight">
-                <OverlayTrigger 
-                  placement="top" 
+              <td className='pushRight'>
+                <OverlayTrigger
+                  placement='top'
                   overlay={this.tooltip}
                 >
-                  <Button 
-                    bsStyle="danger"
-                    onClick = {this.stopMasterProcess}
+                  <Button
+                    bsStyle='danger'
+                    onClick={this.stopMasterProcess}
                   >
-                    <Glyphicon 
-                      glyph="remove"
+                    <Glyphicon
+                      glyph='remove'
                     />
                   </Button>
                 </OverlayTrigger>
@@ -118,17 +116,17 @@ var MasterProcessDetails = createReactClass({
             </tr>
             <tr>
               <td>Started</td>
-              <td className="pushRight">{this.started}</td>
+              <td className='pushRight'>{this.started}</td>
             </tr>
             <tr>
               <td>Uptime</td>
-              <td className="pushRight">{this.upTime}</td>
+              <td className='pushRight'>{this.upTime}</td>
             </tr>
           </tbody>
         </Table>
       </Panel>
-    );
+    )
   }
-});
+})
 
-module.exports = MasterProcessDetails;
+module.exports = MasterProcessDetails

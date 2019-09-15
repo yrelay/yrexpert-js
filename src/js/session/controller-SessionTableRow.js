@@ -10,29 +10,28 @@
 */
 
 module.exports = function (controller, component) {
+  component.onNewProps = function (newProps) {
+  }
 
-  component.onNewProps = function(newProps) {
-  };
-
-  component.stopSession = function() {
+  component.stopSession = function () {
     var message = {
       type: 'stopSession',
       params: {
         token: component.props.token
       }
-    };
-    controller.send(message);
-  };
+    }
+    controller.send(message)
+  }
 
-  component.showSession = function() {
+  component.showSession = function () {
     var message = {
       type: 'showSession',
       params: {
         token: component.props.token
       }
-    };
-    controller.send(message);
-  };
+    }
+    controller.send(message)
+  }
 
-  return controller;
-};
+  return controller
+}

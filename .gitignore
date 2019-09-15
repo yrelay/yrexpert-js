@@ -4,6 +4,8 @@ node_modules/
 !postinstall/node_modules/
 log/
 *.log
+_*
+ydb-data
 
 .*.swp
 ._*

@@ -9,90 +9,87 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Panel,
   Grid,
   Row,
   Col
-} = ReactBootstrap;
+} = ReactBootstrap
 
-var BuildDetails = require('./BuildDetails');
-var MasterProcessDetails = require('./MasterProcessDetails');
-var WorkerProcessDetailsTable = require('./WorkerProcessDetailsTable');
+var BuildDetails = require('./BuildDetails')
+var MasterProcessDetails = require('./MasterProcessDetails')
+var WorkerProcessDetailsTable = require('./WorkerProcessDetailsTable')
 
 var OverviewPanel = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-OverviewPanel')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-OverviewPanel')(this.props.controller, this)
     this.title = (
       <h1>Overview {this.serverName}</h1>
-    );
+    )
   },
 
-  componentWillUpdate: function() {
+  componentWillUpdate: function () {
     this.title = (
       <h1>Overview {this.serverName}</h1>
-    );
+    )
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
     if (this.state.status === 'initial') {
       return (
         <Panel collapsible expanded={this.expanded} header={this.title} />
-      );
-    }
-    else {
+      )
+    } else {
       return (
         <Panel
           collapsible
           expanded={this.expanded}
           header={this.title}
-          bsStyle="primary"
-	 >
+          bsStyle='primary'
+        >
           <Grid
-            fluid = {true}
+            fluid
           >
             <Row>
               <Col md={4}>
                 <BuildDetails
-                  controller = {this.controller}
+                  controller={this.controller}
                 />
               </Col>
               <Col md={3}>
                 <MasterProcessDetails
-                  controller = {this.controller}
+                  controller={this.controller}
                 />
               </Col>
               <Col md={5}>
                 <WorkerProcessDetailsTable
-                  controller = {this.controller}
+                  controller={this.controller}
                 />
               </Col>
             </Row>
           </Grid>
         </Panel>
-      );
+      )
     }
   }
-});
+})
 
-module.exports = OverviewPanel;
-
+module.exports = OverviewPanel

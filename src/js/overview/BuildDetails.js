@@ -9,46 +9,45 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Panel,
   Table
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var BuildDetails = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-BuildDetails')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-BuildDetails')(this.props.controller, this)
     this.title = (
       <h2>Détails de la construction</h2>
-    );
+    )
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //console.log('Rendering Build Details!');
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // console.log('Rendering Build Details!');
+    // var componentPath = this.controller.updateComponentPath(this);
 
     return (
       <Panel
-	    header={this.title}
-		bsStyle="info"
-	  >
-        <Table responsive  className="overviewTable">
+        header={this.title}
+        bsStyle='info'
+      >
+        <Table responsive className='overviewTable'>
           <thead>
             <tr>
               <th>Module</th>
@@ -95,9 +94,8 @@ var BuildDetails = createReactClass({
           </tbody>
         </Table>
       </Panel>
-    );
+    )
   }
-});
+})
 
-module.exports = BuildDetails;
-
+module.exports = BuildDetails

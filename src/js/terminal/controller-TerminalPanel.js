@@ -10,16 +10,11 @@
 */
 
 module.exports = function (controller, component) {
+  component.onNewProps = function (newProps) {
+    // console.log('TerminalPanel newProps: ' + JSON.stringify(newProps));
+  }
 
-  component.onNewProps = function(newProps) {
-    //console.log('TerminalPanel newProps: ' + JSON.stringify(newProps));
-  };
+  component.expanded = true
 
-  component.expanded = true;
-
-  return controller;
-};
-
-
-
-
+  return controller
+}

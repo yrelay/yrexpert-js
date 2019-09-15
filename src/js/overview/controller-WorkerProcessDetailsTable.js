@@ -10,73 +10,72 @@
 */
 
 module.exports = function (controller, component) {
+  component.workers = {}
 
-  component.workers = {};
+  component.onNewProps = function (newProps) {
+    // console.log('WorkerProcessDetailsTable newProps: ' + JSON.stringify(newProps));
+  }
 
-  component.onNewProps = function(newProps) {
-    //console.log('WorkerProcessDetailsTable newProps: ' + JSON.stringify(newProps));
-  };
+  controller.on('stopWorkerProcess', function (messageObj) {
+    controller.send({ type: 'getWorkerDetails' })
+  })
 
-  controller.on('stopWorkerProcess', function(messageObj) {
-    controller.send({type: 'getWorkerDetails'});
-  });
-
-  component.stopWorker = function(pid) {
+  component.stopWorker = function (pid) {
     controller.send({
       type: 'stopWorkerProcess',
       params: {
         pid: pid
       }
-    });
-    controller.toastr('warning', 'Worker ' + pid + ' shut down');
-  };
+    })
+    controller.toastr('warning', 'Worker ' + pid + ' shut down')
+  }
 
-  component.poolSize = 1;
+  component.poolSize = 1
 
-  controller.on('startTimers', function() {
+  controller.on('startTimers', function () {
     if (!controller.timers.poolSize) {
-      controller.timers.poolSize = setInterval(function() {
-        controller.send({type: 'getPoolSize'});
-      },15000);
+      controller.timers.poolSize = setInterval(function () {
+        controller.send({ type: 'getPoolSize' })
+      }, 15000)
     }
     if (!controller.timers.workerDetails) {
-      controller.timers.workerDetails = setInterval(function() {
-        controller.send({type: 'getWorkerDetails'});
-      },10000);
+      controller.timers.workerDetails = setInterval(function () {
+        controller.send({ type: 'getWorkerDetails' })
+      }, 10000)
     }
-  });
+  })
 
-  controller.on('getPoolSize', function(messageObj) {
-    component.poolSize = messageObj.message.poolSize;
-    controller.emit('startTimers');
+  controller.on('getPoolSize', function (messageObj) {
+    component.poolSize = messageObj.message.poolSize
+    controller.emit('startTimers')
     component.setState({
       status: 'poolSizeAvailable'
-    });
-  });
+    })
+  })
 
-  component.setPoolSize = function(poolSize) {
+  component.setPoolSize = function (poolSize) {
     controller.send({
       type: 'setPoolSize',
       params: {
         poolSize: poolSize
       }
-    });
-  };
+    })
+  }
 
-  component.workerDetails = [];
+  component.workerDetails = []
 
-  controller.on('getWorkerDetails', function(messageObj) {
-    //console.log('getWorkerDetails: ' + JSON.stringify(messageObj));
-    component.workerDetails = messageObj.results;
-    controller.emit('startTimers');
+  controller.on('getWorkerDetails', function (messageObj) {
+    // console.log('getWorkerDetails: ' + JSON.stringify(messageObj));
+    component.workerDetails = messageObj.results
+    controller.emit('startTimers')
 
     component.setState({
       status: 'dataAvailable'
-    });
-  });
+    })
+  })
 
-  controller.send({type: 'getWorkerDetails'});
-  controller.send({type: 'getPoolSize'});
+  controller.send({ type: 'getWorkerDetails' })
+  controller.send({ type: 'getPoolSize' })
 
-  return controller;
-};
+  return controller
+}

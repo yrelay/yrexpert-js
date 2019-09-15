@@ -10,14 +10,13 @@
 */
 
 module.exports = function (controller, component) {
-
-  component.onNewProps = function(newProps) {
-    component.hideContainer = (newProps.status !== 'overview');
-  };
+  component.onNewProps = function (newProps) {
+    component.hideContainer = (newProps.status !== 'overview')
+  }
 
   // N'affichez pas le panneau de vue d'ensemble lors du premier rendu après la connexion
 
-  component.hideContainer = true;
+  component.hideContainer = true
 
-  return controller;
-};
+  return controller
+}

@@ -9,94 +9,89 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react'); 
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Button,
   ButtonGroup,
   Glyphicon
-} = ReactBootstrap;
+} = ReactBootstrap
 
-var value;
+var value
 
 var Spinner = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
+  componentWillMount: function () {
+    value = this.props.value
 
-    value = this.props.value;
+    var component = this
 
-    var component = this;
-
-    this.increment = function() {
-      value++;
-      component.props.changeHandler(value);
+    this.increment = function () {
+      value++
+      component.props.changeHandler(value)
       component.setState({
         status: 'update'
-      });
-    };
+      })
+    }
 
-    this.decrement = function() {
+    this.decrement = function () {
       if (value > 1) {
-        value--;
-        component.props.changeHandler(value);
+        value--
+        component.props.changeHandler(value)
         component.setState({
           status: 'update'
-        });
+        })
       }
-    };
-  },  
-
-  componentWillReceiveProps: function(newProps) {
-    value = newProps.value;
+    }
   },
 
-  render: function() {
+  componentWillReceiveProps: function (newProps) {
+    value = newProps.value
+  },
+
+  render: function () {
     return (
 
-        <ButtonGroup>
-          <Button>
-           {value}
-          </Button>
-          <ButtonGroup
-            vertical
+      <ButtonGroup>
+        <Button>
+          {value}
+        </Button>
+        <ButtonGroup
+          vertical
+        >
+          <Button
+            bsStyle='default'
+            bsSize='xsmall'
+            onClick={this.increment}
           >
-            <Button 
-              bsStyle="default"
-              bsSize = "xsmall"
-              onClick = {this.increment}
-            >
-              <Glyphicon 
-                glyph="triangle-top"
-              />
-            </Button>
-            <Button 
-              bsStyle="default"
-              bsSize = "xsmall"
-              onClick = {this.decrement}
-            >
-              <Glyphicon 
-                glyph="triangle-bottom"
-              />
-            </Button>
-          </ButtonGroup>
+            <Glyphicon
+              glyph='triangle-top'
+            />
+          </Button>
+          <Button
+            bsStyle='default'
+            bsSize='xsmall'
+            onClick={this.decrement}
+          >
+            <Glyphicon
+              glyph='triangle-bottom'
+            />
+          </Button>
         </ButtonGroup>
+      </ButtonGroup>
 
-    );
+    )
   }
 
-});
+})
 
-module.exports = Spinner;
-
-
-
-
+module.exports = Spinner

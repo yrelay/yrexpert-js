@@ -9,58 +9,53 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Grid,
   Row,
   Col
-} = ReactBootstrap;
+} = ReactBootstrap
 
-var TerminalPanel = require('./TerminalPanel');
+var TerminalPanel = require('./TerminalPanel')
 
 var TerminalContainer = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-TerminalContainer')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-TerminalContainer')(this.props.controller, this)
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
-
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
     return (
       <Grid
-        fluid = {true}
-        className = {this.hideContainer ? 'hidden' : ''}
+        fluid
+        className={this.hideContainer ? 'hidden' : ''}
       >
         <Row>
           <Col md={12}>
             <TerminalPanel
-              controller = {this.controller}
+              controller={this.controller}
             />
           </Col>
         </Row>
       </Grid>
-    );
-
+    )
   }
-});
+})
 
-module.exports = TerminalContainer;
-
-
-
+module.exports = TerminalContainer

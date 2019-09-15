@@ -10,11 +10,10 @@
 */
 
 module.exports = function (controller, component) {
+  component.onNewProps = function (newProps) {
+  }
 
-  component.onNewProps = function(newProps) {
-  };
+  component.sessions = []
 
-  component.sessions = [];
-
-  return controller;
-};
+  return controller
+}

@@ -9,74 +9,65 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
-var moment = require('moment');
-var {
-  Button,
-  Glyphicon,
-  OverlayTrigger,
-  Popover,
-  Table,
-  Tooltip
-} = ReactBootstrap;
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
+var moment = require('moment')
+var { Table } = ReactBootstrap
 
-var BeatryxTableRow = require('./BeatryxTableRow');
+var BeatryxTableRow = require('./BeatryxTableRow')
 
 var BeatryxTable = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-BeatryxTable')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-BeatryxTable')(this.props.controller, this)
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
+  render: function () {
+    // console.log('Rendering BeatryxTable');
+    // var componentPath = this.controller.updateComponentPath(this);
 
-    //console.log('Rendering BeatryxTable');
-    //var componentPath = this.controller.updateComponentPath(this);
-
-    var rows = [];
-    var row;
-    var beatryx;
-    var expiry;
-    //console.log('this.props.beatryxRobot = ' + JSON.stringify(this.props.beatryxRobot));
+    var rows = []
+    var row
+    var beatryx
+    var expiry
+    // console.log('this.props.beatryxRobot = ' + JSON.stringify(this.props.beatryxRobot));
     for (var i = 0; i < this.props.beatryxRobot.length; i++) {
-      beatryx = this.props.beatryxRobot[i];
-      expiry = moment(new Date(beatryx.expiry * 1000)).format('DD MMM YY, h:mm:ss a');
+      beatryx = this.props.beatryxRobot[i]
+      expiry = moment(new Date(beatryx.expiry * 1000)).format('DD MMM YY, h:mm:ss a')
       row = (
         <BeatryxTableRow
-          key = {beatryx.id}
-          pid = {beatryx.id}
-          application = {beatryx.application}
-          token = {beatryx.token}
-          expiry = {expiry}
-          disabled = {beatryx.disabled}
+          key={beatryx.id}
+          pid={beatryx.id}
+          application={beatryx.application}
+          token={beatryx.token}
+          expiry={expiry}
+          disabled={beatryx.disabled}
           controller={this.controller}
         />
-      );
-      rows.push(row);
+      )
+      rows.push(row)
     }
 
-    //console.log('beatryx rows: ' + JSON.stringify(rows));
-
+    // console.log('beatryx rows: ' + JSON.stringify(rows));
 
     return (
-        <Table 
-          responsive  
-          className = "overviewTable"
-        >
+      <Table
+        responsive
+        className='overviewTable'
+      >
         <thead>
           <tr>
             <th>Date de clôture</th>
@@ -91,8 +82,8 @@ var BeatryxTable = createReactClass({
           {rows}
         </tbody>
       </Table>
-    );
+    )
   }
-});
+})
 
-module.exports = BeatryxTable;
+module.exports = BeatryxTable

@@ -10,29 +10,25 @@
 */
 
 module.exports = function (controller, component) {
+  component.onNewProps = function (newProps) {
+    // console.log('OverviewPanel newProps: ' + JSON.stringify(newProps));
+  }
 
-  component.onNewProps = function(newProps) {
-    //console.log('OverviewPanel newProps: ' + JSON.stringify(newProps));
-  };
+  component.expanded = true
+  component.serverName = 'ewd-xpress'
 
-  component.expanded = true;
-  component.serverName = 'ewd-xpress';
-
-  controller.on('getServerName', function(responseObj) {
+  controller.on('getServerName', function (responseObj) {
     if (responseObj.message.serverName && responseObj.message.serverName !== '') {
-      component.serverName = responseObj.message.serverName;
+      component.serverName = responseObj.message.serverName
       component.setState({
         status: 'updated'
-      });
+      })
     }
-  });
+  })
 
   controller.send({
     type: 'getServerName'
-  });
+  })
 
-  return controller;
-};
-
-
-
+  return controller
+}

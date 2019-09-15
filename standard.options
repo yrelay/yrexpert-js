@@ -1,0 +1,9 @@
+"standard.options": {
+    "globals": ["$", "jQuery", "fetch"],
+    "ignore": [
+        "node_modules/**"
+    ],
+    "plugins": ["html"],
+    "parser": "babel-eslint",
+    "envs": ["jest"]
+}

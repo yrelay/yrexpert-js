@@ -9,40 +9,38 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
-var {
+import React from 'react'
+import createReactClass from 'create-react-class'
+import {
   Button,
   Navbar
-} = ReactBootstrap;
+} from 'react-bootstrap'
 
-var controller;
+var controller
 
-module.exports = createReactClass({
+export default createReactClass({
 
-  startMonitor: function() {
-    location.reload();
+  startMonitor: function () {
+    location.reload()
   },
 
-  render: function() {
+  render: function () {
     return (
       <div>
-        <Navbar inverse >
+        <Navbar inverse>
           <Navbar.Brand>
             {this.props.title}
           </Navbar.Brand>
         </Navbar>
-        <Button 
-          bsStyle="success"
-          onClick = {this.startMonitor}
+        <Button
+          bsStyle='success'
+          onClick={this.startMonitor}
         >
-          Redémarrer
+          Restart Monitor
         </Button>
-      </div>       
-    );
+      </div>
+    )
   }
-});
-
+})

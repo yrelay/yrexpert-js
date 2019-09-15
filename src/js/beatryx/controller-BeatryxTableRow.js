@@ -10,29 +10,28 @@
 */
 
 module.exports = function (controller, component) {
+  component.onNewProps = function (newProps) {
+  }
 
-  component.onNewProps = function(newProps) {
-  };
-
-  component.stopBeatryx = function() {
+  component.stopBeatryx = function () {
     var message = {
       type: 'stopBeatryx',
       params: {
         token: component.props.token
       }
-    };
-    controller.send(message);
-  };
+    }
+    controller.send(message)
+  }
 
-  component.showBeatryx = function() {
+  component.showBeatryx = function () {
     var message = {
       type: 'showBeatryx',
       params: {
         token: component.props.token
       }
-    };
-    controller.send(message);
-  };
+    }
+    controller.send(message)
+  }
 
-  return controller;
-};
+  return controller
+}

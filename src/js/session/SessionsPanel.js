@@ -9,14 +9,14 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
-//var Inspector = require('react-json-inspector');
-var SessionTable = require('./SessionTable');
-var SessionDetails = require('./SessionDetails');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
+// var Inspector = require('react-json-inspector');
+var SessionTable = require('./SessionTable')
+var SessionDetails = require('./SessionDetails')
 
 var {
   Button,
@@ -27,90 +27,89 @@ var {
   Panel,
   Row,
   Tooltip
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var SessionsPanel = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-SessionsPanel')(this.props.controller, this);
+  componentWillMount: function () {
+    this.controller = require('./controller-SessionsPanel')(this.props.controller, this)
 
     this.tooltip = (
-      <Tooltip 
-        id = "SessionsRefreshBtn"
+      <Tooltip
+        id='SessionsRefreshBtn'
       >
         Refresh
       </Tooltip>
-    );
+    )
 
     this.title = (
       <span>
         <b>Sessions</b>
-        <OverlayTrigger 
-          placement="top" 
-            overlay={this.tooltip}
-                >
-          <Button 
-            bsClass="btn btn-success pull-right"
-            onClick = {this.refresh}
+        <OverlayTrigger
+          placement='top'
+          overlay={this.tooltip}
+        >
+          <Button
+            bsClass='btn btn-success pull-right'
+            onClick={this.refresh}
           >
-            <Glyphicon 
-              glyph="refresh"
+            <Glyphicon
+              glyph='refresh'
             />
           </Button>
         </OverlayTrigger>
       </span>
-    );
+    )
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     // fetch current session list
-    this.refresh();
-  },
-  
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+    this.refresh()
   },
 
-  render: function() {
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
+  },
 
-    //var componentPath = this.controller.updateComponentPath(this);
+  render: function () {
+    // var componentPath = this.controller.updateComponentPath(this);
 
-   //console.log('rendering SessionsPanel: ' + JSON.stringify(this.sessionData));
+    // console.log('rendering SessionsPanel: ' + JSON.stringify(this.sessionData));
 
     return (
-      <Panel 
-        collapsible 
-        expanded={true} 
+      <Panel
+        collapsible
+        expanded
         header={this.title}
-        bsStyle="primary"
+        bsStyle='primary'
       >
         <Grid
-          fluid = {true}
+          fluid
         >
           <Row>
             <Col md={5}>
               <SessionTable
-                controller = {this.controller}
-                sessions = {this.sessions}
+                controller={this.controller}
+                sessions={this.sessions}
               />
             </Col>
             <Col md={7}>
               <SessionDetails
-                controller = {this.controller}
-                data = {this.sessionData}
+                controller={this.controller}
+                data={this.sessionData}
               />
             </Col>
           </Row>
         </Grid>
       </Panel>
-    );
+    )
   }
-});
+})
 
-module.exports = SessionsPanel;
+module.exports = SessionsPanel

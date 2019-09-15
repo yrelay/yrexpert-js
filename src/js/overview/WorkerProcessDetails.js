@@ -9,11 +9,11 @@
 
 */
 
-"use strict"
+'use strict'
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactBootstrap = require('react-bootstrap');
+var React = require('react')
+var createReactClass = require('create-react-class')
+var ReactBootstrap = require('react-bootstrap')
 var {
   Button,
   Glyphicon,
@@ -21,41 +21,40 @@ var {
   Popover,
   Table,
   Tooltip
-} = ReactBootstrap;
+} = ReactBootstrap
 
 var WorkerProcessDetails = createReactClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       status: 'initial'
     }
   },
 
-  componentWillMount: function() {
-    this.controller = require('./controller-WorkerProcessDetails')(this.props.controller, this);
-    var id = 'worker' + this.props.pid + 'ShutdownBtn';
+  componentWillMount: function () {
+    this.controller = require('./controller-WorkerProcessDetails')(this.props.controller, this)
+    var id = 'worker' + this.props.pid + 'ShutdownBtn'
     this.tooltip = (
-      <Tooltip 
-        id = {id}
+      <Tooltip
+        id={id}
       >
         Shutdown this Worker Process
       </Tooltip>
-    );
+    )
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.onNewProps(newProps);
+  componentWillReceiveProps: function (newProps) {
+    this.onNewProps(newProps)
   },
 
-  render: function() {
+  render: function () {
+    // console.log('Rendering WorkerProcessDetails Row!');
+    // var componentPath = this.controller.updateComponentPath(this);
 
-    //console.log('Rendering WorkerProcessDetails Row!');
-    //var componentPath = this.controller.updateComponentPath(this);
-
-    var title = 'Worker ' + this.props.pid + ' Memory';
+    var title = 'Worker ' + this.props.pid + ' Memory'
 
     var memoryPopover = (
-      <Popover id="worker-process-memory" title={title}>
+      <Popover id='worker-process-memory' title={title}>
         <Table>
           <tbody>
             <tr>
@@ -73,14 +72,14 @@ var WorkerProcessDetails = createReactClass({
           </tbody>
         </Table>
       </Popover>
-    );
+    )
 
     return (
       <tr>
         <td>
           <OverlayTrigger
             trigger={['hover', 'focus']}
-            placement="left"
+            placement='left'
             overlay={memoryPopover}
           >
             <span>{this.props.pid}</span>
@@ -88,24 +87,24 @@ var WorkerProcessDetails = createReactClass({
         </td>
         <td>{this.props.noOfRequests}</td>
         <td>{this.props.available}</td>
-        <td className = "pushRight">
-          <OverlayTrigger 
-            placement="top" 
+        <td className='pushRight'>
+          <OverlayTrigger
+            placement='top'
             overlay={this.tooltip}
           >
-            <Button 
-              bsStyle="danger"
-              onClick = {this.stopWorker}
+            <Button
+              bsStyle='danger'
+              onClick={this.stopWorker}
             >
-              <Glyphicon 
-                glyph="remove"
+              <Glyphicon
+                glyph='remove'
               />
             </Button>
           </OverlayTrigger>
         </td>
       </tr>
-    );
+    )
   }
-});
+})
 
-module.exports = WorkerProcessDetails;
+module.exports = WorkerProcessDetails
