@@ -46,40 +46,44 @@
     "yrexpert-gtm": "^0.0.2",
     "yrexpert-rpc": "^0.0.7",
     "yrexpert-term": "^0.0.6",
-
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
-
     "babel-eslint": "^10.0.3",
     "standard": "^14.0.2",
     "eslint-plugin-html": "^6.0.0",
-    "jshint": "^2.10.2"
-
+    "jshint": "^2.10.2",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {},
   "standard": {
-      "plugins": ["html"],
-      "parser": "babel-eslint"
+    "plugins": [
+      "html"
+    ],
+    "parser": "babel-eslint"
   },
   "scripts": {
     "postinstall": "node postinstall/install",
-    "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot"
+    "start": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "bugs": {
     "url": "https://github.com/yrelay/yrexpert-js/issues"
   },
-  "keywords": [ "expert",
-                "system",
-                "systeme",
-                "engine",
-                "inference",
-                "moteur",
-                "ai",
-                "artificial",
-                "intelligence",
-                "ai",
-                "artificielle"
-  ]
+  "keywords": [
+    "expert",
+    "system",
+    "systeme",
+    "engine",
+    "inference",
+    "moteur",
+    "ai",
+    "artificial",
+    "intelligence",
+    "ai",
+    "artificielle"
+  ],
+  "snyk": true
 }
