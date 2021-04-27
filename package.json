@@ -41,7 +41,7 @@
     "react-json-inspector": "^7.1.1",
     "react-toastr": "^2.9.3",
     "react-select": "^1.0.0-rc.10",
-    "socket.io-client": "^2.0.3",
+    "socket.io-client": "^4.0.0",
     "toastr": "^2.1.2",
     "yrexpert-gtm": "^0.0.2",
     "yrexpert-rpc": "^0.0.7",
